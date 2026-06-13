@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MailPaw by Allonsy</title>
+    <meta name="description" content="MailPaw is a free private email template builder with local browser storage, curated templates, copyable HTML, and downloadable backups. Built by Allonsy." />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&family=JetBrains+Mono:wght@500&display=swap");
+
+      :root {
+        --bg: #f6f3ef;
+        --ink: #0f172a;
+        --muted: #5b6477;
+        --surface: #ffffff;
+        --surface-2: #f1f5fb;
+        --border: rgba(15, 23, 42, 0.12);
+        --accent: #0ea5e9;
+        --accent-2: #22c55e;
+        --accent-3: #f59e0b;
+        --shadow: 0 30px 80px rgba(15, 23, 42, 0.16);
+        --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
+        --gradient: linear-gradient(135deg, #0ea5e9 0%, #22c55e 100%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", "Noto Sans", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(1200px 600px at 20% -10%, rgba(14, 165, 233, 0.18), transparent 60%),
+          radial-gradient(1000px 520px at 90% -20%, rgba(34, 197, 94, 0.16), transparent 55%),
+          var(--bg);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: radial-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 0);
+        background-size: 24px 24px;
+        opacity: 0.35;
+        pointer-events: none;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      .container {
+        width: min(1200px, 92vw);
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: rgba(14, 165, 233, 0.12);
+        color: #0284c7;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+      }
+
+      .pill .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      header {
+        padding: 28px 0 8px;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 55%, #22c55e 100%);
+        display: grid;
+        place-items: center;
+        color: #fff;
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.18);
+        font-weight: 700;
+        font-size: 15px;
+      }
+
+      .brand small {
+        display: block;
+        font-size: 11px;
+        font-family: "JetBrains Mono", monospace;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      .nav-links a:hover {
+        color: var(--ink);
+      }
+
+      .cta-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .hero .cta-row {
+        margin-bottom: 12px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 18px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 13px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+
+      .btn-primary {
+        background: var(--gradient);
+        color: #fff;
+        box-shadow: 0 16px 30px rgba(14, 165, 233, 0.28);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background: #fff;
+        color: var(--ink);
+        border-color: var(--border);
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 36px;
+        align-items: center;
+        padding: 64px 0 48px;
+      }
+
+      .hero h1 {
+        font-family: "Fraunces", serif;
+        font-size: clamp(36px, 5vw, 58px);
+        margin: 16px 0 16px;
+        line-height: 1.05;
+      }
+
+      .hero p {
+        font-size: 18px;
+        color: var(--muted);
+        line-height: 1.6;
+        margin: 0 0 24px;
+      }
+
+      .hero-meta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .hero-meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .hero-ui {
+        position: relative;
+        padding: 24px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.85));
+        border-radius: 28px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .hero-ui::after {
+        content: "";
+        position: absolute;
+        inset: auto -20% -35% auto;
+        width: 240px;
+        height: 240px;
+        background: radial-gradient(circle, rgba(14, 165, 233, 0.18), transparent 70%);
+        transform: rotate(15deg);
+      }
+
+      .mock-browser {
+        background: #f8fafc;
+        border-radius: 18px;
+        border: 1px solid rgba(15, 23, 42, 0.1);
+        overflow: hidden;
+      }
+
+      .mock-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        background: #fff;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      }
+
+      .mock-header .dots {
+        display: flex;
+        gap: 6px;
+      }
+
+      .mock-header .dots span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #e2e8f0;
+      }
+
+      .mock-header .dots span:nth-child(1) { background: #f87171; }
+      .mock-header .dots span:nth-child(2) { background: #fbbf24; }
+      .mock-header .dots span:nth-child(3) { background: #34d399; }
+
+      .mock-body {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        min-height: 280px;
+      }
+
+      .mock-sidebar {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 16px;
+        display: grid;
+        gap: 12px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .mock-sidebar .chip {
+        height: 24px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .mock-main {
+        padding: 18px;
+        display: grid;
+        gap: 16px;
+        background: #fff;
+      }
+
+      .mock-card {
+        background: #f1f5f9;
+        border-radius: 14px;
+        padding: 16px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .mock-card .bar {
+        height: 10px;
+        background: #cbd5f5;
+        border-radius: 8px;
+      }
+
+      .mock-card .bar.short { width: 70%; }
+      .mock-card .bar.accent { background: #7dd3fc; }
+
+      .mock-card .row {
+        display: flex;
+        gap: 10px;
+      }
+
+      .mock-thumb {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #fff;
+        border: 1px solid rgba(15, 23, 42, 0.1);
+      }
+
+      .section {
+        padding: 64px 0;
+      }
+
+      .section-title {
+        font-family: "Fraunces", serif;
+        font-size: clamp(28px, 3vw, 36px);
+        margin: 0 0 16px;
+      }
+
+      .section-subtitle {
+        color: var(--muted);
+        max-width: 640px;
+        line-height: 1.6;
+      }
+
+      .feature-grid {
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .feature-card {
+        background: var(--surface);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: var(--shadow-soft);
+        display: grid;
+        gap: 10px;
+      }
+
+      .feature-card h3 {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .feature-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+        font-size: 14px;
+      }
+
+      .badge {
+        display: inline-flex;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(14, 165, 233, 0.12);
+        color: #0284c7;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+        align-items: start;
+      }
+
+      .stack {
+        display: grid;
+        gap: 16px;
+      }
+
+      .list {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .pricing {
+        background: linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(15, 23, 42, 0.04));
+        border-radius: 28px;
+        padding: 34px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        box-shadow: var(--shadow-soft);
+        display: grid;
+        gap: 16px;
+      }
+
+      .price {
+        font-size: 42px;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .price span {
+        font-size: 16px;
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      .cta-panel {
+        background: #0f172a;
+        color: #f8fafc;
+        border-radius: 28px;
+        padding: 40px;
+        display: grid;
+        gap: 14px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta-panel::after {
+        content: "";
+        position: absolute;
+        inset: -40% auto auto -10%;
+        width: 260px;
+        height: 260px;
+        background: radial-gradient(circle, rgba(14, 165, 233, 0.35), transparent 70%);
+      }
+
+      .cta-panel h2 {
+        margin: 0;
+        font-size: 28px;
+      }
+
+      .cta-panel p {
+        color: rgba(248, 250, 252, 0.72);
+        margin: 0;
+      }
+
+      .cta-row.is-spaced {
+        margin-top: 18px;
+      }
+
+      footer {
+        padding: 40px 0 70px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .footer-grid {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .tagline {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      @media (max-width: 980px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .feature-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .split {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+          display: none;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .mock-body {
+          grid-template-columns: 1fr;
+        }
+
+        .mock-sidebar {
+          grid-auto-flow: column;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          font-size: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <div class="brand">
+          <div class="brand-mark">A</div>
+          <div>
+            Allonsy
+            <small>Studio Tools</small>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="#studio">Studio</a>
+          <a href="#templates">Templates</a>
+            <a href="#backup">Backups</a>
+          <a href="#support">Support</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="app.html">Open the App</a>
+              <a class="btn btn-secondary" href="https://buymeacoffee.com/barryanders">Support MailPaw</a>
+            </div>
+          </div>
+    </header>
+
+    <main>
+      <section class="container hero">
+        <div>
+          <div class="pill"><span class="dot"></span> MailPaw</div>
+          <h1>Private email templates stored locally in your browser.</h1>
+          <p>
+            MailPaw gives you a polished builder, curated layouts, copyable HTML,
+            and downloadable backups without putting your email content in someone else's cloud.
+            Use it with email clients that support pasted HTML.
+          </p>
+          <div class="cta-row is-spaced">
+            <a class="btn btn-primary" href="app.html">Open the App</a>
+          </div>
+          <div class="hero-meta">
+            <span>Free</span>
+            <span>Private local storage</span>
+            <span>50 curated templates</span>
+          </div>
+        </div>
+        <div class="hero-ui" aria-hidden="true">
+          <div class="mock-browser">
+            <div class="mock-header">
+              <div class="dots"><span></span><span></span><span></span></div>
+              <div class="badge">Studio</div>
+            </div>
+            <div class="mock-body">
+              <div class="mock-sidebar">
+                <div class="chip"></div>
+                <div class="chip"></div>
+                <div class="chip"></div>
+                <div class="chip"></div>
+              </div>
+              <div class="mock-main">
+                <div class="mock-card">
+                  <div class="row">
+                    <div class="mock-thumb"></div>
+                    <div style="flex: 1;">
+                      <div class="bar accent"></div>
+                      <div class="bar short"></div>
+                    </div>
+                  </div>
+                  <div class="bar"></div>
+                  <div class="bar short"></div>
+                </div>
+                <div class="mock-card">
+                  <div class="bar"></div>
+                  <div class="row">
+                    <div class="bar short"></div>
+                    <div class="bar short" style="background:#fde68a;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="studio">
+        <div class="container">
+          <div class="badge">MailPaw Studio</div>
+          <h2 class="section-title">Designed to feel effortless, built for real campaigns.</h2>
+          <p class="section-subtitle">
+            Every interaction is tuned for speed: quick blocks, clean controls, and simple HTML that travels better across email tools.
+          </p>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <h3>Studio builder</h3>
+              <p>Edit blocks, columns, and sections with a focused toolbar and email-friendly styling.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Style presets</h3>
+              <p>Jump between curated looks to explore tone, color, and typography in seconds.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Reusable templates</h3>
+              <p>Save, duplicate, and organize your library so every email starts on a strong foundation.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Inline export</h3>
+              <p>Copy HTML for email clients that accept pasted HTML.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Component defaults</h3>
+              <p>Set global defaults for buttons, text, dividers, and spacing to keep everything consistent.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Simple email HTML</h3>
+              <p>No bloated scripts or unsafe styling. Just simple structure that email clients are more likely to keep.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="templates">
+        <div class="container">
+          <div class="split">
+            <div class="stack">
+              <div class="badge">Template library</div>
+              <h2 class="section-title">A library with range, not repetition.</h2>
+              <p class="section-subtitle">
+                MailPaw ships with 50 polished templates that cover the emails you actually send.
+                Every layout is built with components so you can edit every detail.
+              </p>
+              <ul class="list">
+                <li>Product launches, newsletters, events, promotions</li>
+                <li>Founder updates, community invites, press recaps</li>
+                <li>Onboarding, digest, and feature spotlights</li>
+              </ul>
+            </div>
+            <div class="pricing" id="backup">
+              <div class="badge">Backups</div>
+              <h3 class="price">Free <span>local first</span></h3>
+              <p class="section-subtitle">Templates are stored in your browser on your computer for privacy, not in a hosted account. Download backup copies so you can restore them later or move them to another browser.</p>
+              <div class="cta-row">
+                <a class="btn btn-primary" href="app.html">Open the App</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="badge">Workflow</div>
+          <h2 class="section-title">From idea to inbox in three steps.</h2>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <h3>Pick a starting point</h3>
+              <p>Choose a layout, apply a preset, and lock in the tone for your message.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Polish in Studio</h3>
+              <p>Drag components, adjust spacing, and refine your hierarchy in the standalone studio.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Copy or export</h3>
+              <p>Copy the HTML into an email client that supports pasted HTML, or export templates as backup files.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="free">
+        <div class="container">
+          <div class="cta-panel" id="support">
+            <span class="tagline">Allonsy x MailPaw</span>
+            <h2>Make every email look like a launch.</h2>
+            <p>Free to use. No account, subscription, template limit, or cloud library holding your email content. If MailPaw helps, support Barry Anders on Buy Me a Coffee.</p>
+            <div class="cta-row is-spaced">
+              <a class="btn btn-primary" href="app.html">Open the App</a>
+              <a class="btn btn-secondary" href="https://buymeacoffee.com/barryanders">Support MailPaw</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="container">
+          <div class="badge">FAQ</div>
+          <h2 class="section-title">Everything you need to know.</h2>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <h3>Is this only for Gmail?</h3>
+              <p>No. The standalone app creates copyable HTML for email clients that accept pasted HTML. Each client handles pasted HTML differently, so results can vary.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Where are templates stored?</h3>
+              <p>They are stored locally in your browser on your computer for privacy. Download backup copies from the app so you do not lose important templates.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Can I reuse templates?</h3>
+              <p>Yes. Save, duplicate, and organize everything in your library for fast reuse.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-grid">
+        <div class="brand">
+          <div class="brand-mark">A</div>
+          <div>
+            Allonsy
+            <small>Crafted tools for focused teams</small>
+          </div>
+        </div>
+        <div>Copyright Allonsy. MailPaw is a free standalone email template builder.</div>
+      </div>
+    </footer>
+  </body>
+</html>

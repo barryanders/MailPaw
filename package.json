@@ -1,0 +1,20 @@
+{
+  "name": "mailpaw",
+  "private": false,
+  "description": "Free privacy-first email template builder with local storage, copyable HTML, reusable blocks, and downloadable backups.",
+  "homepage": "https://barryanders.github.io/MailPaw/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barryanders/MailPaw.git"
+  },
+  "author": "Barry Anders",
+  "license": "MIT",
+  "version": "1.0.2",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "jsdom": "^24.1.0"
+  }
+}

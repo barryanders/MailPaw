@@ -1,0 +1,63 @@
+{
+  "manifest_version": 3,
+  "name": "MailPaw: Email Builder & Newsletter Studio",
+  "version": "1.0.2",
+  "description": "Build email templates with a drag-and-drop builder, reusable blocks, copyable HTML, and local backups.",
+  "permissions": ["storage"],
+  "host_permissions": ["https://mail.google.com/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MailPaw",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": [
+        "js/Sortable.min.js",
+        "js/constants.js",
+        "js/state.js",
+        "js/dom.js",
+        "js/events.js",
+        "js/tooltip.js",
+
+        "js/ui-helpers.js",
+        "js/billing.js",
+        "js/ui-popups.js",
+        "js/ui-properties.js",
+        "js/ui-sidebar.js",
+
+        "js/components-data.js",
+        "js/components-blocks.js",
+        "js/components-sidebar.js",
+        "js/components-settings.js",
+
+        "js/ui-editor-layout.js",
+        "js/ui-editor-drag.js",
+        "js/ui-editor-history.js",
+        "js/ui-editor-events.js",
+        "js/ui-editor-save.js",
+        "js/ui-editor-core.js",
+
+        "js/templates.js",
+        "js/main.js"
+      ],
+      "css": [
+        "css/base.css",
+        "css/tooltip.css",
+        "css/trigger.css",
+        "css/panel.css",
+        "css/list.css",
+        "css/editor.css",
+        "css/views.css"
+      ]
+    }
+  ],
+  "background": { "service_worker": "background.js" },
+  "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" },
+  "web_accessible_resources": [{ "resources": ["css/*.css", "mailpaw-icon-64.png"], "matches": ["*://mail.google.com/*"] }]
+}
