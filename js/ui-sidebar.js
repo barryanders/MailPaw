@@ -1277,17 +1277,18 @@ function renderListItems(filter = '', animate = true) {
 
       const insertBtn = document.createElement('button');
       const insertIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>`;
+      const copyActionLabel = (typeof window !== 'undefined' && window.ZT_STANDALONE) ? 'Copy Email' : 'Copy HTML';
       if (isListView) {
         insertBtn.className = 'zt-action-btn zt-btn-insert';
-        insertBtn.setAttribute('data-tooltip', 'Copy HTML');
+        insertBtn.setAttribute('data-tooltip', copyActionLabel);
         insertBtn.innerHTML = insertIcon;
       } else {
         insertBtn.className = 'zt-insert-btn';
-        insertBtn.innerHTML = `<span class="zt-btn-icon">${insertIcon}</span><span class="zt-btn-label">${'Copy HTML'}</span>`;
+        insertBtn.innerHTML = `<span class="zt-btn-icon">${insertIcon}</span><span class="zt-btn-label">${copyActionLabel}</span>`;
       }
       insertBtn.onclick = (e) => {
         e.stopPropagation();
-        initiateTemplateInsertion(t);
+        initiateTemplateInsertion(t, insertBtn);
       };
       if (access.locked) insertBtn.disabled = true;
       let insertWrap = null;
@@ -1635,6 +1636,88 @@ function copyTextToClipboard(text, onSuccess, onError) {
   }
 }
 
+function htmlToClipboardPlainText(html) {
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = html || '';
+  wrapper.querySelectorAll('script, style, meta, link').forEach((el) => el.remove());
+  wrapper.querySelectorAll('br').forEach((br) => br.replaceWith(document.createTextNode('\n')));
+  wrapper.querySelectorAll('p, div, table, tr, h1, h2, h3, h4, h5, h6, blockquote, li').forEach((el) => {
+    el.appendChild(document.createTextNode('\n'));
+  });
+  return (wrapper.textContent || '')
+    .replace(/\u00a0/g, ' ')
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+function sanitizeClipboardHtml(html) {
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = html || '';
+  wrapper.querySelectorAll('script').forEach((el) => el.remove());
+  return wrapper.innerHTML;
+}
+
+function fallbackCopyRichHtml(html, plainText, onSuccess, onError) {
+  const done = typeof onSuccess === 'function' ? onSuccess : () => {};
+  const fail = typeof onError === 'function' ? onError : () => {};
+  let host = null;
+  try {
+    host = document.createElement('div');
+    host.setAttribute('contenteditable', 'true');
+    host.setAttribute('aria-hidden', 'true');
+    host.style.position = 'fixed';
+    host.style.left = '-10000px';
+    host.style.top = '0';
+    host.style.width = '640px';
+    host.style.background = '#ffffff';
+    host.style.opacity = '0';
+    host.innerHTML = html || plainText || '';
+    document.body.appendChild(host);
+
+    const selection = window.getSelection ? window.getSelection() : null;
+    const range = document.createRange();
+    range.selectNodeContents(host);
+    if (selection) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    const success = document.execCommand && document.execCommand('copy');
+    if (selection) selection.removeAllRanges();
+    document.body.removeChild(host);
+    if (success) {
+      done();
+      return;
+    }
+    copyTextToClipboard(html || plainText || '', done, fail);
+  } catch (err) {
+    if (host && host.parentNode) host.parentNode.removeChild(host);
+    copyTextToClipboard(html || plainText || '', done, () => fail(err));
+  }
+}
+
+function copyRichEmailToClipboard(html, onSuccess, onError) {
+  const cleanHtml = sanitizeClipboardHtml(
+    typeof sanitizeTemplateHtml === 'function' ? sanitizeTemplateHtml(html || '') : (html || '')
+  );
+  const plainText = htmlToClipboardPlainText(cleanHtml);
+  const done = typeof onSuccess === 'function' ? onSuccess : () => {};
+  const fail = typeof onError === 'function' ? onError : () => {};
+
+  if (navigator.clipboard && navigator.clipboard.write && typeof ClipboardItem !== 'undefined') {
+    const item = new ClipboardItem({
+      'text/html': new Blob([cleanHtml], { type: 'text/html' }),
+      'text/plain': new Blob([plainText], { type: 'text/plain' })
+    });
+    navigator.clipboard.write([item])
+      .then(done)
+      .catch(() => fallbackCopyRichHtml(cleanHtml, plainText, done, fail));
+    return;
+  }
+
+  fallbackCopyRichHtml(cleanHtml, plainText, done, fail);
+}
+
 function openTemplatePreview(template, access = {}) {
   const existing = document.getElementById('zt-preview-overlay');
   if (existing) existing.remove();
@@ -1737,7 +1820,7 @@ function openTemplatePreview(template, access = {}) {
                 <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
               </svg>
             </span>
-            <span class="zt-btn-label">${'Copy HTML'}</span>
+            <span class="zt-btn-label">${(typeof window !== 'undefined' && window.ZT_STANDALONE) ? 'Copy Email' : 'Copy HTML'}</span>
           </button>
         </div>
       </div>
@@ -1901,7 +1984,7 @@ function openTemplatePreview(template, access = {}) {
     };
   } else {
     insertBtn.onclick = () => {
-      initiateTemplateInsertion(template);
+      initiateTemplateInsertion(template, insertBtn);
       closePreview();
     };
   }

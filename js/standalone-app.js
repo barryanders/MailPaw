@@ -4,7 +4,7 @@
       if (button.textContent !== 'About MailPaw') button.textContent = 'About MailPaw';
     });
     document.querySelectorAll('#zt-preview-insert .zt-btn-label, .zt-insert-btn .zt-btn-label').forEach((label) => {
-      if (label.textContent !== 'Copy HTML') label.textContent = 'Copy HTML';
+      if (label.textContent !== 'Copy Email') label.textContent = 'Copy Email';
     });
   };
 
@@ -14,7 +14,8 @@
       : (template.body || '');
     const html = typeof sanitizeTemplateHtml === 'function' ? sanitizeTemplateHtml(rawHtml) : rawHtml;
     const original = button ? button.innerHTML : '';
-    copyTextToClipboard(html, () => {
+    const copy = typeof copyRichEmailToClipboard === 'function' ? copyRichEmailToClipboard : copyTextToClipboard;
+    copy(html, () => {
       if (button) button.innerHTML = '<span class="zt-btn-label">Copied</span>';
       setTimeout(() => {
         if (button) button.innerHTML = original;
@@ -29,9 +30,9 @@
     });
   };
 
-  window.initiateTemplateInsertion = function initiateStandaloneTemplateCopy(template) {
+  window.initiateTemplateInsertion = function initiateStandaloneTemplateCopy(template, button) {
     if (!template) return;
-    copyTemplateHtml(template, document.activeElement && document.activeElement.closest('button'));
+    copyTemplateHtml(template, button || (document.activeElement && document.activeElement.closest('button')));
   };
 
   window.renderBillingView = function renderStandaloneAboutView() {
@@ -41,7 +42,7 @@
         This standalone version has no trial, subscription, template limit, export limit, or paid plan.
         Templates are stored locally in this browser on this computer for privacy. MailPaw does not need an account or cloud library to hold your email content.
         Download backup copies from the Actions menu so you can restore them later or move them to another browser.
-        MailPaw copies or exports HTML for email clients that accept pasted HTML. Each email client handles pasted HTML differently, so send yourself a test before using a template for a real message.
+        MailPaw copies rich email content for clients that accept formatted paste, including Gmail and many desktop email apps. Each email client handles pasted HTML differently, so send yourself a test before using a template for a real message.
         <div style="margin-top:14px;">
           If MailPaw helped you, you can <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#9b4f63; font-weight:700;">say thanks on Buy Me a Coffee</a>.
         </div>

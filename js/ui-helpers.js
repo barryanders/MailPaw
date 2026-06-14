@@ -157,7 +157,7 @@ function renderHelpModal() {
     const workflowHelp = standalone
         ? `
         <p><strong>Mobile editing</strong><br>Use Blocks and Details in the top bar when you need them. The email canvas stays front and center.</p>
-        <p><strong>Using a template</strong><br>Preview it, then Copy HTML. Paste into an email client that accepts HTML, or export a backup copy from Actions.</p>
+        <p><strong>Using a template</strong><br>Preview it, then Copy Email. Paste into Gmail or another email client that accepts formatted content, or export a backup copy from Actions.</p>
         <p><strong>Privacy</strong><br>Your templates stay in this browser's local storage unless you export or share them.</p>
         `
         : `
