@@ -1658,6 +1658,46 @@ function sanitizeClipboardHtml(html) {
   return wrapper.innerHTML;
 }
 
+function makeClipboardEmailMobileSafe(html) {
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = html || '';
+
+  wrapper.querySelectorAll('table.mp-container').forEach((table) => {
+    table.style.width = '100%';
+    table.style.maxWidth = '100%';
+    table.style.borderCollapse = 'collapse';
+    table.style.tableLayout = 'auto';
+    table.style.display = 'block';
+  });
+
+  wrapper.querySelectorAll('table.mp-container tbody, table.mp-container tr').forEach((el) => {
+    el.style.display = 'block';
+    el.style.width = '100%';
+    el.style.maxWidth = '100%';
+  });
+
+  wrapper.querySelectorAll('td.mp-stack').forEach((col) => {
+    col.style.display = 'block';
+    col.style.width = '100%';
+    col.style.maxWidth = '100%';
+    col.style.boxSizing = 'border-box';
+    col.style.padding = col.style.padding || '10px';
+    col.style.verticalAlign = 'top';
+  });
+
+  wrapper.querySelectorAll('td.mp-stack + td.mp-stack').forEach((col) => {
+    col.style.paddingTop = col.style.paddingTop || '14px';
+  });
+
+  wrapper.querySelectorAll('img.mp-fluid').forEach((img) => {
+    img.style.width = img.style.width || '100%';
+    img.style.maxWidth = '100%';
+    img.style.height = 'auto';
+  });
+
+  return wrapper.innerHTML;
+}
+
 function fallbackCopyRichHtml(html, plainText, onSuccess, onError) {
   const done = typeof onSuccess === 'function' ? onSuccess : () => {};
   const fail = typeof onError === 'function' ? onError : () => {};
@@ -1697,9 +1737,9 @@ function fallbackCopyRichHtml(html, plainText, onSuccess, onError) {
 }
 
 function copyRichEmailToClipboard(html, onSuccess, onError) {
-  const cleanHtml = sanitizeClipboardHtml(
+  const cleanHtml = makeClipboardEmailMobileSafe(sanitizeClipboardHtml(
     typeof sanitizeTemplateHtml === 'function' ? sanitizeTemplateHtml(html || '') : (html || '')
-  );
+  ));
   const plainText = htmlToClipboardPlainText(cleanHtml);
   const done = typeof onSuccess === 'function' ? onSuccess : () => {};
   const fail = typeof onError === 'function' ? onError : () => {};

@@ -7,7 +7,7 @@ function setupClipboardWindow() {
     window.chrome = { storage: { sync: null } };
     window.navigator.clipboard = {};
     loadScripts(window, [
-        { path: 'js/ui-sidebar.js', expose: ['htmlToClipboardPlainText', 'copyRichEmailToClipboard'] }
+        { path: 'js/ui-sidebar.js', expose: ['htmlToClipboardPlainText', 'makeClipboardEmailMobileSafe', 'copyRichEmailToClipboard'] }
     ]);
     return window;
 }
@@ -66,6 +66,35 @@ test('copyRichEmailToClipboard falls back to selecting rendered html', async () 
 
     assert.equal(copied, true);
     assert.equal(window.document.querySelector('[contenteditable="true"]'), null);
+});
+
+test('makeClipboardEmailMobileSafe stacks copied email columns inline', () => {
+    const window = setupClipboardWindow();
+    const html = `
+        <div>
+            <table class="mp-container" style="width:100%; table-layout:fixed;">
+                <tbody>
+                    <tr>
+                        <td class="mp-stack" style="width:50%; max-width:50%; display:table-cell;">Left</td>
+                        <td class="mp-stack" style="width:50%; max-width:50%; display:table-cell;">Right</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    const output = window.__testExports.makeClipboardEmailMobileSafe(html);
+    const wrapper = window.document.createElement('div');
+    wrapper.innerHTML = output;
+    const table = wrapper.querySelector('table.mp-container');
+    const cells = [...wrapper.querySelectorAll('td.mp-stack')];
+
+    assert.equal(table.style.display, 'block');
+    assert.equal(table.style.tableLayout, 'auto');
+    assert.equal(cells.length, 2);
+    assert.ok(cells.every((cell) => cell.style.display === 'block'));
+    assert.ok(cells.every((cell) => cell.style.width === '100%'));
+    assert.ok(cells.every((cell) => cell.style.maxWidth === '100%'));
 });
 
 test('htmlToClipboardPlainText creates readable fallback text', () => {
