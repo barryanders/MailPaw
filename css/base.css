@@ -8,11 +8,11 @@
   --zt-glass-border: rgba(45, 35, 25, 0.1);
   --zt-blur: blur(20px);
   --zt-shadow: 0 24px 60px rgba(47, 31, 27, 0.16);
-  --zt-primary: #0f8f91;
-  --zt-primary-strong: #0b7376;
-  --zt-accent: #d97745;
+  --zt-primary: #9b4f63;
+  --zt-primary-strong: #73384a;
+  --zt-accent: #d77a45;
   --zt-danger: #ef4444;
-  --zt-gradient: linear-gradient(135deg, #0f8f91 0%, #36b8a4 48%, #d97745 100%);
+  --zt-gradient: linear-gradient(135deg, #7d4056 0%, #c8694b 54%, #eca85f 100%);
   --zt-text: #241c1a;
   --zt-muted: #76645d;
   --zt-bg: #f8f0ed;

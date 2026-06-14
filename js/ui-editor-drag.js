@@ -1,8 +1,18 @@
 /* --- CENTRALIZED DRAG & DROP MANAGER --- */
 
+function isMobileEditorLayout() {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false;
+    return window.matchMedia('(max-width: 700px), (pointer: coarse)').matches;
+}
+
 function setupDragAndDrop(canvasEl, sidebarEl) {
     if(typeof Sortable === 'undefined') {
         console.warn('SortableJS not loaded.');
+        return;
+    }
+    if (isMobileEditorLayout()) {
+        if (sidebarEl) sidebarEl.dataset.mobileTapMode = 'true';
+        if (canvasEl) canvasEl.dataset.mobileTapMode = 'true';
         return;
     }
 
@@ -46,6 +56,7 @@ function setupDragAndDrop(canvasEl, sidebarEl) {
 // Renamed from initNestedSortables to prevent confusion
 function refreshNestedSortables(rootEl) {
     if(typeof Sortable === 'undefined') return;
+    if (isMobileEditorLayout()) return;
 
     const cols = rootEl.querySelectorAll('.zt-column');
     cols.forEach(col => {

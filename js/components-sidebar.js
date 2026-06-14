@@ -4,6 +4,13 @@ function renderComponentsList() {
     const modulesContainer = document.querySelector('.zt-fs-modules-content');
     if (!modulesContainer) return;
     modulesContainer.classList.remove('zt-modules-settings');
+    const closeMobileBlockDrawer = () => {
+        const fsLayer = document.getElementById('zt-fs-layer');
+        if (!fsLayer || typeof window === 'undefined' || !window.matchMedia('(max-width: 700px), (pointer: coarse)').matches) return;
+        fsLayer.classList.remove('show-mobile-blocks');
+        const toggle = document.getElementById('zt-mobile-blocks-toggle');
+        if (toggle) toggle.setAttribute('aria-pressed', 'false');
+    };
 
     const labelBar = document.querySelector('.zt-fs-label');
     if(labelBar) labelBar.textContent = window.ZT_STANDALONE ? 'Paw Library' : 'Library';
@@ -55,6 +62,7 @@ function renderComponentsList() {
         if (btn.dataset.preset) {
             e.stopPropagation(); e.preventDefault();
             insertPreset(btn.dataset.preset);
+            closeMobileBlockDrawer();
             return;
         }
 
@@ -86,6 +94,7 @@ function renderComponentsList() {
                const selected = Array.from(document.querySelectorAll('input[name="zt-social"]:checked')).map(el => el.value);
                if (!selected.length) { alert('Select at least one network.'); return false; }
                insertBlock('social', selected);
+               closeMobileBlockDrawer();
                return true;
             });
             return;
@@ -104,12 +113,14 @@ function renderComponentsList() {
             showModal('Grid Settings', content, () => {
                const cols = parseInt(document.getElementById('modal-grid-cols').value);
                if (cols >= 2 && cols <= 4) insertBlock('grid', cols);
+               closeMobileBlockDrawer();
                return true;
             });
         }
         // 5. STANDARD CLICK
         else {
             insertBlock(btn.dataset.type);
+            closeMobileBlockDrawer();
         }
     };
 }

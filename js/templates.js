@@ -221,7 +221,7 @@ function maybePromptForSupport() {
     saveReviewState(nextState);
     const content = `
       <div style="color:#475569; font-size:14px; line-height:1.5;">
-        MailPaw is free, private, and local-first. If it saved you time, you can support Barry Anders and help keep the project moving.
+        MailPaw is free, private, and local-first. If it saved you time, you can support MailPaw and help keep the project moving.
       </div>
     `;
     showModal('Support MailPaw?', content, () => {
