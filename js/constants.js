@@ -1224,6 +1224,354 @@ const DEFAULT_TEMPLATE_SPECS = [
   }
 ];
 
+const MAILPAW_EXAMPLE_TEMPLATE_SPECS = [
+  {
+    id: 'tpl-example-ink-gallery',
+    title: 'Ink Gallery',
+    category: 'Examples',
+    subject: 'A stark gallery note with room to breathe',
+    tier: 'free',
+    stylePresetId: 'ghost-minimal',
+    bgEmail: '#ffffff',
+    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+    fontColor: '#0f172a',
+    blocks: [
+      mpText('MAILPAW EXAMPLE 01', { size: '11px', color: '#64748b', align: 'center' }),
+      mpHeading('Ink, white space, and one clear move', { size: '34px', align: 'center', color: '#0f172a' }),
+      mpText('A crisp editorial layout for messages that need confidence without visual noise.', { color: '#475569', align: 'center' }),
+      mpHero('ink-gallery-studio', { alt: 'Black and white studio desk with prints' }),
+      mpDivider('#e2e8f0'),
+      mpCard('<strong>Composition note</strong><br>Lead with one image, one idea, and one action. Everything else should earn its place.', { background: '#f8fafc', borderColor: '#e2e8f0', color: '#334155' }),
+      mpButton('Open the collection', MP_SITE + '/collection', { align: 'center', bg: '#0f172a', color: '#ffffff' }),
+      mpFooter('Made with MailPaw. Edit freely and keep your own backup.')
+    ]
+  },
+  {
+    id: 'tpl-example-noir-product',
+    title: 'Noir Product',
+    category: 'Examples',
+    subject: 'The midnight product card',
+    tier: 'free',
+    stylePresetId: 'midnight-neon',
+    bgEmail: '#0b1120',
+    fontFamily: 'Arial, Helvetica, sans-serif',
+    fontColor: '#e2e8f0',
+    blocks: [
+      mpText('NIGHT EDITION', { size: '12px', color: '#67e8f9', align: 'center' }),
+      mpHeading('A darker frame for a brighter feature', { size: '33px', align: 'center', color: '#f8fafc' }),
+      mpText('Use contrast, compact copy, and one electric accent to make a product feel premium without adding complexity.', { color: '#cbd5e1', align: 'center' }),
+      mpButton('See what changed', MP_SITE + '/feature', { align: 'center', bg: '#67e8f9', color: '#0b1120' }),
+      mpHero('noir-product-panel', { alt: 'Dark product interface with cyan highlights' }),
+      mpCard('<strong>Designed for scanning</strong><br>Short blocks, generous spacing, and a single CTA keep the email readable on small screens.', { background: '#111827', borderColor: '#243044', color: '#dbeafe' }),
+      mpFooter('You can replace the image, button, and copy in seconds.', '#94a3b8')
+    ]
+  },
+  {
+    id: 'tpl-example-soft-cloud',
+    title: 'Soft Cloud',
+    category: 'Examples',
+    subject: 'A calm note with soft edges',
+    tier: 'free',
+    stylePresetId: 'cobalt-cloud',
+    bgEmail: '#f8fafc',
+    fontFamily: 'Tahoma, Arial, sans-serif',
+    fontColor: '#0f172a',
+    blocks: [
+      mpHero('soft-cloud-letter', { alt: 'Soft blue workspace with folded paper' }),
+      mpText('SOFT CLOUD', { size: '11px', color: '#64748b', align: 'center' }),
+      mpHeading('A gentle layout for thoughtful updates', { size: '30px', align: 'center' }),
+      mpText('A cool, airy example for personal notes, studio updates, or any message that should feel considered.', { color: '#475569', align: 'center' }),
+      mpCard('<strong>Why it works</strong><br>The image gives the email warmth while the surrounding frame stays quiet and easy to read.', { background: '#ffffff', borderColor: '#dbe4ef', color: '#334155' }),
+      mpButton('Read the update', MP_SITE + '/update', { align: 'center', bg: '#2563eb', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-museum-card',
+    title: 'Museum Card',
+    category: 'Examples',
+    subject: 'A label-style feature card',
+    tier: 'free',
+    stylePresetId: 'editorial-serif',
+    bgEmail: '#fbfbf9',
+    fontFamily: 'Georgia, Times, serif',
+    fontColor: '#1f2937',
+    blocks: [
+      mpText('CATALOGUE NO. 12', { size: '11px', color: '#6b7280' }),
+      mpHeading('The object gets the spotlight', { size: '32px', color: '#111827' }),
+      mpHero('museum-card-object', { alt: 'Minimal product object on a gallery plinth' }),
+      mpCard('<strong>Label</strong><br>A refined single-column card inspired by gallery labels and exhibition notes. Best when the subject is visual and the copy can stay precise.', { background: '#ffffff', borderColor: '#d4d4d8', color: '#374151' }),
+      mpDivider('#d4d4d8'),
+      mpText('Replace the image, label, and CTA to turn this into a product feature, portfolio note, or curator-style announcement.', { color: '#4b5563', lineHeight: '1.8' }),
+      mpButton('View details', MP_SITE + '/details', { bg: '#1f2937', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-color-block',
+    title: 'Color Block',
+    category: 'Examples',
+    subject: 'A bold block-built email',
+    tier: 'free',
+    stylePresetId: 'citrus-pop',
+    bgEmail: '#fffdf5',
+    fontFamily: 'Verdana, Geneva, sans-serif',
+    fontColor: '#111827',
+    blocks: [
+      mpCard('<span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#075985;">Color Block</span><br><span style="font-size:30px;line-height:1.15;font-weight:800;color:#111827;">Big shapes, clean copy, no layout tricks.</span><br><br><span style="color:#475569;">A vivid example that still stays mobile-safe because the structure is vertical.</span>', { background: '#dff7ff', borderColor: '#bae6fd', color: '#111827' }),
+      mpCard('<strong>01</strong><br>Use a bright card for the main message.', { background: '#fef3c7', borderColor: '#fde68a', color: '#713f12' }),
+      mpCard('<strong>02</strong><br>Use a second block for proof, context, or a short list.', { background: '#dcfce7', borderColor: '#bbf7d0', color: '#14532d' }),
+      mpButton('Use this structure', MP_SITE + '/blocks', { align: 'center', bg: '#111827', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-type-poster',
+    title: 'Type Poster',
+    category: 'Examples',
+    subject: 'A poster-like email made from type',
+    tier: 'free',
+    stylePresetId: 'mono-ink',
+    bgEmail: '#f4f4f5',
+    fontFamily: "'Courier New', Courier, monospace",
+    fontColor: '#18181b',
+    blocks: [
+      mpText('POSTER / EMAIL / SYSTEM', { size: '12px', color: '#71717a' }),
+      mpHeading('Make the message the visual.', { size: '36px', color: '#18181b' }),
+      mpDivider('#a1a1aa'),
+      mpCard('<strong>When images are not the point</strong><br>Use scale, rhythm, and hard-working copy. This template feels designed without needing a complex composition.', { background: '#ffffff', borderColor: '#d4d4d8', color: '#3f3f46' }),
+      mpText('01 / Short headline<br>02 / One useful paragraph<br>03 / One unmistakable action', { color: '#52525b', lineHeight: '1.9' }),
+      mpButton('Start from type', MP_SITE + '/type', { bg: '#18181b', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-photo-letter',
+    title: 'Photo Letter',
+    category: 'Examples',
+    subject: 'A warm photo-led letter',
+    tier: 'free',
+    stylePresetId: 'ghost-minimal',
+    bgEmail: '#ffffff',
+    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+    fontColor: '#111827',
+    blocks: [
+      mpHero('photo-letter-window', { alt: 'Natural light photo of a desk beside a window' }),
+      mpHeading('A note that starts with atmosphere', { size: '31px' }),
+      mpText('Hi there,<br><br>This example uses one strong photo and plain language so the email feels personal without becoming fragile or hard to paste.', { color: '#4b5563', lineHeight: '1.8' }),
+      mpCard('<strong>Keep it human</strong><br>Use this when a message should sound like it came from a person, not a campaign machine.', { background: '#f8fafc', borderColor: '#e5e7eb', color: '#374151' }),
+      mpButton('Reply with a thought', MP_SITE + '/reply', { bg: '#111827', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-luxe-minimal',
+    title: 'Luxe Minimal',
+    category: 'Examples',
+    subject: 'A quiet luxury email layout',
+    tier: 'free',
+    stylePresetId: 'editorial-serif',
+    bgEmail: '#fcfcfd',
+    fontFamily: 'Georgia, Times, serif',
+    fontColor: '#111827',
+    blocks: [
+      mpText('PRIVATE PREVIEW', { size: '11px', color: '#71717a', align: 'center' }),
+      mpHeading('Less decoration. More presence.', { size: '34px', align: 'center' }),
+      mpText('A premium-looking example built from restraint: centered type, a single image, thin rules, and controlled spacing.', { color: '#52525b', align: 'center', lineHeight: '1.8' }),
+      mpDivider('#d4d4d8', '72%'),
+      mpHero('luxe-minimal-materials', { alt: 'Minimal premium materials on a light surface' }),
+      mpCard('<strong>Detail</strong><br>Use a short paragraph here for materials, process, availability, or one beautiful reason to click.', { background: '#ffffff', borderColor: '#d4d4d8', color: '#3f3f46' }),
+      mpButton('Reserve a preview', MP_SITE + '/preview', { align: 'center', bg: '#111827', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-terminal-note',
+    title: 'Terminal Note',
+    category: 'Examples',
+    subject: 'A technical note with style',
+    tier: 'free',
+    stylePresetId: 'mono-ink',
+    bgEmail: '#09090b',
+    fontFamily: "'Courier New', Courier, monospace",
+    fontColor: '#e4e4e7',
+    blocks: [
+      mpText('> STATUS: READY', { size: '12px', color: '#86efac' }),
+      mpHeading('A technical email that still feels designed', { size: '28px', color: '#fafafa' }),
+      mpCard('<span style="color:#86efac;">$ mailpaw build</span><br><span style="color:#a1a1aa;">Rendering mobile-safe email blocks...</span><br><span style="color:#86efac;">Done.</span>', { background: '#18181b', borderColor: '#3f3f46', color: '#e4e4e7' }),
+      mpText('Use this style for release notes, developer updates, changelogs, internal announcements, or any message where the technical tone is part of the brand.', { color: '#d4d4d8', lineHeight: '1.8' }),
+      mpButton('View the notes', MP_SITE + '/notes', { bg: '#86efac', color: '#052e16' }),
+      mpFooter('Plain HTML. Easy to edit. Safe to back up.', '#a1a1aa')
+    ]
+  },
+  {
+    id: 'tpl-example-studio-index',
+    title: 'Studio Index',
+    category: 'Examples',
+    subject: 'A clean index of highlights',
+    tier: 'free',
+    stylePresetId: 'ghost-minimal',
+    bgEmail: '#ffffff',
+    fontFamily: 'Arial, Helvetica, sans-serif',
+    fontColor: '#111827',
+    blocks: [
+      mpText('STUDIO INDEX', { size: '12px', color: '#64748b' }),
+      mpHeading('Three things worth opening', { size: '30px' }),
+      mpCard('<strong>01 / The visual system</strong><br>A short note about how the new examples were designed to stay clean in email clients.', { background: '#f8fafc', borderColor: '#e2e8f0', color: '#334155' }),
+      mpCard('<strong>02 / The new copy pass</strong><br>Practical filler copy that sounds usable instead of placeholder-flat.', { background: '#f8fafc', borderColor: '#e2e8f0', color: '#334155' }),
+      mpCard('<strong>03 / The export check</strong><br>A reminder to copy the email body and keep backup downloads when your library matters.', { background: '#f8fafc', borderColor: '#e2e8f0', color: '#334155' }),
+      mpButton('Open the index', MP_SITE + '/index', { bg: '#111827', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-greenhouse',
+    title: 'Greenhouse',
+    category: 'Examples',
+    subject: 'A fresh green announcement',
+    tier: 'free',
+    stylePresetId: 'mint-labs',
+    bgEmail: '#f0fdf4',
+    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+    fontColor: '#052e16',
+    blocks: [
+      mpHero('greenhouse-table', { alt: 'Fresh green studio table with plants and paper' }),
+      mpText('GREENHOUSE', { size: '11px', color: '#15803d', align: 'center' }),
+      mpHeading('A fresh start without visual clutter', { size: '30px', align: 'center', color: '#052e16' }),
+      mpText('A bright example for seasonal notes, positive updates, or anything that should feel clean and alive.', { color: '#166534', align: 'center' }),
+      mpCard('<strong>Design move</strong><br>Let green carry the mood, but keep the structure simple enough to paste into real inboxes.', { background: '#ffffff', borderColor: '#bbf7d0', color: '#14532d' }),
+      mpButton('Start fresh', MP_SITE + '/fresh', { align: 'center', bg: '#15803d', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-redacted',
+    title: 'Redacted',
+    category: 'Examples',
+    subject: 'A confidential-feeling update',
+    tier: 'free',
+    stylePresetId: 'mono-ink',
+    bgEmail: '#f8fafc',
+    fontFamily: "'Courier New', Courier, monospace",
+    fontColor: '#0f172a',
+    blocks: [
+      mpText('CONFIDENTIAL DRAFT', { size: '12px', color: '#64748b' }),
+      mpHeading('The details are almost ready', { size: '30px' }),
+      mpCard('<span style="background:#0f172a;color:#0f172a;">████████████</span><br><br><strong>What can be shared now</strong><br>A concise update is ready. The final asset, release note, or announcement can drop into this frame when approved.', { background: '#ffffff', borderColor: '#cbd5e1', color: '#334155' }),
+      mpDivider('#cbd5e1'),
+      mpText('Use this for teaser notes, early previews, private updates, or launch windows where restraint creates attention.', { color: '#475569', lineHeight: '1.8' }),
+      mpButton('Get the first look', MP_SITE + '/first-look', { bg: '#0f172a', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-signal-card',
+    title: 'Signal Card',
+    category: 'Examples',
+    subject: 'One metric, one message',
+    tier: 'free',
+    stylePresetId: 'aqua-studio',
+    bgEmail: '#ecfeff',
+    fontFamily: 'Arial, Helvetica, sans-serif',
+    fontColor: '#0f172a',
+    blocks: [
+      mpText('SIGNAL CARD', { size: '12px', color: '#0e7490', align: 'center' }),
+      mpMetric('84%', 'Readers scanned the full card', { background: '#ffffff', borderColor: '#a5f3fc', color: '#0f172a' }),
+      mpHeading('Build around the strongest signal', { size: '29px', align: 'center' }),
+      mpText('A metric-led design for reports, proof points, short updates, or any message where one number should set the frame.', { color: '#155e75', align: 'center' }),
+      mpCard('<strong>Supporting note</strong><br>Keep the explanation short. The number earns attention, and the copy explains what to do with it.', { background: '#ffffff', borderColor: '#a5f3fc', color: '#164e63' }),
+      mpButton('See the signal', MP_SITE + '/signal', { align: 'center', bg: '#0891b2', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-object-story',
+    title: 'Object Story',
+    category: 'Examples',
+    subject: 'A product story in one column',
+    tier: 'free',
+    stylePresetId: 'ghost-minimal',
+    bgEmail: '#ffffff',
+    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+    fontColor: '#111827',
+    blocks: [
+      mpHeading('The story behind the object', { size: '31px' }),
+      mpText('Use this example when the product, service, or idea needs context before the click.', { color: '#4b5563' }),
+      mpHero('object-story-detail', { alt: 'Close-up detail of a carefully made object' }),
+      mpCard('<strong>Made for</strong><br>People who appreciate a clearer explanation before being asked to act.', { background: '#f9fafb', borderColor: '#e5e7eb', color: '#374151' }),
+      mpCard('<strong>What to replace</strong><br>The image, the object story, and this second proof card. The rhythm can stay exactly the same.', { background: '#f9fafb', borderColor: '#e5e7eb', color: '#374151' }),
+      mpButton('Explore the object', MP_SITE + '/object', { bg: '#111827', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-blueprint',
+    title: 'Blueprint',
+    category: 'Examples',
+    subject: 'A structured blueprint email',
+    tier: 'free',
+    stylePresetId: 'cobalt-cloud',
+    bgEmail: '#eff6ff',
+    fontFamily: 'Tahoma, Arial, sans-serif',
+    fontColor: '#0f172a',
+    blocks: [
+      mpText('BLUEPRINT', { size: '12px', color: '#1d4ed8' }),
+      mpHeading('A plan people can scan quickly', { size: '30px' }),
+      mpCard('<strong>Step 1</strong><br>Set the frame with a plain-English headline.', { background: '#ffffff', borderColor: '#bfdbfe', color: '#1e3a8a' }),
+      mpCard('<strong>Step 2</strong><br>Show the most important detail in its own block.', { background: '#ffffff', borderColor: '#bfdbfe', color: '#1e3a8a' }),
+      mpCard('<strong>Step 3</strong><br>End with one clear action and no competing buttons.', { background: '#ffffff', borderColor: '#bfdbfe', color: '#1e3a8a' }),
+      mpButton('Use the blueprint', MP_SITE + '/blueprint', { bg: '#1d4ed8', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-brutalist-note',
+    title: 'Brutalist Note',
+    category: 'Examples',
+    subject: 'A bold black-border email',
+    tier: 'free',
+    stylePresetId: 'mono-ink',
+    bgEmail: '#ffffff',
+    fontFamily: 'Arial Black, Arial, Helvetica, sans-serif',
+    fontColor: '#000000',
+    blocks: [
+      mpCard('<span style="font-size:12px;letter-spacing:1px;">NO. 16</span><br><span style="font-size:34px;line-height:1.05;font-weight:900;">LOUD STRUCTURE. CLEAN HTML.</span>', { background: '#ffffff', borderColor: '#000000', color: '#000000' }),
+      mpText('A punchy example for brands that want directness, sharp edges, and no decorative softness.', { color: '#27272a' }),
+      mpCard('<strong>Important line</strong><br>This is intentionally simple: border, type, copy, button.', { background: '#f4f4f5', borderColor: '#000000', color: '#000000' }),
+      mpButton('Make it bold', MP_SITE + '/bold', { bg: '#000000', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-example-tiny-magazine',
+    title: 'Tiny Magazine',
+    category: 'Examples',
+    subject: 'A small magazine-style issue',
+    tier: 'free',
+    stylePresetId: 'editorial-serif',
+    bgEmail: '#ffffff',
+    fontFamily: 'Georgia, Times, serif',
+    fontColor: '#111827',
+    blocks: [
+      mpText('TINY MAGAZINE / VOL. 04', { size: '11px', color: '#71717a', align: 'center' }),
+      mpHeading('A pocket-sized issue for busy readers', { size: '32px', align: 'center' }),
+      mpHero('tiny-magazine-cover', { alt: 'Magazine cover and coffee on a table' }),
+      mpCard('<strong>Feature</strong><br>A short essay about making useful work feel finished without overbuilding the page.', { background: '#fafafa', borderColor: '#d4d4d8', color: '#3f3f46' }),
+      mpCard('<strong>Small find</strong><br>A tool, link, or object worth saving for later.', { background: '#fafafa', borderColor: '#d4d4d8', color: '#3f3f46' }),
+      mpButton('Read the issue', MP_SITE + '/issue', { align: 'center', bg: '#111827', color: '#ffffff' }),
+      mpFooter('Forward to someone who likes compact useful things.')
+    ]
+  },
+  {
+    id: 'tpl-example-clear-receipt',
+    title: 'Clear Receipt',
+    category: 'Examples',
+    subject: 'A polished receipt-style layout',
+    tier: 'free',
+    stylePresetId: 'ghost-minimal',
+    bgEmail: '#f8fafc',
+    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+    fontColor: '#0f172a',
+    blocks: [
+      mpHeading('Everything is recorded clearly', { size: '28px' }),
+      mpText('A receipt-inspired example that works for confirmations, summaries, handoffs, or simple status notes.', { color: '#475569' }),
+      mpCard('<strong>Summary</strong><br>Design review complete<br>Files exported<br>Backup saved', { background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }),
+      mpCard('<strong>Next action</strong><br>Open the saved copy and replace this sample content with your real details.', { background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }),
+      mpButton('Open saved copy', MP_SITE + '/saved', { bg: '#111827', color: '#ffffff' }),
+      mpFooter('Your templates live locally in this browser. Download backups for anything important.')
+    ]
+  }
+];
+
+DEFAULT_TEMPLATE_SPECS.splice(0, DEFAULT_TEMPLATE_SPECS.length, ...MAILPAW_EXAMPLE_TEMPLATE_SPECS);
+
 const LEGACY_DEFAULT_TEMPLATE_IDS = [
   'tpl-welcome-onboarding',
   'tpl-email-verification',
@@ -1323,6 +1671,52 @@ const LEGACY_DEFAULT_TEMPLATE_IDS = [
   'tpl-company-team',
   'tpl-company-hiring'
 ];
+
+LEGACY_DEFAULT_TEMPLATE_IDS.push(
+  'tpl-curated-radar-newsletter',
+  'tpl-curated-founder-field-note',
+  'tpl-curated-visual-digest',
+  'tpl-curated-metrics-memo',
+  'tpl-curated-editorial-roundup',
+  'tpl-curated-neon-launch',
+  'tpl-curated-waitlist-open',
+  'tpl-curated-feature-reveal',
+  'tpl-curated-collection-drop',
+  'tpl-curated-partner-collab',
+  'tpl-curated-seasonal-sale',
+  'tpl-curated-vip-access',
+  'tpl-curated-referral-invite',
+  'tpl-curated-bundle-offer',
+  'tpl-curated-gift-guide',
+  'tpl-curated-changelog-clean',
+  'tpl-curated-roadmap-preview',
+  'tpl-curated-feature-spotlight',
+  'tpl-curated-integration-announce',
+  'tpl-curated-case-study',
+  'tpl-curated-webinar-invite',
+  'tpl-curated-event-agenda',
+  'tpl-curated-event-recap',
+  'tpl-curated-community-meetup',
+  'tpl-curated-blog-digest',
+  'tpl-curated-podcast-episode',
+  'tpl-curated-guide-release',
+  'tpl-curated-report-release',
+  'tpl-curated-video-series',
+  'tpl-curated-welcome-lifecycle',
+  'tpl-curated-onboarding-day-one',
+  'tpl-curated-backup-reminder',
+  'tpl-curated-winback-note',
+  'tpl-curated-trial-ending',
+  'tpl-curated-order-confirmation',
+  'tpl-curated-shipping-update',
+  'tpl-curated-password-reset',
+  'tpl-curated-community-spotlight',
+  'tpl-curated-community-survey',
+  'tpl-curated-ambassador-program',
+  'tpl-curated-company-milestone',
+  'tpl-curated-hiring-highlight',
+  'tpl-curated-press-roundup'
+);
 
 function getMailPawIconSrc() {
   if (typeof chrome !== 'undefined' && chrome.runtime?.getURL) {

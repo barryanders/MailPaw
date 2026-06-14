@@ -1,0 +1,208 @@
+:root {
+  --zt-glass: rgba(255, 255, 255, 0.94);
+  --zt-glass-border: rgba(15, 23, 42, 0.1);
+  --zt-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+  --zt-primary: #111827;
+  --zt-primary-strong: #020617;
+  --zt-accent: #64748b;
+  --zt-gradient: #111827;
+  --zt-text: #111827;
+  --zt-muted: #64748b;
+  --zt-bg: #f6f7f9;
+  --zt-surface: #ffffff;
+  --zt-surface-strong: #ffffff;
+}
+
+body.zt-standalone,
+.mailpaw-launch,
+body.zt-standalone #zt-fs-layer {
+  background: #f6f7f9;
+  background-image: none;
+}
+
+.mailpaw-launch {
+  color: #111827;
+}
+
+.mailpaw-launch img,
+body.zt-standalone .zt-logo-mark {
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+}
+
+.mailpaw-launch button,
+body.zt-standalone .zt-header-create,
+body.zt-standalone .zt-hero-primary,
+body.zt-standalone .zt-insert-btn,
+body.zt-standalone .zt-btn-save,
+body.zt-standalone .zt-banner-cta,
+body.zt-standalone .zt-usage-cta__btn,
+.zt-btn-primary,
+.zt-trigger-btn,
+.zt-block-controls {
+  background: #111827;
+  background-image: none;
+  color: #ffffff;
+  border-color: #111827;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.16);
+}
+
+body.zt-standalone #zt-panel,
+#zt-panel {
+  background: rgba(255, 255, 255, 0.96);
+  background-image: none;
+}
+
+body.zt-standalone #zt-panel::before,
+body.zt-standalone .zt-header::after,
+body.zt-standalone .zt-item::before,
+.zt-hero-card::before,
+.zt-billing-banner::before {
+  display: none;
+}
+
+body.zt-standalone .zt-header,
+.zt-header,
+body.zt-standalone .zt-fs-header,
+body.zt-standalone .zt-fs-col,
+body.zt-standalone .zt-fs-settings-col,
+body.zt-standalone .zt-style-presets-wrap,
+body.zt-standalone .zt-settings-back-wrap,
+body.zt-standalone .zt-settings-save-wrap,
+.zt-footer {
+  background: rgba(255, 255, 255, 0.92);
+  background-image: none;
+}
+
+body.zt-standalone .zt-fs-col-main,
+.zt-fs-col-main {
+  background: #f1f5f9;
+}
+
+.zt-title strong {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: #111827;
+}
+
+body.zt-standalone .zt-logo-text::after {
+  color: #64748b;
+}
+
+.zt-hero-card {
+  color: #f8fafc;
+  background: #111827;
+  background-image: none;
+  border-color: rgba(148, 163, 184, 0.25);
+  box-shadow: 0 22px 44px rgba(15, 23, 42, 0.18);
+}
+
+.zt-hero-kicker {
+  background: rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+}
+
+.zt-hero-kicker::before,
+.zt-hero-preview-bar.accent,
+.zt-usage-cta__bar span,
+.zt-billing-banner__dot,
+.zt-style-thumb-banner {
+  background: #111827;
+  background-image: none;
+}
+
+.zt-hero-tag {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #e2e8f0;
+}
+
+.zt-hero-preview-card {
+  background: #ffffff;
+  background-image: none;
+  box-shadow: 0 16px 28px rgba(15, 23, 42, 0.14);
+}
+
+.zt-billing-banner {
+  background: #ffffff;
+  background-image: none;
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
+}
+
+.zt-search:focus,
+.zt-select:focus,
+.zt-input-title:focus,
+.zt-box-input:focus,
+.zt-bar-select:focus {
+  border-color: #111827;
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+}
+
+.zt-tab.active {
+  color: #111827;
+  border-bottom-color: #111827;
+}
+
+.zt-item:hover {
+  border-color: rgba(15, 23, 42, 0.18);
+}
+
+.zt-template-badge.is-example,
+body.zt-standalone .zt-template-badge.is-example,
+body.zt-standalone .zt-shortcut-badge,
+.zt-shortcut-badge {
+  background: #f1f5f9;
+  border-color: rgba(15, 23, 42, 0.12);
+  color: #334155;
+}
+
+.zt-view-btn:hover,
+.zt-btn-edit:hover,
+.zt-btn-preview:hover,
+.zt-btn-insert:hover,
+.zt-reset-btn:hover,
+.zt-bar-btn:hover,
+.zt-suggestion-item:hover,
+.zt-menu-item:hover,
+.zt-html-tab:hover,
+.zt-component-settings:hover,
+.zt-column:hover {
+  background: rgba(15, 23, 42, 0.06);
+  color: #111827;
+  border-color: rgba(15, 23, 42, 0.14);
+}
+
+.zt-builder-block:hover {
+  outline-color: rgba(15, 23, 42, 0.24);
+}
+
+.zt-builder-block.selected {
+  outline-color: #111827;
+}
+
+.sortable-ghost {
+  background: rgba(15, 23, 42, 0.08);
+  border-color: #111827;
+}
+
+.zt-btn-duplicate:hover,
+.zt-template-badge.is-custom {
+  background: #ecfdf5;
+  color: #166534;
+}
+
+.zt-btn-delete:hover,
+.zt-usage-cta.is-limit,
+.zt-usage-cta.is-limit .zt-usage-cta__bar span {
+  background: rgba(15, 23, 42, 0.06);
+  color: #111827;
+}
+
+@media (max-width: 700px) {
+  body.zt-standalone .zt-search-container {
+    background: rgba(246, 247, 249, 0.94);
+  }
+
+  body.zt-standalone .zt-btn-preview {
+    display: none !important;
+  }
+}

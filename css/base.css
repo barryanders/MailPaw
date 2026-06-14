@@ -4,19 +4,19 @@
 :root {
   --zt-font: "Space Grotesk", "Avenir Next", Avenir, "Trebuchet MS", sans-serif;
   --zt-font-mono: "JetBrains Mono", "Fira Code", "SFMono-Regular", Menlo, monospace;
-  --zt-glass: rgba(255, 247, 244, 0.94);
-  --zt-glass-border: rgba(45, 35, 25, 0.1);
+  --zt-glass: rgba(255, 255, 255, 0.94);
+  --zt-glass-border: rgba(15, 23, 42, 0.1);
   --zt-blur: blur(20px);
-  --zt-shadow: 0 24px 60px rgba(47, 31, 27, 0.16);
-  --zt-primary: #9b4f63;
-  --zt-primary-strong: #73384a;
-  --zt-accent: #d77a45;
+  --zt-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+  --zt-primary: #111827;
+  --zt-primary-strong: #020617;
+  --zt-accent: #64748b;
   --zt-danger: #ef4444;
-  --zt-gradient: linear-gradient(135deg, #7d4056 0%, #c8694b 54%, #eca85f 100%);
-  --zt-text: #241c1a;
-  --zt-muted: #76645d;
-  --zt-bg: #f8f0ed;
-  --zt-surface: #fff7f4;
+  --zt-gradient: #111827;
+  --zt-text: #111827;
+  --zt-muted: #64748b;
+  --zt-bg: #f6f7f9;
+  --zt-surface: #ffffff;
   --zt-surface-strong: #ffffff;
   --zt-radius: 16px;
 }
