@@ -67,7 +67,7 @@ function updateUsageCTA(billing) {
   const limit = ZT_FREE_TEMPLATE_LIMIT;
   const usedDisplay = Math.min(used, limit);
   const pct = limit ? Math.min(100, Math.round((usedDisplay / limit) * 100)) : 0;
-  const ctaLabel = 'Support MailPaw';
+  const ctaLabel = 'Say Thanks';
   cta.classList.toggle('is-limit', used >= limit);
   cta.innerHTML = `
     <div class="zt-usage-cta__copy">
@@ -162,16 +162,16 @@ function applyBillingStateToBanner(billing) {
   if (billing.isTrial) {
     title = `Trial active • ${billing.daysLeft} day${billing.daysLeft === 1 ? '' : 's'} left`;
     subtitle = 'MailPaw is free and unlimited.';
-    primaryLabel = 'Support MailPaw';
+    primaryLabel = 'Say Thanks';
     secondaryLabel = '';
   } else if (isExpired) {
     title = 'MailPaw is free';
     subtitle = 'There is no trial, subscription, or paid plan.';
-    primaryLabel = 'Support MailPaw';
+    primaryLabel = 'Say Thanks';
   } else if (isFree) {
     title = 'MailPaw is free';
     subtitle = 'Templates, imports, exports, style presets, and copies are unlimited.';
-    primaryLabel = 'Support MailPaw';
+    primaryLabel = 'Say Thanks';
     secondaryLabel = '';
   }
   banner.classList.add('show');
@@ -547,8 +547,8 @@ function createPanel() {
         </div>
         <div class="zt-header-actions">
           <button class="zt-header-create" id="zt-create-template">New Template</button>
-          <button class="zt-header-trial" id="zt-header-trial">Support MailPaw</button>
-          <button class="zt-header-buy" id="zt-header-buy">Support MailPaw</button>
+          <button class="zt-header-trial" id="zt-header-trial">Say Thanks</button>
+          <button class="zt-header-buy" id="zt-header-buy">Say Thanks</button>
           <button class="zt-icon-btn" id="zt-btn-settings" data-tooltip="Actions">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
               <line x1="4" y1="7" x2="20" y2="7"></line>
@@ -574,7 +574,7 @@ function createPanel() {
         </div>
         <div class="zt-menu-section">
           <div class="zt-menu-title">Account</div>
-          <button class="zt-menu-item" id="zt-support">Support MailPaw</button>
+          <button class="zt-menu-item" id="zt-support">Say Thanks</button>
           <button class="zt-menu-item" id="zt-billing">About MailPaw</button>
         </div>
         <input type="file" id="zt-file-input" accept=".json" style="display:none" />
@@ -850,7 +850,7 @@ function renderUpgradeView(billing, options = {}) {
     title = 'Keep Building for Free';
     message = 'MailPaw is free and local-first. Download backup copies of important templates so you control your work.';
   }
-  const ctaLabel = 'Support MailPaw';
+  const ctaLabel = 'Say Thanks';
   const showPlansLink = false;
   const showBuyOption = true;
   if (typeof showModal !== 'function') return;
@@ -866,7 +866,7 @@ function renderUpgradeView(billing, options = {}) {
       ${showPlansLink ? '<button class="zt-link-btn" id="zt-upgrade-plans">Trial details</button>' : ''}
       ${showBuyOption ? `
         <div class="zt-upgrade-actions" style="margin-top:12px;">
-          <button class="zt-btn-secondary" id="zt-upgrade-buy">Support MailPaw</button>
+          <button class="zt-btn-secondary" id="zt-upgrade-buy">Say Thanks</button>
         </div>
       ` : ''}
     </div>
@@ -1533,7 +1533,7 @@ function renderBillingView() {
       Download backup copies from the Actions menu so you can restore them later or move them to another browser.
       The standalone web app copies or exports HTML for email clients that accept pasted HTML. Direct insertion is only available when using the Chrome extension inside Gmail.
       <div style="margin-top:14px;">
-        MailPaw is free. If it helps, you can <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#9b4f63; font-weight:700;">support MailPaw on Buy Me a Coffee</a>.
+        If MailPaw helped you, you can <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#9b4f63; font-weight:700;">say thanks on Buy Me a Coffee</a>.
       </div>
     </div>
   `, () => true);

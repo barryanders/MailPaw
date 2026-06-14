@@ -19,7 +19,6 @@
     const original = button ? button.innerHTML : '';
     copyTextToClipboard(html, () => {
       if (button) button.innerHTML = '<span class="zt-btn-label">Copied</span>';
-      if (typeof maybePromptForSupport === 'function') maybePromptForSupport();
       setTimeout(() => {
         if (button) button.innerHTML = original;
         relabelAppActions();
@@ -47,7 +46,7 @@
         Download backup copies from the Actions menu so you can restore them later or move them to another browser.
         Direct insertion only works in the Chrome extension inside Gmail; this web app copies or exports HTML for email clients that accept pasted HTML.
         <div style="margin-top:14px;">
-          MailPaw is free. If it helps, you can <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#9b4f63; font-weight:700;">support MailPaw on Buy Me a Coffee</a>.
+          If MailPaw helped you, you can <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#9b4f63; font-weight:700;">say thanks on Buy Me a Coffee</a>.
         </div>
       </div>
     `, () => true);

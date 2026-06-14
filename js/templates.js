@@ -201,43 +201,7 @@ function saveReviewState(state) {
 }
 
 function maybePromptForSupport() {
-  if (typeof showModal !== 'function' || !chrome?.storage?.local) return;
-  loadReviewState((state) => {
-    const now = Date.now();
-    const nextState = {
-      actionCount: 0,
-      lastPromptAt: 0,
-      supported: false,
-      ...state
-    };
-    nextState.actionCount = (Number(nextState.actionCount || nextState.insertCount) || 0) + 1;
-    const cooldownOk = !nextState.lastPromptAt || (now - nextState.lastPromptAt) > ZT_SUPPORT_COOLDOWN_MS;
-    const shouldPrompt = nextState.actionCount >= ZT_SUPPORT_MIN_ACTIONS && !nextState.supported && cooldownOk;
-    if (!shouldPrompt) {
-      saveReviewState(nextState);
-      return;
-    }
-    nextState.lastPromptAt = now;
-    saveReviewState(nextState);
-    const content = `
-      <div style="color:#475569; font-size:14px; line-height:1.5;">
-        MailPaw is free, private, and local-first. If it saved you time, you can support MailPaw and help keep the project moving.
-      </div>
-    `;
-    showModal('Support MailPaw?', content, () => {
-      nextState.supported = true;
-      saveReviewState(nextState);
-      window.open(MAILPAW_SUPPORT_URL, '_blank', 'noopener');
-      return true;
-    });
-    const modal = document.querySelector('.zt-modal-overlay');
-    if (modal) {
-      const submit = modal.querySelector('#modal-submit');
-      const cancel = modal.querySelector('#modal-cancel');
-      if (submit) submit.textContent = 'Support MailPaw';
-      if (cancel) cancel.textContent = 'Not now';
-    }
-  });
+  return;
 }
 
 function maybePromptForReview() {
