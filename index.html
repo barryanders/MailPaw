@@ -3,15 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MailPaw - Free Email Template Builder</title>
-  <meta name="description" content="MailPaw is a free privacy-first email template builder with local browser storage, reusable blocks, copyable HTML, and downloadable backups.">
+  <title>MailPaw - Free Email Template Builder & Mailchimp Alternative</title>
+  <meta name="description" content="MailPaw is a free privacy-first email template builder for newsletters, marketing emails, and reusable HTML email templates stored locally in your browser.">
+  <meta name="robots" content="index,follow">
+  <meta name="application-name" content="MailPaw">
+  <meta name="theme-color" content="#9b4f63">
   <link rel="canonical" href="https://barryanders.github.io/MailPaw/">
-  <meta property="og:title" content="MailPaw - Free Email Template Builder">
-  <meta property="og:description" content="Build newsletter and email templates locally in your browser. No account, no subscription, no cloud template library.">
+  <meta property="og:title" content="MailPaw - Free Email Template Builder & Mailchimp Alternative">
+  <meta property="og:description" content="Build newsletter and HTML email templates locally in your browser. No account, no subscription, no cloud template library.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://barryanders.github.io/MailPaw/">
   <meta property="og:image" content="https://barryanders.github.io/MailPaw/mailpaw-icon.png">
+  <meta property="og:site_name" content="MailPaw">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MailPaw - Free Email Template Builder">
+  <meta name="twitter:description" content="Create reusable newsletter and HTML email templates locally in your browser.">
+  <meta name="twitter:image" content="https://barryanders.github.io/MailPaw/mailpaw-icon.png">
+  <link rel="icon" type="image/png" href="mailpaw-icon-64.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "MailPaw",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "url": "https://barryanders.github.io/MailPaw/",
+    "image": "https://barryanders.github.io/MailPaw/mailpaw-icon.png",
+    "description": "Free privacy-first email template builder for newsletters, marketing emails, and reusable HTML email templates stored locally in your browser.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Email template builder",
+      "Newsletter templates",
+      "Reusable HTML email blocks",
+      "Local browser storage",
+      "Downloadable backup files",
+      "Copyable HTML for email clients"
+    ]
+  }
+  </script>
   <style>
     :root {
       color-scheme: light;
@@ -87,6 +120,31 @@
       font-size: 14px;
       color: #64748b;
     }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .features li {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
+      color: #334155;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    @media (max-width: 560px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -96,6 +154,14 @@
       <h1>MailPaw</h1>
     </div>
     <p>Free privacy-first email templates stored locally in your browser. Build reusable layouts, copy HTML, and download backup files without putting your email content in someone else's cloud.</p>
+    <ul class="features" aria-label="MailPaw features">
+      <li>Email template builder</li>
+      <li>Newsletter templates</li>
+      <li>HTML email blocks</li>
+      <li>Mailchimp alternative</li>
+      <li>Local browser storage</li>
+      <li>Downloadable backups</li>
+    </ul>
     <div class="actions">
       <a class="primary" href="app.html">Open Builder</a>
       <a class="secondary" href="https://github.com/barryanders/MailPaw">GitHub</a>
