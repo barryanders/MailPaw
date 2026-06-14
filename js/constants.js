@@ -156,2145 +156,1070 @@ if (typeof window !== 'undefined') {
   window.resolveStylePresetForTemplate = resolveStylePresetForTemplate;
 }
 
+const MP_SOCIALS = ['Instagram', 'LinkedIn', 'YouTube'];
+const MP_SITE = 'https://example.com';
+
+function mpImage(seed, width = 1200, height = 720) {
+  return 'https://picsum.photos/seed/mailpaw-' + seed + '/' + width + '/' + height;
+}
+
+function mpLayout(options = {}) {
+  const layout = {};
+  if (options.padding) layout.padding = options.padding;
+  if (options.marginBottom) layout.marginBottom = options.marginBottom;
+  if (options.radius) layout.radius = options.radius;
+  if (options.borderWidth) layout.borderWidth = options.borderWidth;
+  if (options.borderColor) layout.borderColor = options.borderColor;
+  return layout;
+}
+
+function mpText(html, options = {}) {
+  return {
+    type: 'text',
+    html,
+    color: options.color,
+    size: options.size,
+    align: options.align,
+    lineHeight: options.lineHeight,
+    background: options.background,
+    layout: options.layout
+  };
+}
+
+function mpHeading(text, options = {}) {
+  return {
+    type: 'heading',
+    text,
+    size: options.size || '28px',
+    color: options.color,
+    align: options.align,
+    weight: options.weight
+  };
+}
+
+function mpButton(text, href = MP_SITE, options = {}) {
+  return {
+    type: 'button',
+    text,
+    href,
+    align: options.align || 'left',
+    bg: options.bg,
+    color: options.color,
+    radius: options.radius || '999px'
+  };
+}
+
+function mpCard(html, options = {}) {
+  return mpText(html, {
+    color: options.color,
+    size: options.size,
+    align: options.align,
+    lineHeight: options.lineHeight,
+    background: options.background || '#ffffff',
+    layout: mpLayout({
+      padding: options.padding || '14px',
+      radius: options.radius || '14px',
+      borderWidth: options.borderWidth || '1',
+      borderColor: options.borderColor || '#e2e8f0',
+      marginBottom: options.marginBottom
+    })
+  });
+}
+
+function mpMetric(value, label, options = {}) {
+  return mpCard('<strong style="font-size:22px;">' + value + '</strong><br>' + label, {
+    color: options.color,
+    background: options.background,
+    borderColor: options.borderColor,
+    align: options.align || 'center',
+    padding: options.padding || '12px'
+  });
+}
+
+function mpGrid(cols, columns, options = {}) {
+  return {
+    type: 'grid',
+    cols,
+    columns,
+    background: options.background,
+    layout: options.layout
+  };
+}
+
+function mpHero(seed, options = {}) {
+  return {
+    type: 'image',
+    src: mpImage(seed, options.width || 1200, options.height || 720),
+    alt: options.alt || 'Decorative email image',
+    radius: options.radius || '18px'
+  };
+}
+
+function mpDivider(color = '#e2e8f0', width = '100%') {
+  return { type: 'divider', color, width, thickness: '1px' };
+}
+
+function mpSocial(networks = MP_SOCIALS) {
+  return { type: 'social', networks };
+}
+
+function mpFooter(text, color = '#94a3b8') {
+  return mpText(text, { size: '11px', color, align: 'center' });
+}
+
 const DEFAULT_TEMPLATE_SPECS = [
   {
-    id: 'tpl-news-brief',
-    title: 'Weekly Newsletter - Brief',
+    id: 'tpl-curated-radar-newsletter',
+    title: 'Signal Radar Newsletter',
     category: 'Newsletter',
-    subject: '{{Brand}} Weekly Brief | {{Issue}}',
-    shortcut: '/brief',
+    subject: 'This week on the radar: three useful signals',
     tier: 'free',
     stylePresetId: 'ghost-minimal',
     bgEmail: '#ffffff',
     fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
     fontColor: '#0f172a',
     blocks: [
-      { type: 'heading', text: 'Weekly Brief', size: '28px' },
-      { type: 'text', html: 'Issue {{Issue}} | {{Date}} | {{Brand}}', size: '12px', color: '#64748b' },
-      { type: 'text', html: 'Top takeaway: {{TopTakeaway}}', color: '#475569' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-001/1200/720', radius: '14px' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Lead story', size: '16px' },
-            { type: 'text', html: '<strong>{{PrimaryStoryTitle}}</strong><br>{{PrimaryStorySummary}}', color: '#475569' },
-            { type: 'button', text: 'Read the story', href: '{{PrimaryStoryUrl}}', align: 'left' }
-          ],
-          [
-            { type: 'heading', text: 'Quick hits', size: '16px' },
-            { type: 'text', html: '&bull; {{QuickHitOne}}<br>&bull; {{QuickHitTwo}}<br>&bull; {{QuickHitThree}}', color: '#475569' },
-            { type: 'text', html: 'Also: {{SecondaryNote}}', size: '12px', color: '#64748b' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>What we are watching</strong><br>{{WatchOne}}<br>{{WatchTwo}}',
-        color: '#0f172a',
-        background: '#f8fafc',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-      },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] },
-      { type: 'text', html: 'You are receiving this because you subscribed at {{Website}}.', size: '11px', color: '#94a3b8', align: 'center' }
+      mpText('WEEKLY RADAR / ISSUE 18', { size: '12px', color: '#64748b', align: 'center' }),
+      mpHeading('Three signals worth your attention', { size: '32px', align: 'center' }),
+      mpText('A tight briefing for people who want the useful part first: one trend, one tactic, one question to carry into the week.', { color: '#475569', align: 'center' }),
+      mpHero('signal-radar', { alt: 'Abstract desk with notebook and color cards' }),
+      mpGrid(3, [
+        [mpCard('<strong>01 / Trend</strong><br>Small teams are replacing bloated campaign calendars with compact weekly editorial rituals.', { background: '#f8fafc' })],
+        [mpCard('<strong>02 / Tactic</strong><br>Write the subject line after the CTA. It keeps the email honest about the action you want.', { background: '#f8fafc' })],
+        [mpCard('<strong>03 / Question</strong><br>What would this email look like if it only had to earn one click?', { background: '#f8fafc' })]
+      ]),
+      mpButton('Read the full briefing', MP_SITE + '/briefing'),
+      mpFooter('You are receiving this because you asked for practical marketing notes.')
     ]
   },
   {
-    id: 'tpl-news-digest',
-    title: 'Visual Newsletter - Digest',
+    id: 'tpl-curated-founder-field-note',
+    title: 'Founder Field Note',
     category: 'Newsletter',
-    subject: '{{Brand}} Visual Digest | {{Date}}',
-    shortcut: '/digest',
-    tier: 'free',
-    stylePresetId: 'aqua-studio',
-    bgEmail: '#ecfeff',
-    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
-    fontColor: '#0f172a',
-    blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-002/1200/720', radius: '18px' },
-      { type: 'heading', text: 'Visual Digest', size: '28px', align: 'center' },
-      { type: 'text', html: 'A curated recap from {{Brand}}.', color: '#475569', align: 'center' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-003/900/540', radius: '12px' },
-            { type: 'text', html: '{{StoryOneCategory}}', size: '12px', color: '#64748b' },
-            { type: 'heading', text: '{{StoryOneTitle}}', size: '16px' },
-            { type: 'text', html: '{{StoryOneSummary}}', color: '#475569' },
-            { type: 'button', text: 'Open story', href: '{{StoryOneUrl}}', align: 'left' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-004/900/540', radius: '12px' },
-            { type: 'text', html: '{{StoryTwoCategory}}', size: '12px', color: '#64748b' },
-            { type: 'heading', text: '{{StoryTwoTitle}}', size: '16px' },
-            { type: 'text', html: '{{StoryTwoSummary}}', color: '#475569' },
-            { type: 'button', text: 'Open story', href: '{{StoryTwoUrl}}', align: 'left' }
-          ]
-        ]
-      },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            {
-              type: 'text',
-              html: '<strong>{{MetricOneValue}}</strong><br>{{MetricOneLabel}}',
-              color: '#0f172a',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{MetricTwoValue}}</strong><br>{{MetricTwoLabel}}',
-              color: '#0f172a',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{MetricThreeValue}}</strong><br>{{MetricThreeLabel}}',
-              color: '#0f172a',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Spotlight</strong><br>{{SpotlightCopy}}',
-        color: '#0f172a',
-        background: '#ffffff',
-        layout: { padding: '14px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-      },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-news-letter',
-    title: 'Founder Update - Letter',
-    category: 'Newsletter',
-    subject: 'Founder letter from {{Brand}}',
-    shortcut: '/letter',
+    subject: 'A field note from the founder',
     tier: 'free',
     stylePresetId: 'editorial-serif',
     bgEmail: '#fff7ed',
     fontFamily: 'Georgia, serif',
     fontColor: '#1f2937',
     blocks: [
-      { type: 'heading', text: 'Founder Letter', size: '28px' },
-      { type: 'text', html: 'From {{FounderName}} | {{Date}}', size: '12px', color: '#6b7280' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-005/1200/720', radius: '16px' },
-      { type: 'text', html: 'Hi {{FirstName}},<br><br>{{Intro}}', color: '#475569', lineHeight: '1.7' },
-      { type: 'text', html: '<blockquote>{{Quote}}</blockquote>', color: '#1f2937' },
-      { type: 'heading', text: 'Highlights', size: '18px' },
-      { type: 'text', html: '&bull; {{UpdateOne}}<br>&bull; {{UpdateTwo}}<br>&bull; {{UpdateThree}}', color: '#475569' },
-      {
-        type: 'text',
-        html: '<strong>Looking ahead</strong><br>{{LookingAhead}}',
-        color: '#1f2937',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-      },
-      { type: 'button', text: 'Read the full update', href: '{{LetterUrl}}', align: 'left' },
-      { type: 'text', html: 'Thanks,<br>{{FounderName}}', color: '#475569' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpText('FIELD NOTE', { size: '12px', color: '#9a3412' }),
+      mpHeading('What changed after we listened harder', { size: '30px' }),
+      mpText('Hi there,<br><br>This month we stopped trying to add more features and started removing every step that made the product feel heavy. The result is quieter, faster, and easier to trust.', { color: '#475569', lineHeight: '1.8' }),
+      mpCard('<blockquote>The best product work this month came from asking what people were already trying to do.</blockquote>', { background: '#ffffff', borderColor: '#fed7aa', color: '#1f2937' }),
+      mpGrid(2, [
+        [mpHeading('Shipped', { size: '17px' }), mpText('&bull; Faster first-run setup<br>&bull; Cleaner exports<br>&bull; Simpler account settings', { color: '#475569' })],
+        [mpHeading('Next', { size: '17px' }), mpText('&bull; Better examples<br>&bull; More reusable patterns<br>&bull; A smaller learning curve', { color: '#475569' })]
+      ]),
+      mpButton('Read the full note', MP_SITE + '/founder-note'),
+      mpText('Thanks for building with us,<br>Maya', { color: '#475569' })
     ]
   },
   {
-    id: 'tpl-launch-neon',
-    title: 'Product Launch - Hype',
+    id: 'tpl-curated-visual-digest',
+    title: 'Visual Digest',
+    category: 'Newsletter',
+    subject: 'A visual digest for your week',
+    tier: 'free',
+    stylePresetId: 'aqua-studio',
+    bgEmail: '#ecfeff',
+    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
+    fontColor: '#0f172a',
+    blocks: [
+      mpHero('visual-digest-hero', { alt: 'Colorful workspace collage' }),
+      mpHeading('The visual digest', { size: '31px', align: 'center' }),
+      mpText('A curated set of stories, tools, and small ideas to make the next thing easier to ship.', { color: '#475569', align: 'center' }),
+      mpGrid(2, [
+        [mpHero('visual-digest-one', { width: 800, height: 520, radius: '14px' }), mpText('DESIGN', { size: '11px', color: '#0891b2' }), mpHeading('A calmer way to launch', { size: '17px' }), mpText('Why fewer sections can make a product email feel more expensive.', { color: '#475569' })],
+        [mpHero('visual-digest-two', { width: 800, height: 520, radius: '14px' }), mpText('OPERATIONS', { size: '11px', color: '#0891b2' }), mpHeading('The tiny checklist that saved Friday', { size: '17px' }), mpText('A five-minute QA ritual for emails that go out under pressure.', { color: '#475569' })]
+      ]),
+      mpCard('<strong>Reader prompt</strong><br>Reply with the one email you keep rewriting from scratch. We may turn it into a future template.', { background: '#ffffff', borderColor: '#bae6fd' }),
+      mpButton('Open the archive', MP_SITE + '/archive', { align: 'center' })
+    ]
+  },
+  {
+    id: 'tpl-curated-metrics-memo',
+    title: 'Metrics Memo',
+    category: 'Newsletter',
+    subject: 'The monthly metrics memo',
+    tier: 'free',
+    stylePresetId: 'mono-ink',
+    bgEmail: '#f5f5f4',
+    fontFamily: "'Courier New', monospace",
+    fontColor: '#1c1917',
+    blocks: [
+      mpText('MONTHLY MEMO', { size: '12px', color: '#78716c' }),
+      mpHeading('The numbers moved. Here is why.', { size: '28px' }),
+      mpGrid(3, [
+        [mpMetric('+18%', 'Activation lift', { borderColor: '#d6d3d1' })],
+        [mpMetric('2.4x', 'More saved templates', { borderColor: '#d6d3d1' })],
+        [mpMetric('-31%', 'Support questions', { borderColor: '#d6d3d1' })]
+      ]),
+      mpGrid(2, [
+        [mpHeading('What worked', { size: '16px' }), mpText('&bull; The new welcome flow explained less and showed more.<br>&bull; Templates were grouped by job, not by department.<br>&bull; Backup reminders reduced anxiety.', { color: '#57534e' })],
+        [mpHeading('What needs attention', { size: '16px' }), mpText('&bull; Mobile editing still needs fewer visible controls.<br>&bull; Export language should be plainer.<br>&bull; Examples need stronger finished copy.', { color: '#57534e' })]
+      ]),
+      mpCard('<strong>Focus for next month</strong><br>Make the first useful export happen in under three minutes.', { borderColor: '#d6d3d1' }),
+      mpButton('Open the dashboard', MP_SITE + '/dashboard')
+    ]
+  },
+  {
+    id: 'tpl-curated-editorial-roundup',
+    title: 'Editorial Roundup',
+    category: 'Newsletter',
+    subject: 'Five links worth saving',
+    tier: 'free',
+    stylePresetId: 'cobalt-cloud',
+    bgEmail: '#eef2ff',
+    fontFamily: 'Tahoma, sans-serif',
+    fontColor: '#111827',
+    blocks: [
+      mpHeading('Five links worth saving', { size: '30px' }),
+      mpText('A sharp, skimmable roundup for readers who want useful links without a wall of commentary.', { color: '#475569' }),
+      mpDivider('#c7d2fe'),
+      mpCard('<strong>01. The launch teardown</strong><br>A practical breakdown of why a simple release email outperformed a full campaign.', { borderColor: '#c7d2fe' }),
+      mpCard('<strong>02. The retention map</strong><br>A visual model for spotting where customers quietly drift away.', { borderColor: '#c7d2fe' }),
+      mpCard('<strong>03. The writing checklist</strong><br>Ten questions that make newsletter drafts more useful before they get prettier.', { borderColor: '#c7d2fe' }),
+      mpGrid(2, [
+        [mpCard('<strong>Save for later</strong><br>The two reads that pair best with a coffee break.', { background: '#ffffff', borderColor: '#c7d2fe' })],
+        [mpCard('<strong>Share with</strong><br>A teammate who keeps asking for cleaner launch examples.', { background: '#ffffff', borderColor: '#c7d2fe' })]
+      ]),
+      mpButton('Browse all links', MP_SITE + '/links'),
+      mpFooter('Forwarded by a friend? Subscribe for next week.')
+    ]
+  },
+  {
+    id: 'tpl-curated-neon-launch',
+    title: 'Neon Product Launch',
     category: 'Launch',
-    subject: 'Introducing {{ProductName}}',
-    shortcut: '/neon',
+    subject: 'Meet Nightlight Studio',
     tier: 'free',
     stylePresetId: 'midnight-neon',
     bgEmail: '#0b1120',
     fontFamily: 'Arial, sans-serif',
     fontColor: '#e2e8f0',
     blocks: [
-      { type: 'heading', text: 'Introducing {{ProductName}}', size: '30px', align: 'center', color: '#f8fafc' },
-      { type: 'text', html: 'Built to {{PrimaryBenefit}} in half the time.', align: 'center', color: '#cbd5e1' },
-      { type: 'button', text: 'Launch now', href: '{{LaunchUrl}}', align: 'center', bg: '#38bdf8', color: '#0b1120', radius: '999px' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-006/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            { type: 'heading', text: 'Speed', size: '15px', color: '#f8fafc' },
-            { type: 'text', html: '{{FeatureOne}}', color: '#cbd5e1' }
-          ],
-          [
-            { type: 'heading', text: 'Control', size: '15px', color: '#f8fafc' },
-            { type: 'text', html: '{{FeatureTwo}}', color: '#cbd5e1' }
-          ],
-          [
-            { type: 'heading', text: 'Scale', size: '15px', color: '#f8fafc' },
-            { type: 'text', html: '{{FeatureThree}}', color: '#cbd5e1' }
-          ]
-        ]
-      },
-      {
-        type: 'grid',
-        cols: 2,
-        background: '#111827',
-        layout: { padding: '12px', radius: '14px', borderWidth: '1', borderColor: '#1f2937' },
-        columns: [
-          [
-            { type: 'heading', text: 'Included', size: '16px', color: '#f8fafc' },
-            { type: 'text', html: '&bull; {{IncludedOne}}<br>&bull; {{IncludedTwo}}<br>&bull; {{IncludedThree}}', color: '#cbd5e1' }
-          ],
-          [
-            { type: 'heading', text: 'Best for', size: '16px', color: '#f8fafc' },
-            { type: 'text', html: '&bull; {{UseCaseOne}}<br>&bull; {{UseCaseTwo}}<br>&bull; {{UseCaseThree}}', color: '#cbd5e1' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Launch window</strong><br>{{LaunchWindow}}',
-        color: '#e2e8f0',
-        background: '#0f172a',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#1f2937' }
-      },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpText('NEW RELEASE', { size: '12px', color: '#38bdf8', align: 'center' }),
+      mpHeading('Meet Nightlight Studio', { size: '34px', align: 'center', color: '#f8fafc' }),
+      mpText('A faster way to shape campaign assets, export clean HTML, and keep the final draft close to your team.', { color: '#cbd5e1', align: 'center' }),
+      mpButton('Try the new studio', MP_SITE + '/launch', { align: 'center', bg: '#38bdf8', color: '#0b1120' }),
+      mpHero('neon-launch', { alt: 'Dark product scene with bright blue highlights' }),
+      mpGrid(3, [
+        [mpHeading('Fast', { size: '16px', color: '#f8fafc' }), mpText('Start from strong examples instead of blank screens.', { color: '#cbd5e1' })],
+        [mpHeading('Local', { size: '16px', color: '#f8fafc' }), mpText('Keep saved drafts in your browser unless you export them.', { color: '#cbd5e1' })],
+        [mpHeading('Portable', { size: '16px', color: '#f8fafc' }), mpText('Copy email HTML for tools that accept pasted HTML.', { color: '#cbd5e1' })]
+      ], { background: '#111827', layout: mpLayout({ padding: '12px', radius: '16px', borderWidth: '1', borderColor: '#1f2937' }) }),
+      mpFooter('You are getting this because you joined the launch list.', '#94a3b8')
     ]
   },
   {
-    id: 'tpl-launch-focus',
-    title: 'Feature Release - Walkthrough',
+    id: 'tpl-curated-waitlist-open',
+    title: 'Waitlist Opening',
     category: 'Launch',
-    subject: 'Feature release: {{FeatureName}}',
-    shortcut: '/focus',
-    tier: 'free',
-    stylePresetId: 'cobalt-cloud',
-    bgEmail: '#eef2ff',
-    fontFamily: 'Tahoma, sans-serif',
-    fontColor: '#111827',
-    blocks: [
-      { type: 'heading', text: 'Feature Release: {{FeatureName}}', size: '26px' },
-      { type: 'text', html: 'A faster way to {{Benefit}} inside {{Brand}}.', color: '#475569' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-007/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Why it matters', size: '16px' },
-            { type: 'text', html: '&bull; {{ImpactOne}}<br>&bull; {{ImpactTwo}}<br>&bull; {{ImpactThree}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: 'How it works', size: '16px' },
-            { type: 'text', html: '1. {{StepOne}}<br>2. {{StepTwo}}<br>3. {{StepThree}}', color: '#475569' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Results</strong><br>{{MetricOne}}<br>{{MetricTwo}}',
-        color: '#111827',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#c7d2fe' }
-      },
-      { type: 'button', text: 'Try the feature', href: '{{FeatureUrl}}', align: 'left' }
-    ]
-  },
-  {
-    id: 'tpl-launch-gallery',
-    title: 'Collection Launch - Lookbook',
-    category: 'Launch',
-    subject: '{{CollectionName}} Lookbook',
-    shortcut: '/gallery',
+    subject: 'The waitlist is open',
     tier: 'free',
     stylePresetId: 'vapor-peach',
     bgEmail: '#fff1f2',
     fontFamily: 'Trebuchet MS, Verdana, sans-serif',
     fontColor: '#4c0519',
     blocks: [
-      { type: 'heading', text: '{{CollectionName}} Lookbook', size: '28px', align: 'center', color: '#4c0519' },
-      { type: 'text', html: 'A curated drop for {{Season}}.', color: '#9f1239', align: 'center' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-008/600/360', radius: '12px' },
-            { type: 'text', html: '{{LookOneName}}', size: '12px', color: '#9f1239', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-009/600/360', radius: '12px' },
-            { type: 'text', html: '{{LookTwoName}}', size: '12px', color: '#9f1239', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-010/600/360', radius: '12px' },
-            { type: 'text', html: '{{LookThreeName}}', size: '12px', color: '#9f1239', align: 'center' }
-          ]
-        ]
-      },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            {
-              type: 'text',
-              html: '<strong>Materials</strong><br>{{Materials}}',
-              color: '#4c0519',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#fecdd3' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>Sizing</strong><br>{{SizingNotes}}',
-              color: '#4c0519',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#fecdd3' }
-            }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Explore the collection', href: '{{CollectionUrl}}', align: 'center', bg: '#e11d48', color: '#ffffff', radius: '999px' },
-      { type: 'text', html: 'Free shipping over {{FreeShipThreshold}}.', size: '12px', color: '#9f1239', align: 'center' }
+      mpHeading('The waitlist is open', { size: '30px', align: 'center', color: '#4c0519' }),
+      mpText('Early access starts with the people who helped shape the idea. You are invited to claim a spot before the public launch.', { color: '#9f1239', align: 'center' }),
+      mpHero('waitlist-open', { alt: 'Soft product preview on pink background' }),
+      mpGrid(2, [
+        [mpCard('<strong>What you get</strong><br>Early onboarding, a private setup guide, and direct feedback windows with the team.', { borderColor: '#fecdd3', color: '#4c0519' })],
+        [mpCard('<strong>Who it is for</strong><br>Creators, founders, and operators who send useful emails without wanting another heavy platform.', { borderColor: '#fecdd3', color: '#4c0519' })]
+      ]),
+      mpButton('Join the waitlist', MP_SITE + '/waitlist', { align: 'center', bg: '#e11d48', color: '#ffffff' }),
+      mpFooter('Early access invitations go out in small weekly batches.', '#9f1239')
     ]
   },
   {
-    id: 'tpl-event-session',
-    title: 'Workshop Invite',
-    category: 'Events',
-    subject: 'Workshop invite: {{EventName}}',
-    shortcut: '/session',
+    id: 'tpl-curated-feature-reveal',
+    title: 'Feature Reveal',
+    category: 'Launch',
+    subject: 'New: smarter reusable blocks',
     tier: 'free',
     stylePresetId: 'aqua-studio',
     bgEmail: '#ecfeff',
     fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
     fontColor: '#0f172a',
     blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-011/1200/720', radius: '16px' },
-      { type: 'heading', text: 'Workshop: {{EventName}}', size: '26px' },
-      { type: 'text', html: 'Join {{HostName}} for a live session on {{Topic}}.', color: '#475569' },
-      {
-        type: 'text',
-        html: '<strong>Event details</strong><br>Date: {{EventDate}}<br>Time: {{EventTime}}<br>Location: {{EventLocation}}',
-        color: '#0f172a',
-        background: '#ffffff',
-        layout: { padding: '14px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-      },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'You will learn', size: '16px' },
-            { type: 'text', html: '&bull; {{LessonOne}}<br>&bull; {{LessonTwo}}<br>&bull; {{LessonThree}}', color: '#475569' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-012/700/420', radius: '12px' },
-            { type: 'text', html: 'Hosted by {{HostName}}', size: '12px', color: '#64748b', align: 'center' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Reserve my seat', href: '{{EventUrl}}', align: 'left' },
-      { type: 'text', html: 'Replay available to attendees.', size: '12px', color: '#64748b' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpText('FEATURE RELEASE', { size: '12px', color: '#0891b2' }),
+      mpHeading('Reusable blocks just got smarter', { size: '29px' }),
+      mpText('You can now start with polished sections, tune the details, and export a finished email without rebuilding the same layout every week.', { color: '#475569' }),
+      mpGrid(2, [
+        [mpHeading('Before', { size: '16px' }), mpText('Copy last week&apos;s email, delete the wrong parts, fix broken spacing, then hope nothing shifted.', { color: '#475569' })],
+        [mpHeading('Now', { size: '16px' }), mpText('Add a section, edit the content, save the template, and keep a backup copy when it matters.', { color: '#475569' })]
+      ]),
+      mpCard('<strong>Available today</strong><br>The update is live for everyone. No plan, trial, or account required.', { borderColor: '#bae6fd' }),
+      mpButton('Open the builder', MP_SITE + '/app', { bg: '#06b6d4', color: '#0b1120' })
     ]
   },
   {
-    id: 'tpl-event-agenda',
-    title: 'Summit Agenda - Invite',
-    category: 'Events',
-    subject: 'Summit agenda: {{EventName}}',
-    shortcut: '/agenda',
-    tier: 'free',
-    stylePresetId: 'rose-noir',
-    bgEmail: '#1f1134',
-    fontFamily: 'Verdana, sans-serif',
-    fontColor: '#f8fafc',
-    blocks: [
-      { type: 'heading', text: 'Summit Agenda: {{EventName}}', size: '28px', align: 'center', color: '#f8fafc' },
-      { type: 'text', html: 'Two days of strategy, design, and community.', align: 'center', color: '#f3e8ff' },
-      { type: 'button', text: 'Get tickets', href: '{{EventUrl}}', align: 'center', bg: '#f472b6', color: '#1f1134', radius: '999px' },
-      {
-        type: 'grid',
-        cols: 2,
-        background: '#2a1845',
-        layout: { padding: '12px', radius: '14px', borderWidth: '1', borderColor: '#3b1d59' },
-        columns: [
-          [
-            { type: 'heading', text: 'Day one', size: '16px', color: '#f8fafc' },
-            { type: 'text', html: '09:00 - {{SessionOne}}<br>11:00 - {{SessionTwo}}<br>14:00 - {{SessionThree}}', color: '#f3e8ff' }
-          ],
-          [
-            { type: 'heading', text: 'Day two', size: '16px', color: '#f8fafc' },
-            { type: 'text', html: '09:00 - {{SessionFour}}<br>11:00 - {{SessionFive}}<br>14:00 - {{SessionSix}}', color: '#f3e8ff' }
-          ]
-        ]
-      },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-013/600/360', radius: '12px' },
-            { type: 'text', html: '<strong>{{SpeakerOne}}</strong><br>{{SpeakerOneRole}}', size: '12px', color: '#f3e8ff', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-014/600/360', radius: '12px' },
-            { type: 'text', html: '<strong>{{SpeakerTwo}}</strong><br>{{SpeakerTwoRole}}', size: '12px', color: '#f3e8ff', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-015/600/360', radius: '12px' },
-            { type: 'text', html: '<strong>{{SpeakerThree}}</strong><br>{{SpeakerThreeRole}}', size: '12px', color: '#f3e8ff', align: 'center' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Venue</strong><br>{{Venue}}<br>{{VenueAddress}}',
-        color: '#f8fafc',
-        background: '#2a1845',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#3b1d59' }
-      },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-event-gathering',
-    title: 'Community Meetup Invite',
-    category: 'Events',
-    subject: '{{City}} Community Meetup',
-    shortcut: '/gather',
-    tier: 'free',
-    stylePresetId: 'editorial-serif',
-    bgEmail: '#fff7ed',
-    fontFamily: 'Georgia, serif',
-    fontColor: '#1f2937',
-    blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-016/1200/720', radius: '18px' },
-      { type: 'heading', text: '{{City}} Community Meetup', size: '26px' },
-      { type: 'text', html: 'An evening of conversation and connection with {{Brand}}.', color: '#475569' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            {
-              type: 'text',
-              html: '<strong>When + where</strong><br>{{EventDate}} at {{EventTime}}<br>{{Venue}}',
-              color: '#1f2937',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>What to expect</strong><br>{{MeetupHighlights}}',
-              color: '#1f2937',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Save my spot', href: '{{EventUrl}}', align: 'left' },
-      { type: 'text', html: 'Dress code: {{DressCode}}', size: '12px', color: '#6b7280' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-promo-member',
-    title: 'Member Perk Offer',
-    category: 'Promotion',
-    subject: 'Member perk: {{OfferName}}',
-    shortcut: '/perk',
-    tier: 'free',
-    stylePresetId: 'mint-labs',
-    bgEmail: '#ecfdf5',
-    fontFamily: 'Arial, sans-serif',
-    fontColor: '#064e3b',
-    blocks: [
-      { type: 'heading', text: 'Member Perk: {{OfferName}}', size: '26px' },
-      { type: 'text', html: 'Exclusive access for {{Brand}} members.', color: '#065f46' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-017/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            {
-              type: 'text',
-              html: '<strong>What is included</strong><br>{{PerkOne}}<br>{{PerkTwo}}<br>{{PerkThree}}',
-              color: '#064e3b',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#bbf7d0' }
-            }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-018/700/420', radius: '12px' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Member code</strong><br>{{PromoCode}}<br>Valid through {{EndDate}}',
-        color: '#064e3b',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#bbf7d0' }
-      },
-      { type: 'button', text: 'Redeem perk', href: '{{PerkUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-promo-sale',
-    title: 'Seasonal Sale Promo',
-    category: 'Promotion',
-    subject: '{{Season}} Sale: {{Discount}} Off',
-    shortcut: '/sale',
+    id: 'tpl-curated-collection-drop',
+    title: 'Collection Drop',
+    category: 'Launch',
+    subject: 'The Sunday Goods drop is live',
     tier: 'free',
     stylePresetId: 'citrus-pop',
     bgEmail: '#fffbeb',
     fontFamily: 'Verdana, sans-serif',
     fontColor: '#78350f',
     blocks: [
-      { type: 'heading', text: '{{Season}} Sale', size: '30px', align: 'center', color: '#78350f' },
-      { type: 'text', html: '{{Discount}} off best sellers at {{Brand}}.', color: '#92400e', align: 'center' },
-      { type: 'button', text: 'Shop the sale', href: '{{SaleUrl}}', align: 'center', bg: '#f97316', color: '#1f1300', radius: '999px' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-019/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-020/700/420', radius: '12px' },
-            { type: 'text', html: '<strong>{{ProductOneName}}</strong><br>{{ProductOnePrice}}', size: '12px', color: '#92400e', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-021/700/420', radius: '12px' },
-            { type: 'text', html: '<strong>{{ProductTwoName}}</strong><br>{{ProductTwoPrice}}', size: '12px', color: '#92400e', align: 'center' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Use code</strong><br>{{PromoCode}}<br>Ends {{EndDate}}',
-        color: '#78350f',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#fde68a' }
-      },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpHeading('Sunday Goods is live', { size: '32px', align: 'center', color: '#78350f' }),
+      mpText('A small seasonal drop built around warm color, practical carry, and things that age well.', { color: '#92400e', align: 'center' }),
+      mpGrid(3, [
+        [mpHero('drop-canvas', { width: 640, height: 420, radius: '14px' }), mpText('<strong>Canvas Tote</strong><br>$48', { size: '12px', color: '#92400e', align: 'center' })],
+        [mpHero('drop-mug', { width: 640, height: 420, radius: '14px' }), mpText('<strong>Studio Mug</strong><br>$28', { size: '12px', color: '#92400e', align: 'center' })],
+        [mpHero('drop-blanket', { width: 640, height: 420, radius: '14px' }), mpText('<strong>Desk Blanket</strong><br>$72', { size: '12px', color: '#92400e', align: 'center' })]
+      ]),
+      mpCard('<strong>Launch window</strong><br>Available through Sunday night or until the first run sells out.', { borderColor: '#fde68a', color: '#78350f' }),
+      mpButton('Shop the drop', MP_SITE + '/shop', { align: 'center', bg: '#f97316', color: '#1f1300' })
     ]
   },
   {
-    id: 'tpl-promo-bundle',
-    title: 'Bundle Offer',
-    category: 'Promotion',
-    subject: '{{BundleName}} Bundle Offer',
-    shortcut: '/bundle',
-    tier: 'free',
-    stylePresetId: 'mono-ink',
-    bgEmail: '#f5f5f4',
-    fontFamily: "'Courier New', monospace",
-    fontColor: '#1c1917',
-    blocks: [
-      { type: 'heading', text: '{{BundleName}} Bundle', size: '28px', align: 'center' },
-      { type: 'text', html: 'Everything you need to ship faster, bundled for {{BundlePrice}}.', align: 'center', color: '#57534e' },
-      { type: 'button', text: 'Get the bundle', href: '{{BundleUrl}}', align: 'center', bg: '#111827', color: '#ffffff', radius: '999px' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'What is inside', size: '16px' },
-            { type: 'text', html: '&bull; {{BundleOne}}<br>&bull; {{BundleTwo}}<br>&bull; {{BundleThree}}', color: '#57534e' }
-          ],
-          [
-            { type: 'heading', text: 'Bonus', size: '16px' },
-            { type: 'text', html: '{{Bonus}}<br>Ends {{EndDate}}', color: '#57534e' }
-          ]
-        ]
-      },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-022/1200/720', radius: '16px' },
-      { type: 'text', html: 'Bundle ends {{EndDate}}.', size: '12px', color: '#78716c', align: 'center' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-news-monthly',
-    title: 'Monthly Newsletter - Highlights',
-    category: 'Newsletter',
-    subject: '{{Brand}} Monthly Highlights | {{Month}}',
-    shortcut: '/monthly',
-    tier: 'free',
-    stylePresetId: 'ghost-minimal',
-    bgEmail: '#ffffff',
-    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
-    fontColor: '#0f172a',
-    blocks: [
-      { type: 'heading', text: 'Monthly Highlights', size: '28px' },
-      { type: 'text', html: 'Edition {{Month}} {{Year}} | {{Brand}}', size: '12px', color: '#64748b' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-023/1200/720', radius: '14px' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Top story', size: '16px' },
-            { type: 'text', html: '<strong>{{TopStoryTitle}}</strong><br>{{TopStorySummary}}', color: '#475569' },
-            { type: 'button', text: 'Read full story', href: '{{TopStoryUrl}}', align: 'left' }
-          ],
-          [
-            { type: 'heading', text: 'In this issue', size: '16px' },
-            { type: 'text', html: '&bull; {{StoryTwoTitle}}<br>&bull; {{StoryThreeTitle}}<br>&bull; {{StoryFourTitle}}', color: '#475569' },
-            { type: 'text', html: 'Plus: {{BonusNote}}', size: '12px', color: '#64748b' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Editor note</strong><br>{{EditorNote}}',
-        color: '#0f172a',
-        background: '#f8fafc',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-      },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            {
-              type: 'text',
-              html: '<strong>{{MetricOneValue}}</strong><br>{{MetricOneLabel}}',
-              color: '#0f172a',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{MetricTwoValue}}</strong><br>{{MetricTwoLabel}}',
-              color: '#0f172a',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{MetricThreeValue}}</strong><br>{{MetricThreeLabel}}',
-              color: '#0f172a',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ]
-        ]
-      },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] },
-      { type: 'text', html: 'You are receiving this because you subscribed at {{Website}}.', size: '11px', color: '#94a3b8', align: 'center' }
-    ]
-  },
-  {
-    id: 'tpl-news-insight',
-    title: 'Insights Newsletter - Trends',
-    category: 'Newsletter',
-    subject: '{{Brand}} Insight Brief | {{Date}}',
-    shortcut: '/insight',
+    id: 'tpl-curated-partner-collab',
+    title: 'Partner Collaboration',
+    category: 'Launch',
+    subject: 'A new collaboration with Northstar Studio',
     tier: 'free',
     stylePresetId: 'cobalt-cloud',
     bgEmail: '#eef2ff',
     fontFamily: 'Tahoma, sans-serif',
     fontColor: '#111827',
     blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-024/1200/720', radius: '16px' },
-      { type: 'heading', text: 'Insight Brief', size: '28px', align: 'center' },
-      { type: 'text', html: 'Trends shaping {{Industry}} this week.', color: '#475569', align: 'center' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Trend: {{TrendOneTitle}}', size: '16px' },
-            { type: 'text', html: '{{TrendOneSummary}}', color: '#475569' },
-            { type: 'button', text: 'Read analysis', href: '{{TrendOneUrl}}', align: 'left' }
-          ],
-          [
-            { type: 'heading', text: 'Trend: {{TrendTwoTitle}}', size: '16px' },
-            { type: 'text', html: '{{TrendTwoSummary}}', color: '#475569' },
-            { type: 'button', text: 'Read analysis', href: '{{TrendTwoUrl}}', align: 'left' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Key data point</strong><br>{{KeyDataPoint}}',
-        color: '#111827',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#c7d2fe' }
-      },
-      { type: 'text', html: '<strong>Forecast</strong><br>{{ForecastSummary}}', color: '#475569' },
-      { type: 'button', text: 'See full report', href: '{{ReportUrl}}', align: 'center' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpText('COLLABORATION', { size: '12px', color: '#4338ca', align: 'center' }),
+      mpHeading('Northstar Studio x Fieldkit', { size: '30px', align: 'center' }),
+      mpHero('partner-collab', { alt: 'Two creative teams reviewing product boards' }),
+      mpText('We teamed up to create a compact planning kit for launch teams who need fewer meetings and clearer handoffs.', { color: '#475569', align: 'center' }),
+      mpGrid(2, [
+        [mpCard('<strong>Inside the kit</strong><br>Launch checklist, asset map, status email, and retrospective prompts.', { borderColor: '#c7d2fe' })],
+        [mpCard('<strong>Best for</strong><br>Small teams coordinating launches across design, content, and operations.', { borderColor: '#c7d2fe' })]
+      ]),
+      mpButton('See the collaboration', MP_SITE + '/collab', { align: 'center' })
     ]
   },
   {
-    id: 'tpl-news-metrics',
-    title: 'Metrics Newsletter - Snapshot',
-    category: 'Newsletter',
-    subject: '{{Brand}} Metrics Snapshot | {{Date}}',
-    shortcut: '/metrics',
-    tier: 'free',
-    stylePresetId: 'mono-ink',
-    bgEmail: '#f5f5f4',
-    fontFamily: "'Courier New', monospace",
-    fontColor: '#1c1917',
-    blocks: [
-      { type: 'heading', text: 'Metrics Snapshot', size: '28px' },
-      { type: 'text', html: 'Performance for {{Period}} at a glance.', color: '#57534e' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            {
-              type: 'text',
-              html: '<strong>{{MetricOneValue}}</strong><br>{{MetricOneLabel}}',
-              color: '#1c1917',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e7e5e4' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{MetricTwoValue}}</strong><br>{{MetricTwoLabel}}',
-              color: '#1c1917',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e7e5e4' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{MetricThreeValue}}</strong><br>{{MetricThreeLabel}}',
-              color: '#1c1917',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e7e5e4' }
-            }
-          ]
-        ]
-      },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Growth drivers', size: '16px' },
-            { type: 'text', html: '&bull; {{DriverOne}}<br>&bull; {{DriverTwo}}<br>&bull; {{DriverThree}}', color: '#57534e' }
-          ],
-          [
-            { type: 'heading', text: 'Challenges', size: '16px' },
-            { type: 'text', html: '&bull; {{ChallengeOne}}<br>&bull; {{ChallengeTwo}}<br>&bull; {{ChallengeThree}}', color: '#57534e' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Focus this week</strong><br>{{FocusTheme}}',
-        color: '#1c1917',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e7e5e4' }
-      },
-      { type: 'button', text: 'Open dashboard', href: '{{DashboardUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-news-story',
-    title: 'Brand Newsletter - Story',
-    category: 'Newsletter',
-    subject: '{{Brand}} Story Edition | {{Issue}}',
-    shortcut: '/story',
-    tier: 'free',
-    stylePresetId: 'editorial-serif',
-    bgEmail: '#fff7ed',
-    fontFamily: 'Georgia, serif',
-    fontColor: '#1f2937',
-    blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-025/1200/720', radius: '16px' },
-      { type: 'heading', text: 'Story Edition', size: '28px' },
-      { type: 'text', html: 'Issue {{Issue}} | {{Date}}', size: '12px', color: '#6b7280' },
-      { type: 'text', html: '{{StoryIntro}}', color: '#475569', lineHeight: '1.7' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Feature story', size: '16px' },
-            { type: 'text', html: '<strong>{{FeatureTitle}}</strong><br>{{FeatureSummary}}', color: '#475569' },
-            { type: 'button', text: 'Read the feature', href: '{{FeatureUrl}}', align: 'left' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-026/700/420', radius: '12px' },
-            { type: 'text', html: '{{PhotoCaption}}', size: '12px', color: '#6b7280', align: 'center' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Quote of the month</strong><br>{{Quote}}',
-        color: '#1f2937',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#fed7aa' }
-      },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-launch-redesign',
-    title: 'Product Redesign - Reveal',
-    category: 'Launch',
-    subject: 'Meet the new {{ProductName}}',
-    shortcut: '/redesign',
-    tier: 'free',
-    stylePresetId: 'cobalt-cloud',
-    bgEmail: '#eef2ff',
-    fontFamily: 'Tahoma, sans-serif',
-    fontColor: '#111827',
-    blocks: [
-      { type: 'heading', text: 'Meet the new {{ProductName}}', size: '30px', align: 'center' },
-      { type: 'text', html: 'A cleaner, faster experience built for {{Audience}}.', color: '#475569', align: 'center' },
-      { type: 'button', text: 'Explore the redesign', href: '{{RedesignUrl}}', align: 'center' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-027/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            { type: 'heading', text: 'Speed', size: '15px' },
-            { type: 'text', html: '{{RedesignFeatureOne}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: 'Clarity', size: '15px' },
-            { type: 'text', html: '{{RedesignFeatureTwo}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: 'Control', size: '15px' },
-            { type: 'text', html: '{{RedesignFeatureThree}}', color: '#475569' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>What changed</strong><br>{{ChangeSummary}}',
-        color: '#111827',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#c7d2fe' }
-      },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-launch-beta',
-    title: 'Beta Access - Early List',
-    category: 'Launch',
-    subject: '{{ProductName}} Beta Access',
-    shortcut: '/beta',
-    tier: 'free',
-    stylePresetId: 'aqua-studio',
-    bgEmail: '#ecfeff',
-    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
-    fontColor: '#0f172a',
-    blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-028/1200/720', radius: '16px' },
-      { type: 'heading', text: 'Get beta access', size: '26px' },
-      { type: 'text', html: 'Be the first to try {{ProductName}} before launch.', color: '#475569' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Why beta', size: '16px' },
-            { type: 'text', html: '&bull; {{BetaWhyOne}}<br>&bull; {{BetaWhyTwo}}<br>&bull; {{BetaWhyThree}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: 'What you get', size: '16px' },
-            { type: 'text', html: '&bull; {{BetaPerkOne}}<br>&bull; {{BetaPerkTwo}}<br>&bull; {{BetaPerkThree}}', color: '#475569' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Request access', href: '{{BetaUrl}}', align: 'left' },
-      { type: 'text', html: 'Spots are limited. {{BetaCloseDate}}', size: '12px', color: '#64748b' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-launch-partner',
-    title: 'Partnership Launch - Co-Brand',
-    category: 'Launch',
-    subject: '{{Brand}} x {{Partner}} launch',
-    shortcut: '/partner',
-    tier: 'free',
-    stylePresetId: 'vapor-peach',
-    bgEmail: '#fff1f2',
-    fontFamily: 'Trebuchet MS, Verdana, sans-serif',
-    fontColor: '#4c0519',
-    blocks: [
-      { type: 'heading', text: '{{Brand}} x {{Partner}}', size: '28px', align: 'center', color: '#4c0519' },
-      { type: 'text', html: 'A collaboration built for {{Audience}}.', color: '#9f1239', align: 'center' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-029/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'What we built', size: '16px', color: '#4c0519' },
-            { type: 'text', html: '&bull; {{CollabOne}}<br>&bull; {{CollabTwo}}<br>&bull; {{CollabThree}}', color: '#9f1239' }
-          ],
-          [
-            { type: 'heading', text: 'Why it matters', size: '16px', color: '#4c0519' },
-            { type: 'text', html: '{{CollabImpact}}', color: '#9f1239' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'See the collaboration', href: '{{CollabUrl}}', align: 'center' },
-      { type: 'text', html: 'Launch window: {{LaunchWindow}}', size: '12px', color: '#9f1239', align: 'center' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-launch-drop',
-    title: 'New Collection - Drop',
-    category: 'Launch',
-    subject: 'New drop: {{CollectionName}}',
-    shortcut: '/drop',
+    id: 'tpl-curated-seasonal-sale',
+    title: 'Seasonal Sale',
+    category: 'Promotion',
+    subject: 'A warm weekend sale',
     tier: 'free',
     stylePresetId: 'citrus-pop',
     bgEmail: '#fffbeb',
     fontFamily: 'Verdana, sans-serif',
     fontColor: '#78350f',
     blocks: [
-      { type: 'heading', text: '{{CollectionName}} drop', size: '30px', align: 'center', color: '#78350f' },
-      { type: 'text', html: 'Limited release for {{Season}}.', color: '#92400e', align: 'center' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-030/600/360', radius: '12px' },
-            { type: 'text', html: '{{DropOneName}}', size: '12px', color: '#92400e', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-031/600/360', radius: '12px' },
-            { type: 'text', html: '{{DropTwoName}}', size: '12px', color: '#92400e', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-032/600/360', radius: '12px' },
-            { type: 'text', html: '{{DropThreeName}}', size: '12px', color: '#92400e', align: 'center' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Available</strong><br>{{AvailabilityWindow}}',
-        color: '#78350f',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#fde68a' }
-      },
-      { type: 'button', text: 'Shop the drop', href: '{{CollectionUrl}}', align: 'center' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpText('WEEKEND ONLY', { size: '12px', color: '#ea580c', align: 'center' }),
+      mpHeading('Warm up your workspace', { size: '31px', align: 'center', color: '#78350f' }),
+      mpText('Take 20% off reader favorites through Monday. No mystery countdowns, just a straightforward seasonal thank-you.', { color: '#92400e', align: 'center' }),
+      mpButton('Shop the sale', MP_SITE + '/sale', { align: 'center', bg: '#f97316', color: '#1f1300' }),
+      mpHero('seasonal-sale', { alt: 'Warm desktop product arrangement' }),
+      mpGrid(2, [
+        [mpCard('<strong>Use code</strong><br>WARM20', { align: 'center', borderColor: '#fde68a', color: '#78350f' })],
+        [mpCard('<strong>Ends</strong><br>Monday at midnight', { align: 'center', borderColor: '#fde68a', color: '#78350f' })]
+      ]),
+      mpFooter('Discount applies at checkout while supplies last.', '#92400e')
     ]
   },
   {
-    id: 'tpl-event-webinar',
-    title: 'Webinar Invite - Live Demo',
-    category: 'Events',
-    subject: 'Live demo: {{EventName}}',
-    shortcut: '/webinar',
-    tier: 'free',
-    stylePresetId: 'aqua-studio',
-    bgEmail: '#ecfeff',
-    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
-    fontColor: '#0f172a',
-    blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-033/1200/720', radius: '16px' },
-      { type: 'heading', text: 'Live demo: {{EventName}}', size: '26px' },
-      { type: 'text', html: 'Join {{HostName}} for a walkthrough of {{Topic}}.', color: '#475569' },
-      {
-        type: 'text',
-        html: '<strong>Event details</strong><br>{{EventDate}} | {{EventTime}} | {{EventLocation}}',
-        color: '#0f172a',
-        background: '#ffffff',
-        layout: { padding: '14px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-      },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'You will learn', size: '16px' },
-            { type: 'text', html: '&bull; {{LessonOne}}<br>&bull; {{LessonTwo}}<br>&bull; {{LessonThree}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: 'Speakers', size: '16px' },
-            { type: 'text', html: '<strong>{{SpeakerOne}}</strong><br>{{SpeakerOneRole}}<br><strong>{{SpeakerTwo}}</strong><br>{{SpeakerTwoRole}}', color: '#475569' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Reserve my seat', href: '{{EventUrl}}', align: 'left' },
-      { type: 'text', html: 'Replay available to registered attendees.', size: '12px', color: '#64748b' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-event-savedate',
-    title: 'Save the Date - Conference',
-    category: 'Events',
-    subject: 'Save the date: {{EventName}}',
-    shortcut: '/savedate',
-    tier: 'free',
-    stylePresetId: 'rose-noir',
-    bgEmail: '#1f1134',
-    fontFamily: 'Verdana, sans-serif',
-    fontColor: '#f8fafc',
-    blocks: [
-      { type: 'heading', text: 'Save the Date: {{EventName}}', size: '28px', align: 'center', color: '#f8fafc' },
-      { type: 'text', html: '{{EventDate}} | {{City}}', align: 'center', color: '#f3e8ff' },
-      { type: 'button', text: 'Get early tickets', href: '{{EventUrl}}', align: 'center' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-034/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 2,
-        background: '#2a1845',
-        layout: { padding: '12px', radius: '14px', borderWidth: '1', borderColor: '#3b1d59' },
-        columns: [
-          [
-            { type: 'heading', text: 'Why attend', size: '16px', color: '#f8fafc' },
-            { type: 'text', html: '&bull; {{ReasonOne}}<br>&bull; {{ReasonTwo}}<br>&bull; {{ReasonThree}}', color: '#f3e8ff' }
-          ],
-          [
-            { type: 'heading', text: 'Featured tracks', size: '16px', color: '#f8fafc' },
-            { type: 'text', html: '&bull; {{TrackOne}}<br>&bull; {{TrackTwo}}<br>&bull; {{TrackThree}}', color: '#f3e8ff' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Venue</strong><br>{{Venue}}<br>{{VenueAddress}}',
-        color: '#f8fafc',
-        background: '#2a1845',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#3b1d59' }
-      },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-event-recap',
-    title: 'Event Recap - Highlights',
-    category: 'Events',
-    subject: '{{EventName}} recap + highlights',
-    shortcut: '/recap',
-    tier: 'free',
-    stylePresetId: 'ghost-minimal',
-    bgEmail: '#ffffff',
-    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
-    fontColor: '#0f172a',
-    blocks: [
-      { type: 'heading', text: 'Highlights from {{EventName}}', size: '28px' },
-      { type: 'text', html: 'Thank you for joining us on {{EventDate}}.', color: '#475569' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-035/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Top moments', size: '16px' },
-            { type: 'text', html: '&bull; {{MomentOne}}<br>&bull; {{MomentTwo}}<br>&bull; {{MomentThree}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: 'Key takeaways', size: '16px' },
-            { type: 'text', html: '&bull; {{TakeawayOne}}<br>&bull; {{TakeawayTwo}}<br>&bull; {{TakeawayThree}}', color: '#475569' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Watch the replay', href: '{{ReplayUrl}}', align: 'left' },
-      { type: 'text', html: 'Share your feedback: {{FeedbackUrl}}', size: '12px', color: '#64748b' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-event-series',
-    title: 'Workshop Series - Multi-Session',
-    category: 'Events',
-    subject: '{{SeriesName}} workshop series',
-    shortcut: '/series',
-    tier: 'free',
-    stylePresetId: 'mint-labs',
-    bgEmail: '#ecfdf5',
-    fontFamily: 'Arial, sans-serif',
-    fontColor: '#064e3b',
-    blocks: [
-      { type: 'heading', text: 'Workshop Series: {{SeriesName}}', size: '26px' },
-      { type: 'text', html: 'A multi-week deep dive into {{Topic}}.', color: '#065f46' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            {
-              type: 'text',
-              html: '<strong>Session schedule</strong><br>{{SessionOne}}<br>{{SessionTwo}}<br>{{SessionThree}}',
-              color: '#064e3b',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#bbf7d0' }
-            }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-036/700/420', radius: '12px' },
-            { type: 'text', html: 'Led by {{InstructorName}}', size: '12px', color: '#6b7280', align: 'center' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Join the series', href: '{{SeriesUrl}}', align: 'left' },
-      { type: 'text', html: 'Includes recordings and worksheets.', size: '12px', color: '#6b7280' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-promo-limited',
-    title: 'Limited-Time Offer',
-    category: 'Promotion',
-    subject: '{{OfferName}} ends {{EndDate}}',
-    shortcut: '/limited',
-    tier: 'free',
-    stylePresetId: 'citrus-pop',
-    bgEmail: '#fffbeb',
-    fontFamily: 'Verdana, sans-serif',
-    fontColor: '#78350f',
-    blocks: [
-      { type: 'heading', text: '{{OfferName}}', size: '30px', align: 'center', color: '#78350f' },
-      { type: 'text', html: '{{Discount}} off until {{EndDate}}.', color: '#92400e', align: 'center' },
-      { type: 'button', text: 'Claim the offer', href: '{{OfferUrl}}', align: 'center' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-037/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'What is included', size: '16px', color: '#78350f' },
-            { type: 'text', html: '&bull; {{OfferDetailOne}}<br>&bull; {{OfferDetailTwo}}<br>&bull; {{OfferDetailThree}}', color: '#92400e' }
-          ],
-          [
-            { type: 'heading', text: 'Perfect for', size: '16px', color: '#78350f' },
-            { type: 'text', html: '&bull; {{OfferAudienceOne}}<br>&bull; {{OfferAudienceTwo}}<br>&bull; {{OfferAudienceThree}}', color: '#92400e' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Use code</strong><br>{{PromoCode}}',
-        color: '#78350f',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#fde68a' }
-      },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-promo-referral',
-    title: 'Referral Program',
-    category: 'Promotion',
-    subject: 'Invite friends, earn {{Reward}}',
-    shortcut: '/referral',
-    tier: 'free',
-    stylePresetId: 'mint-labs',
-    bgEmail: '#ecfdf5',
-    fontFamily: 'Arial, sans-serif',
-    fontColor: '#064e3b',
-    blocks: [
-      { type: 'heading', text: 'Invite friends, earn {{Reward}}', size: '26px' },
-      { type: 'text', html: 'Share {{Brand}} and get rewarded when they join.', color: '#065f46' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            { type: 'heading', text: '1. Share', size: '14px' },
-            { type: 'text', html: '{{StepOne}}', color: '#065f46' }
-          ],
-          [
-            { type: 'heading', text: '2. Invite', size: '14px' },
-            { type: 'text', html: '{{StepTwo}}', color: '#065f46' }
-          ],
-          [
-            { type: 'heading', text: '3. Earn', size: '14px' },
-            { type: 'text', html: '{{StepThree}}', color: '#065f46' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Get my referral link', href: '{{ReferralUrl}}', align: 'left' },
-      { type: 'text', html: 'Rewards apply after {{Requirement}}.', size: '12px', color: '#6b7280' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-promo-vip',
+    id: 'tpl-curated-vip-access',
     title: 'VIP Early Access',
     category: 'Promotion',
-    subject: 'VIP early access to {{LaunchName}}',
-    shortcut: '/vip',
+    subject: 'Your early access window is open',
     tier: 'free',
     stylePresetId: 'midnight-neon',
     bgEmail: '#0b1120',
     fontFamily: 'Arial, sans-serif',
     fontColor: '#e2e8f0',
     blocks: [
-      { type: 'heading', text: 'VIP Early Access', size: '30px', align: 'center', color: '#f8fafc' },
-      { type: 'text', html: 'Be first to experience {{LaunchName}}.', align: 'center', color: '#cbd5e1' },
-      { type: 'button', text: 'Unlock access', href: '{{VipUrl}}', align: 'center' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-038/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 2,
-        background: '#111827',
-        layout: { padding: '12px', radius: '14px', borderWidth: '1', borderColor: '#1f2937' },
-        columns: [
-          [
-            { type: 'heading', text: 'VIP perks', size: '16px', color: '#f8fafc' },
-            { type: 'text', html: '&bull; {{VipPerkOne}}<br>&bull; {{VipPerkTwo}}<br>&bull; {{VipPerkThree}}', color: '#cbd5e1' }
-          ],
-          [
-            { type: 'heading', text: 'Timeline', size: '16px', color: '#f8fafc' },
-            { type: 'text', html: '{{VipTimeline}}', color: '#cbd5e1' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Access opens</strong><br>{{AccessDate}}',
-        color: '#e2e8f0',
-        background: '#0f172a',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#1f2937' }
-      },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpHeading('Your early access window is open', { size: '31px', align: 'center', color: '#f8fafc' }),
+      mpText('You are receiving this before the public announcement because you joined the first-look list.', { color: '#cbd5e1', align: 'center' }),
+      mpButton('Unlock early access', MP_SITE + '/vip', { align: 'center', bg: '#38bdf8', color: '#0b1120' }),
+      mpGrid(3, [
+        [mpMetric('48 hrs', 'Private access', { background: '#111827', borderColor: '#1f2937', color: '#e2e8f0' })],
+        [mpMetric('15%', 'Launch savings', { background: '#111827', borderColor: '#1f2937', color: '#e2e8f0' })],
+        [mpMetric('1:1', 'Setup help', { background: '#111827', borderColor: '#1f2937', color: '#e2e8f0' })]
+      ]),
+      mpCard('<strong>Access note</strong><br>When the public page opens, early access pricing will disappear automatically.', { background: '#0f172a', borderColor: '#1f2937', color: '#e2e8f0' })
     ]
   },
   {
-    id: 'tpl-promo-gift',
-    title: 'Gift Guide - Seasonal Picks',
+    id: 'tpl-curated-referral-invite',
+    title: 'Referral Invite',
     category: 'Promotion',
-    subject: '{{Season}} gift guide from {{Brand}}',
-    shortcut: '/gift',
+    subject: 'Give a month, get a month',
+    tier: 'free',
+    stylePresetId: 'mint-labs',
+    bgEmail: '#ecfdf5',
+    fontFamily: 'Arial, sans-serif',
+    fontColor: '#064e3b',
+    blocks: [
+      mpHeading('Give a month, get a month', { size: '28px' }),
+      mpText('Invite a friend who would actually use this. When they join, you both get a free month added to your accounts.', { color: '#065f46' }),
+      mpGrid(3, [
+        [mpHeading('1', { size: '22px', align: 'center' }), mpText('Share your referral link.', { color: '#065f46', align: 'center' })],
+        [mpHeading('2', { size: '22px', align: 'center' }), mpText('They create their first project.', { color: '#065f46', align: 'center' })],
+        [mpHeading('3', { size: '22px', align: 'center' }), mpText('You both get credit.', { color: '#065f46', align: 'center' })]
+      ], { background: '#ffffff', layout: mpLayout({ padding: '12px', radius: '16px', borderWidth: '1', borderColor: '#bbf7d0' }) }),
+      mpButton('Get my referral link', MP_SITE + '/referral'),
+      mpFooter('Credits apply after the referred account is active.', '#047857')
+    ]
+  },
+  {
+    id: 'tpl-curated-bundle-offer',
+    title: 'Bundle Offer',
+    category: 'Promotion',
+    subject: 'The operator bundle is live',
+    tier: 'free',
+    stylePresetId: 'mono-ink',
+    bgEmail: '#f5f5f4',
+    fontFamily: "'Courier New', monospace",
+    fontColor: '#1c1917',
+    blocks: [
+      mpText('BUNDLE / 04', { size: '12px', color: '#78716c' }),
+      mpHeading('The operator bundle', { size: '30px' }),
+      mpText('Templates, checklists, and example messages for people who coordinate launches without wanting a project-management theater production.', { color: '#57534e' }),
+      mpGrid(2, [
+        [mpHeading('Included', { size: '16px' }), mpText('&bull; Launch status email<br>&bull; Weekly metrics memo<br>&bull; Customer update<br>&bull; Event recap', { color: '#57534e' })],
+        [mpHeading('Bonus', { size: '16px' }), mpText('A one-page QA checklist for catching broken links, unclear CTAs, and weird spacing before sending.', { color: '#57534e' })]
+      ]),
+      mpHero('bundle-offer', { alt: 'Organized bundle of cards and checklists' }),
+      mpButton('Download the bundle', MP_SITE + '/bundle', { bg: '#111827', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-curated-gift-guide',
+    title: 'Gift Guide',
+    category: 'Promotion',
+    subject: 'A useful gift guide',
     tier: 'free',
     stylePresetId: 'vapor-peach',
     bgEmail: '#fff1f2',
     fontFamily: 'Trebuchet MS, Verdana, sans-serif',
     fontColor: '#4c0519',
     blocks: [
-      { type: 'heading', text: '{{Season}} Gift Guide', size: '28px', align: 'center', color: '#4c0519' },
-      { type: 'text', html: 'Curated picks from {{Brand}}.', color: '#9f1239', align: 'center' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-039/600/360', radius: '12px' },
-            { type: 'text', html: '<strong>{{GiftOneName}}</strong><br>{{GiftOnePrice}}', size: '12px', color: '#9f1239', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-040/600/360', radius: '12px' },
-            { type: 'text', html: '<strong>{{GiftTwoName}}</strong><br>{{GiftTwoPrice}}', size: '12px', color: '#9f1239', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-041/600/360', radius: '12px' },
-            { type: 'text', html: '<strong>{{GiftThreeName}}</strong><br>{{GiftThreePrice}}', size: '12px', color: '#9f1239', align: 'center' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Shop the guide', href: '{{GuideUrl}}', align: 'center' },
-      { type: 'text', html: 'Free shipping over {{FreeShipThreshold}}.', size: '12px', color: '#9f1239', align: 'center' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpHeading('Gifts that will not become clutter', { size: '29px', align: 'center', color: '#4c0519' }),
+      mpText('A short guide for practical people, desk people, cozy people, and the person who says they do not need anything.', { color: '#9f1239', align: 'center' }),
+      mpGrid(3, [
+        [mpHero('gift-notebook', { width: 640, height: 420, radius: '14px' }), mpText('<strong>For note-takers</strong><br>The daily desk set', { size: '12px', color: '#9f1239', align: 'center' })],
+        [mpHero('gift-coffee', { width: 640, height: 420, radius: '14px' }), mpText('<strong>For slow mornings</strong><br>The thermal mug', { size: '12px', color: '#9f1239', align: 'center' })],
+        [mpHero('gift-bag', { width: 640, height: 420, radius: '14px' }), mpText('<strong>For commuters</strong><br>The canvas carryall', { size: '12px', color: '#9f1239', align: 'center' })]
+      ]),
+      mpButton('Shop the guide', MP_SITE + '/gift-guide', { align: 'center', bg: '#e11d48', color: '#ffffff' }),
+      mpFooter('Order by December 15 for standard holiday delivery.', '#9f1239')
     ]
   },
   {
-    id: 'tpl-product-changelog',
-    title: 'Product Update - Changelog',
+    id: 'tpl-curated-changelog-clean',
+    title: 'Clean Changelog',
     category: 'Product',
-    subject: '{{ProductName}} updates | {{Date}}',
-    shortcut: '/changelog',
+    subject: 'What changed this week',
     tier: 'free',
     stylePresetId: 'ghost-minimal',
     bgEmail: '#ffffff',
     fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
     fontColor: '#0f172a',
     blocks: [
-      { type: 'heading', text: 'Product Updates', size: '28px' },
-      { type: 'text', html: 'New in {{ProductName}} - {{Date}}', size: '12px', color: '#64748b' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'New features', size: '16px' },
-            { type: 'text', html: '&bull; {{FeatureOne}}<br>&bull; {{FeatureTwo}}<br>&bull; {{FeatureThree}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: 'Improvements', size: '16px' },
-            { type: 'text', html: '&bull; {{ImprovementOne}}<br>&bull; {{ImprovementTwo}}<br>&bull; {{ImprovementThree}}', color: '#475569' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Bug fixes</strong><br>{{FixesSummary}}',
-        color: '#0f172a',
-        background: '#f8fafc',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-      },
-      { type: 'button', text: 'View full changelog', href: '{{ChangelogUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpText('CHANGELOG', { size: '12px', color: '#64748b' }),
+      mpHeading('What changed this week', { size: '29px' }),
+      mpText('A focused update for people who want to know what is better, what is fixed, and whether they need to do anything.', { color: '#475569' }),
+      mpGrid(2, [
+        [mpHeading('New', { size: '16px' }), mpText('&bull; Faster export previews<br>&bull; Cleaner mobile editor controls<br>&bull; More useful example templates', { color: '#475569' })],
+        [mpHeading('Fixed', { size: '16px' }), mpText('&bull; Toolbar buttons no longer disappear<br>&bull; Empty-state language matches the app<br>&bull; Old extension copy is gone', { color: '#475569' })]
+      ]),
+      mpCard('<strong>Do you need to do anything?</strong><br>No. The update is available the next time you open the app.', { background: '#f8fafc' }),
+      mpButton('View all changes', MP_SITE + '/changelog')
     ]
   },
   {
-    id: 'tpl-product-roadmap',
+    id: 'tpl-curated-roadmap-preview',
     title: 'Roadmap Preview',
     category: 'Product',
-    subject: '{{ProductName}} roadmap preview',
-    shortcut: '/roadmap',
+    subject: 'A preview of what is next',
     tier: 'free',
     stylePresetId: 'cobalt-cloud',
     bgEmail: '#eef2ff',
     fontFamily: 'Tahoma, sans-serif',
     fontColor: '#111827',
     blocks: [
-      { type: 'heading', text: 'Roadmap Preview', size: '28px' },
-      { type: 'text', html: 'A look at what is coming next for {{ProductName}}.', color: '#475569' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            { type: 'heading', text: '{{QuarterOne}}', size: '15px' },
-            { type: 'text', html: '&bull; {{Q1ItemOne}}<br>&bull; {{Q1ItemTwo}}<br>&bull; {{Q1ItemThree}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: '{{QuarterTwo}}', size: '15px' },
-            { type: 'text', html: '&bull; {{Q2ItemOne}}<br>&bull; {{Q2ItemTwo}}<br>&bull; {{Q2ItemThree}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: '{{QuarterThree}}', size: '15px' },
-            { type: 'text', html: '&bull; {{Q3ItemOne}}<br>&bull; {{Q3ItemTwo}}<br>&bull; {{Q3ItemThree}}', color: '#475569' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Feedback focus</strong><br>{{FeedbackFocus}}',
-        color: '#111827',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#c7d2fe' }
-      },
-      { type: 'button', text: 'Share feedback', href: '{{FeedbackUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpHeading('A preview of what is next', { size: '29px' }),
+      mpText('Here is where the product is headed and how your feedback is shaping the order of work.', { color: '#475569' }),
+      mpGrid(3, [
+        [mpCard('<strong>Now</strong><br>Cleaner editing on mobile and stronger built-in examples.', { borderColor: '#c7d2fe' })],
+        [mpCard('<strong>Next</strong><br>Better import previews and safer backup restore flows.', { borderColor: '#c7d2fe' })],
+        [mpCard('<strong>Later</strong><br>Optional theme packs and more email-client testing notes.', { borderColor: '#c7d2fe' })]
+      ]),
+      mpText('If one of these matters more than the others, reply and tell us where the pain is strongest.', { color: '#475569' }),
+      mpButton('Share feedback', MP_SITE + '/feedback')
     ]
   },
   {
-    id: 'tpl-product-spotlight',
+    id: 'tpl-curated-feature-spotlight',
     title: 'Feature Spotlight',
     category: 'Product',
-    subject: '{{FeatureName}} spotlight',
-    shortcut: '/spotlight',
+    subject: 'Feature spotlight: local backups',
     tier: 'free',
-    stylePresetId: 'aqua-studio',
-    bgEmail: '#ecfeff',
-    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
-    fontColor: '#0f172a',
+    stylePresetId: 'mint-labs',
+    bgEmail: '#ecfdf5',
+    fontFamily: 'Arial, sans-serif',
+    fontColor: '#064e3b',
     blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-042/1200/720', radius: '16px' },
-      { type: 'heading', text: '{{FeatureName}} Spotlight', size: '26px' },
-      { type: 'text', html: '{{FeatureTagline}}', color: '#475569' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Use cases', size: '16px' },
-            { type: 'text', html: '&bull; {{UseCaseOne}}<br>&bull; {{UseCaseTwo}}<br>&bull; {{UseCaseThree}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: 'How it works', size: '16px' },
-            { type: 'text', html: '1. {{StepOne}}<br>2. {{StepTwo}}<br>3. {{StepThree}}', color: '#475569' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Try the feature', href: '{{FeatureUrl}}', align: 'left' },
-      { type: 'text', html: 'Available on {{Availability}}.', size: '12px', color: '#64748b' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpHero('backup-spotlight', { alt: 'Folder and backup drive on a desk' }),
+      mpHeading('Feature spotlight: local backups', { size: '28px' }),
+      mpText('Your templates live in your browser for privacy. Backups give you the same local control without putting all your work at the mercy of one device.', { color: '#065f46' }),
+      mpGrid(2, [
+        [mpHeading('Why it matters', { size: '16px' }), mpText('&bull; Move templates between browsers<br>&bull; Keep a copy before clearing storage<br>&bull; Restore after switching devices', { color: '#065f46' })],
+        [mpHeading('How to use it', { size: '16px' }), mpText('Open Actions, choose Download Backup Copy, and store the JSON file somewhere you already trust.', { color: '#065f46' })]
+      ]),
+      mpButton('Open backup guide', MP_SITE + '/backup'),
+      mpFooter('Tip: download a backup after any template you would hate to lose.', '#047857')
     ]
   },
   {
-    id: 'tpl-product-integration',
+    id: 'tpl-curated-integration-announce',
     title: 'Integration Announcement',
     category: 'Product',
-    subject: '{{ProductName}} + {{IntegrationName}}',
-    shortcut: '/integration',
+    subject: 'New integration: Notion export',
     tier: 'free',
     stylePresetId: 'mono-ink',
     bgEmail: '#f5f5f4',
     fontFamily: "'Courier New', monospace",
     fontColor: '#1c1917',
     blocks: [
-      { type: 'heading', text: '{{ProductName}} + {{IntegrationName}}', size: '28px', align: 'center' },
-      { type: 'text', html: 'Connect your workflow in minutes.', color: '#57534e', align: 'center' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-043/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'What you can do', size: '16px' },
-            { type: 'text', html: '&bull; {{IntegrationBenefitOne}}<br>&bull; {{IntegrationBenefitTwo}}<br>&bull; {{IntegrationBenefitThree}}', color: '#57534e' }
-          ],
-          [
-            { type: 'heading', text: 'Setup steps', size: '16px' },
-            { type: 'text', html: '1. {{SetupStepOne}}<br>2. {{SetupStepTwo}}<br>3. {{SetupStepThree}}', color: '#57534e' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Enable the integration', href: '{{IntegrationUrl}}', align: 'center' },
-      { type: 'text', html: 'Documentation: {{DocsUrl}}', size: '12px', color: '#78716c' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpHeading('New integration: Notion export', { size: '28px', align: 'center' }),
+      mpText('Document finished campaigns where your team already keeps project notes.', { color: '#57534e', align: 'center' }),
+      mpHero('integration-notion', { alt: 'Connected cards showing workflow integration' }),
+      mpGrid(2, [
+        [mpHeading('What it sends', { size: '16px' }), mpText('&bull; Subject line<br>&bull; Final HTML<br>&bull; Backup JSON<br>&bull; Send notes', { color: '#57534e' })],
+        [mpHeading('When to use it', { size: '16px' }), mpText('After approval, before send, or when archiving a reusable campaign for the next cycle.', { color: '#57534e' })]
+      ]),
+      mpButton('Connect Notion', MP_SITE + '/integrations', { align: 'center', bg: '#111827', color: '#ffffff' })
     ]
   },
   {
-    id: 'tpl-product-case',
-    title: 'Customer Story - Case Study',
+    id: 'tpl-curated-case-study',
+    title: 'Customer Case Study',
     category: 'Product',
-    subject: '{{Customer}} story with {{ProductName}}',
-    shortcut: '/case',
+    subject: 'How Little Lantern shipped twice as fast',
     tier: 'free',
     stylePresetId: 'editorial-serif',
     bgEmail: '#fff7ed',
     fontFamily: 'Georgia, serif',
     fontColor: '#1f2937',
     blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-044/1200/720', radius: '16px' },
-      { type: 'heading', text: '{{Customer}} x {{ProductName}}', size: '28px' },
-      { type: 'text', html: 'How {{Customer}} achieved {{Outcome}}.', color: '#475569' },
-      { type: 'text', html: '<blockquote>{{Quote}}</blockquote>', color: '#1f2937' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            {
-              type: 'text',
-              html: '<strong>{{ResultOneValue}}</strong><br>{{ResultOneLabel}}',
-              color: '#1f2937',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{ResultTwoValue}}</strong><br>{{ResultTwoLabel}}',
-              color: '#1f2937',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{ResultThreeValue}}</strong><br>{{ResultThreeLabel}}',
-              color: '#1f2937',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Read the full story', href: '{{CaseStudyUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpHero('case-study-lantern', { alt: 'Small team reviewing a launch board' }),
+      mpHeading('How Little Lantern shipped twice as fast', { size: '29px' }),
+      mpText('The team replaced scattered docs with three reusable email templates: launch, update, and recap.', { color: '#475569' }),
+      mpCard('<blockquote>We stopped rewriting the same email every Friday and started improving the message instead.</blockquote>', { borderColor: '#fed7aa', color: '#1f2937' }),
+      mpGrid(3, [
+        [mpMetric('2x', 'Faster campaign setup', { borderColor: '#fed7aa' })],
+        [mpMetric('38%', 'More replies', { borderColor: '#fed7aa' })],
+        [mpMetric('0', 'Lost drafts', { borderColor: '#fed7aa' })]
+      ]),
+      mpButton('Read the story', MP_SITE + '/customers/little-lantern')
     ]
   },
   {
-    id: 'tpl-product-playbook',
-    title: 'Use Case Playbook',
-    category: 'Product',
-    subject: '{{UseCase}} playbook',
-    shortcut: '/playbook',
-    tier: 'free',
-    stylePresetId: 'mint-labs',
-    bgEmail: '#ecfdf5',
-    fontFamily: 'Arial, sans-serif',
-    fontColor: '#064e3b',
-    blocks: [
-      { type: 'heading', text: '{{UseCase}} Playbook', size: '26px' },
-      { type: 'text', html: 'A practical guide to using {{ProductName}} for {{UseCase}}.', color: '#065f46' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Playbook steps', size: '16px' },
-            { type: 'text', html: '1. {{StepOne}}<br>2. {{StepTwo}}<br>3. {{StepThree}}', color: '#065f46' }
-          ],
-          [
-            { type: 'heading', text: 'Recommended tools', size: '16px' },
-            { type: 'text', html: '&bull; {{ToolOne}}<br>&bull; {{ToolTwo}}<br>&bull; {{ToolThree}}', color: '#065f46' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Time to value</strong><br>{{TimeToValue}}',
-        color: '#064e3b',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#bbf7d0' }
-      },
-      { type: 'button', text: 'Download the playbook', href: '{{PlaybookUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-product-plans',
-    title: 'Plan Comparison',
-    category: 'Product',
-    subject: 'Find the right {{ProductName}} plan',
-    shortcut: '/plans',
-    tier: 'free',
-    stylePresetId: 'ghost-minimal',
-    bgEmail: '#ffffff',
-    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
-    fontColor: '#0f172a',
-    blocks: [
-      { type: 'heading', text: 'Choose the right plan', size: '28px' },
-      { type: 'text', html: 'Compare {{ProductName}} plans at a glance.', color: '#475569' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            { type: 'heading', text: 'Starter', size: '16px' },
-            { type: 'text', html: '<strong>{{StarterPrice}}</strong><br>{{StarterDesc}}<br>&bull; {{StarterFeatureOne}}<br>&bull; {{StarterFeatureTwo}}', color: '#475569' },
-            { type: 'button', text: 'Select Starter', href: '{{StarterUrl}}', align: 'center' }
-          ],
-          [
-            { type: 'heading', text: 'Growth', size: '16px' },
-            { type: 'text', html: '<strong>{{GrowthPrice}}</strong><br>{{GrowthDesc}}<br>&bull; {{GrowthFeatureOne}}<br>&bull; {{GrowthFeatureTwo}}', color: '#475569' },
-            { type: 'button', text: 'Select Growth', href: '{{GrowthUrl}}', align: 'center' }
-          ],
-          [
-            { type: 'heading', text: 'Scale', size: '16px' },
-            { type: 'text', html: '<strong>{{ScalePrice}}</strong><br>{{ScaleDesc}}<br>&bull; {{ScaleFeatureOne}}<br>&bull; {{ScaleFeatureTwo}}', color: '#475569' },
-            { type: 'button', text: 'Select Scale', href: '{{ScaleUrl}}', align: 'center' }
-          ]
-        ]
-      },
-      { type: 'text', html: 'Need a custom plan? {{SalesEmail}}', size: '12px', color: '#64748b' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-community-spotlight',
-    title: 'Community Spotlight',
-    category: 'Community',
-    subject: 'Community spotlight: {{MemberName}}',
-    shortcut: '/community',
-    tier: 'free',
-    stylePresetId: 'mint-labs',
-    bgEmail: '#ecfdf5',
-    fontFamily: 'Arial, sans-serif',
-    fontColor: '#064e3b',
-    blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-045/1200/720', radius: '16px' },
-      { type: 'heading', text: 'Community Spotlight: {{MemberName}}', size: '26px' },
-      { type: 'text', html: '{{MemberRole}} at {{MemberCompany}}', size: '12px', color: '#6b7280' },
-      { type: 'text', html: '{{SpotlightIntro}}', color: '#065f46' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Favorite tools', size: '16px' },
-            { type: 'text', html: '&bull; {{ToolOne}}<br>&bull; {{ToolTwo}}<br>&bull; {{ToolThree}}', color: '#065f46' }
-          ],
-          [
-            { type: 'heading', text: 'Advice to newcomers', size: '16px' },
-            { type: 'text', html: '{{Advice}}', color: '#065f46' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Say hello', href: '{{ProfileUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-community-ambassador',
-    title: 'Ambassador Program',
-    category: 'Community',
-    subject: 'Join the {{Brand}} ambassador program',
-    shortcut: '/ambassador',
-    tier: 'free',
-    stylePresetId: 'vapor-peach',
-    bgEmail: '#fff1f2',
-    fontFamily: 'Trebuchet MS, Verdana, sans-serif',
-    fontColor: '#4c0519',
-    blocks: [
-      { type: 'heading', text: '{{Brand}} Ambassador Program', size: '26px' },
-      { type: 'text', html: 'Become a voice for {{Brand}} and earn rewards.', color: '#9f1239' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-046/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Program benefits', size: '16px', color: '#4c0519' },
-            { type: 'text', html: '&bull; {{BenefitOne}}<br>&bull; {{BenefitTwo}}<br>&bull; {{BenefitThree}}', color: '#9f1239' }
-          ],
-          [
-            { type: 'heading', text: 'Who is a fit', size: '16px', color: '#4c0519' },
-            { type: 'text', html: '{{AmbassadorFit}}', color: '#9f1239' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Apply to join', href: '{{ProgramUrl}}', align: 'left' },
-      { type: 'text', html: 'Applications close {{Deadline}}.', size: '12px', color: '#9f1239' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-community-survey',
-    title: 'Member Survey',
-    category: 'Community',
-    subject: 'Help shape {{Brand}}',
-    shortcut: '/survey',
-    tier: 'free',
-    stylePresetId: 'ghost-minimal',
-    bgEmail: '#ffffff',
-    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
-    fontColor: '#0f172a',
-    blocks: [
-      { type: 'heading', text: 'We want your feedback', size: '26px' },
-      { type: 'text', html: 'Help shape the next version of {{Brand}}.', color: '#475569' },
-      {
-        type: 'text',
-        html: '<strong>Survey topics</strong><br>{{SurveyTopics}}',
-        color: '#0f172a',
-        background: '#f8fafc',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-      },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            {
-              type: 'text',
-              html: '<strong>{{TimeEstimate}}</strong><br>Minutes to complete',
-              color: '#0f172a',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{Incentive}}</strong><br>Thank you gift',
-              color: '#0f172a',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{SurveyDeadline}}</strong><br>Deadline',
-              color: '#0f172a',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-            }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Take the survey', href: '{{SurveyUrl}}', align: 'left' },
-      { type: 'text', html: 'Thank you for being part of the community.', size: '12px', color: '#64748b' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-community-gallery',
-    title: 'User Gallery - Showcase',
-    category: 'Community',
-    subject: 'See what the community created',
-    shortcut: '/galleryc',
-    tier: 'free',
-    stylePresetId: 'citrus-pop',
-    bgEmail: '#fffbeb',
-    fontFamily: 'Verdana, sans-serif',
-    fontColor: '#78350f',
-    blocks: [
-      { type: 'heading', text: 'Community Showcase', size: '28px', align: 'center', color: '#78350f' },
-      { type: 'text', html: 'What members built with {{Brand}}.', color: '#92400e', align: 'center' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-047/600/360', radius: '12px' },
-            { type: 'text', html: '{{ShowcaseOne}}', size: '12px', color: '#92400e', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-048/600/360', radius: '12px' },
-            { type: 'text', html: '{{ShowcaseTwo}}', size: '12px', color: '#92400e', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-049/600/360', radius: '12px' },
-            { type: 'text', html: '{{ShowcaseThree}}', size: '12px', color: '#92400e', align: 'center' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Submit your work', href: '{{SubmitUrl}}', align: 'center' },
-      { type: 'text', html: 'Explore the full gallery at {{GalleryUrl}}.', size: '12px', color: '#92400e', align: 'center' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-community-recap',
-    title: 'Community Event Recap',
-    category: 'Community',
-    subject: '{{EventName}} community recap',
-    shortcut: '/communityrecap',
+    id: 'tpl-curated-webinar-invite',
+    title: 'Webinar Invite',
+    category: 'Events',
+    subject: 'Live workshop: better emails in 30 minutes',
     tier: 'free',
     stylePresetId: 'aqua-studio',
     bgEmail: '#ecfeff',
     fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
     fontColor: '#0f172a',
     blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-050/1200/720', radius: '16px' },
-      { type: 'heading', text: '{{EventName}} Recap', size: '26px' },
-      { type: 'text', html: 'Highlights from our community gathering.', color: '#475569' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Top moments', size: '16px' },
-            { type: 'text', html: '&bull; {{MomentOne}}<br>&bull; {{MomentTwo}}<br>&bull; {{MomentThree}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: 'Favorite quotes', size: '16px' },
-            { type: 'text', html: '"{{QuoteOne}}"<br>"{{QuoteTwo}}"', color: '#475569' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'View the photo album', href: '{{AlbumUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpHero('webinar-invite', { alt: 'Workshop desk setup' }),
+      mpHeading('Better emails in 30 minutes', { size: '29px' }),
+      mpText('Join a live workshop on turning rough updates into emails people can actually scan, understand, and act on.', { color: '#475569' }),
+      mpCard('<strong>Thursday, June 24</strong><br>10:00 AM Central<br>Replay available to everyone who registers.', { borderColor: '#bae6fd' }),
+      mpGrid(2, [
+        [mpHeading('You will learn', { size: '16px' }), mpText('&bull; How to shape one clear CTA<br>&bull; How to avoid design clutter<br>&bull; How to test pasted HTML', { color: '#475569' })],
+        [mpHeading('Good for', { size: '16px' }), mpText('Founders, creators, operators, and anyone sending updates without a full marketing team.', { color: '#475569' })]
+      ]),
+      mpButton('Reserve a seat', MP_SITE + '/workshop')
     ]
   },
   {
-    id: 'tpl-content-digest',
-    title: 'Content Digest - Blog',
-    category: 'Content',
-    subject: '{{Brand}} blog digest | {{Month}}',
-    shortcut: '/digestblog',
+    id: 'tpl-curated-event-agenda',
+    title: 'Event Agenda',
+    category: 'Events',
+    subject: 'The full agenda is here',
+    tier: 'free',
+    stylePresetId: 'rose-noir',
+    bgEmail: '#1f1134',
+    fontFamily: 'Verdana, sans-serif',
+    fontColor: '#f8fafc',
+    blocks: [
+      mpText('AGENDA RELEASE', { size: '12px', color: '#f9a8d4', align: 'center' }),
+      mpHeading('The full agenda is here', { size: '30px', color: '#f8fafc', align: 'center' }),
+      mpText('Two days of practical sessions, calm networking, and examples you can adapt immediately.', { color: '#f3e8ff', align: 'center' }),
+      mpButton('Get tickets', MP_SITE + '/tickets', { align: 'center', bg: '#f472b6', color: '#1f1134' }),
+      mpGrid(2, [
+        [mpHeading('Day one', { size: '16px', color: '#f8fafc' }), mpText('09:00 Opening notes<br>10:30 Campaign teardown<br>13:00 Working session<br>15:30 Founder panel', { color: '#f3e8ff' })],
+        [mpHeading('Day two', { size: '16px', color: '#f8fafc' }), mpText('09:00 Customer stories<br>10:30 Email QA lab<br>13:00 Design clinic<br>15:00 Closing recap', { color: '#f3e8ff' })]
+      ], { background: '#2a1845', layout: mpLayout({ padding: '12px', radius: '16px', borderWidth: '1', borderColor: '#3b1d59' }) }),
+      mpFooter('Venue details and calendar holds arrive after registration.', '#f3e8ff')
+    ]
+  },
+  {
+    id: 'tpl-curated-event-recap',
+    title: 'Event Recap',
+    category: 'Events',
+    subject: 'Highlights from yesterday',
     tier: 'free',
     stylePresetId: 'ghost-minimal',
     bgEmail: '#ffffff',
     fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
     fontColor: '#0f172a',
     blocks: [
-      { type: 'heading', text: 'Blog Digest', size: '28px' },
-      { type: 'text', html: '{{Month}} highlights from {{Brand}}.', color: '#64748b' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-051/900/540', radius: '12px' },
-            { type: 'heading', text: '{{PostOneTitle}}', size: '16px' },
-            { type: 'text', html: '{{PostOneSummary}}', color: '#475569' },
-            { type: 'button', text: 'Read post', href: '{{PostOneUrl}}', align: 'left' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-052/900/540', radius: '12px' },
-            { type: 'heading', text: '{{PostTwoTitle}}', size: '16px' },
-            { type: 'text', html: '{{PostTwoSummary}}', color: '#475569' },
-            { type: 'button', text: 'Read post', href: '{{PostTwoUrl}}', align: 'left' }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Popular now</strong><br>{{PopularPostTitle}}',
-        color: '#0f172a',
-        background: '#f8fafc',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e2e8f0' }
-      },
-      { type: 'button', text: 'See all posts', href: '{{BlogUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpHeading('Highlights from yesterday', { size: '29px' }),
+      mpText('Thank you for joining the workshop. Here are the notes, links, and next steps in one place.', { color: '#475569' }),
+      mpHero('event-recap', { alt: 'Audience and workshop materials' }),
+      mpGrid(2, [
+        [mpHeading('Top takeaways', { size: '16px' }), mpText('&bull; Start with the reader&apos;s next action.<br>&bull; Keep section count low.<br>&bull; Always send yourself a test.', { color: '#475569' })],
+        [mpHeading('Resources', { size: '16px' }), mpText('&bull; Slide deck<br>&bull; Replay link<br>&bull; Email QA checklist', { color: '#475569' })]
+      ]),
+      mpButton('Watch the replay', MP_SITE + '/replay'),
+      mpFooter('Have feedback? Reply directly to this email.')
     ]
   },
   {
-    id: 'tpl-content-podcast',
-    title: 'Podcast Episode',
-    category: 'Content',
-    subject: 'New episode: {{EpisodeTitle}}',
-    shortcut: '/podcast',
+    id: 'tpl-curated-community-meetup',
+    title: 'Community Meetup',
+    category: 'Events',
+    subject: 'Join us for a local meetup',
     tier: 'free',
     stylePresetId: 'editorial-serif',
     bgEmail: '#fff7ed',
     fontFamily: 'Georgia, serif',
     fontColor: '#1f2937',
     blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-053/1200/720', radius: '16px' },
-      { type: 'heading', text: 'New Episode: {{EpisodeTitle}}', size: '26px' },
-      { type: 'text', html: 'Featuring {{GuestName}} | {{EpisodeNumber}}', size: '12px', color: '#6b7280' },
-      { type: 'text', html: '{{EpisodeSummary}}', color: '#475569' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Key moments', size: '16px' },
-            { type: 'text', html: '&bull; {{MomentOne}}<br>&bull; {{MomentTwo}}<br>&bull; {{MomentThree}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: 'About the guest', size: '16px' },
-            { type: 'text', html: '{{GuestBio}}', color: '#475569' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Listen now', href: '{{EpisodeUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpHero('community-meetup', { alt: 'People gathered around a warm table' }),
+      mpHeading('A small evening for useful conversations', { size: '28px' }),
+      mpText('No stage, no pitch, no awkward badge wall. Just a relaxed meetup for people building independent projects.', { color: '#475569' }),
+      mpGrid(2, [
+        [mpCard('<strong>When</strong><br>Thursday, June 24<br>6:00 PM', { borderColor: '#fed7aa' })],
+        [mpCard('<strong>Where</strong><br>The Cozy Studio<br>123 Market Street', { borderColor: '#fed7aa' })]
+      ]),
+      mpButton('Save my spot', MP_SITE + '/meetup'),
+      mpFooter('Space is limited so the room stays conversational.', '#9a3412')
     ]
   },
   {
-    id: 'tpl-content-video',
-    title: 'Video Series Launch',
+    id: 'tpl-curated-blog-digest',
+    title: 'Blog Digest',
     category: 'Content',
-    subject: '{{SeriesName}} video series',
-    shortcut: '/video',
+    subject: 'Three posts for better launches',
+    tier: 'free',
+    stylePresetId: 'ghost-minimal',
+    bgEmail: '#ffffff',
+    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
+    fontColor: '#0f172a',
+    blocks: [
+      mpHeading('Three posts for better launches', { size: '29px' }),
+      mpText('A short digest for teams trying to make launches feel clearer, calmer, and less improvised.', { color: '#475569' }),
+      mpGrid(2, [
+        [mpHero('blog-post-one', { width: 800, height: 520, radius: '14px' }), mpHeading('The launch email audit', { size: '16px' }), mpText('A practical way to find unclear CTAs before readers do.', { color: '#475569' })],
+        [mpHero('blog-post-two', { width: 800, height: 520, radius: '14px' }), mpHeading('Better examples beat blank templates', { size: '16px' }), mpText('Why finished copy helps people customize faster.', { color: '#475569' })]
+      ]),
+      mpCard('<strong>Popular now</strong><br>The tiny checklist that catches broken links, weak subject lines, and layout drift.', { background: '#f8fafc' }),
+      mpButton('Read the digest', MP_SITE + '/blog')
+    ]
+  },
+  {
+    id: 'tpl-curated-podcast-episode',
+    title: 'Podcast Episode',
+    category: 'Content',
+    subject: 'New episode: designing for trust',
+    tier: 'free',
+    stylePresetId: 'editorial-serif',
+    bgEmail: '#fff7ed',
+    fontFamily: 'Georgia, serif',
+    fontColor: '#1f2937',
+    blocks: [
+      mpHero('podcast-episode', { alt: 'Microphone and notes' }),
+      mpText('EPISODE 42', { size: '12px', color: '#9a3412' }),
+      mpHeading('Designing for trust before delight', { size: '28px' }),
+      mpText('This week, designer Lena Ortiz joins us to talk about interfaces that explain themselves without flattening the brand.', { color: '#475569' }),
+      mpGrid(2, [
+        [mpHeading('Key moments', { size: '16px' }), mpText('&bull; Why onboarding should feel reversible<br>&bull; The danger of decorative complexity<br>&bull; How to make defaults feel thoughtful', { color: '#475569' })],
+        [mpCard('<strong>Quote</strong><br>Trust is built when the user can predict what happens next.', { borderColor: '#fed7aa' })]
+      ]),
+      mpButton('Listen now', MP_SITE + '/podcast')
+    ]
+  },
+  {
+    id: 'tpl-curated-guide-release',
+    title: 'Guide Release',
+    category: 'Content',
+    subject: 'New guide: the plain-English email QA checklist',
+    tier: 'free',
+    stylePresetId: 'cobalt-cloud',
+    bgEmail: '#eef2ff',
+    fontFamily: 'Tahoma, sans-serif',
+    fontColor: '#111827',
+    blocks: [
+      mpHero('guide-release', { alt: 'Guide pages on a desk' }),
+      mpHeading('The plain-English email QA checklist', { size: '29px' }),
+      mpText('A compact guide for checking your message, links, layout, and backup plan before you send.', { color: '#475569' }),
+      mpGrid(2, [
+        [mpHeading('Inside', { size: '16px' }), mpText('&bull; Subject line checks<br>&bull; CTA clarity prompts<br>&bull; Mobile layout notes<br>&bull; Backup/export reminders', { color: '#475569' })],
+        [mpHeading('Best for', { size: '16px' }), mpText('Newsletter writers, small teams, founders, and anyone who sends without a dedicated email QA department.', { color: '#475569' })]
+      ]),
+      mpButton('Download the guide', MP_SITE + '/guide'),
+      mpFooter('PDF and checklist formats are both included.')
+    ]
+  },
+  {
+    id: 'tpl-curated-report-release',
+    title: 'Research Report',
+    category: 'Content',
+    subject: 'New report: what readers actually click',
+    tier: 'free',
+    stylePresetId: 'mono-ink',
+    bgEmail: '#f5f5f4',
+    fontFamily: "'Courier New', monospace",
+    fontColor: '#1c1917',
+    blocks: [
+      mpHeading('What readers actually click', { size: '28px' }),
+      mpText('Findings from 1,200 small-team newsletters, product updates, and community emails.', { color: '#57534e' }),
+      mpGrid(3, [
+        [mpMetric('61%', 'Clicked a clear single CTA', { borderColor: '#d6d3d1' })],
+        [mpMetric('27%', 'Clicked image-heavy layouts', { borderColor: '#d6d3d1' })],
+        [mpMetric('3x', 'More replies to plain asks', { borderColor: '#d6d3d1' })]
+      ]),
+      mpCard('<strong>Top insight</strong><br>The most effective emails looked designed, but they read like a helpful person wrote them.', { borderColor: '#d6d3d1' }),
+      mpButton('Download report', MP_SITE + '/report', { bg: '#111827', color: '#ffffff' })
+    ]
+  },
+  {
+    id: 'tpl-curated-video-series',
+    title: 'Video Series',
+    category: 'Content',
+    subject: 'New video series: ship the useful thing',
     tier: 'free',
     stylePresetId: 'midnight-neon',
     bgEmail: '#0b1120',
     fontFamily: 'Arial, sans-serif',
     fontColor: '#e2e8f0',
     blocks: [
-      { type: 'heading', text: '{{SeriesName}} Video Series', size: '30px', align: 'center', color: '#f8fafc' },
-      { type: 'text', html: 'New episodes every {{Cadence}}.', align: 'center', color: '#cbd5e1' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-054/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            { type: 'heading', text: 'Episode 1', size: '14px', color: '#f8fafc' },
-            { type: 'text', html: '{{EpisodeOneTitle}}', color: '#cbd5e1' }
-          ],
-          [
-            { type: 'heading', text: 'Episode 2', size: '14px', color: '#f8fafc' },
-            { type: 'text', html: '{{EpisodeTwoTitle}}', color: '#cbd5e1' }
-          ],
-          [
-            { type: 'heading', text: 'Episode 3', size: '14px', color: '#f8fafc' },
-            { type: 'text', html: '{{EpisodeThreeTitle}}', color: '#cbd5e1' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Watch episode 1', href: '{{SeriesUrl}}', align: 'center' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpHeading('Ship the useful thing', { size: '32px', color: '#f8fafc', align: 'center' }),
+      mpText('A three-part video series on cutting scope without making the work feel cheap.', { color: '#cbd5e1', align: 'center' }),
+      mpHero('video-series', { alt: 'Video editing timeline and lights' }),
+      mpGrid(3, [
+        [mpHeading('01', { size: '18px', color: '#38bdf8', align: 'center' }), mpText('Find the useful core', { color: '#cbd5e1', align: 'center' })],
+        [mpHeading('02', { size: '18px', color: '#38bdf8', align: 'center' }), mpText('Design for scanning', { color: '#cbd5e1', align: 'center' })],
+        [mpHeading('03', { size: '18px', color: '#38bdf8', align: 'center' }), mpText('Make handoff boring', { color: '#cbd5e1', align: 'center' })]
+      ], { background: '#111827', layout: mpLayout({ padding: '12px', radius: '16px', borderWidth: '1', borderColor: '#1f2937' }) }),
+      mpButton('Watch episode one', MP_SITE + '/series', { align: 'center', bg: '#38bdf8', color: '#0b1120' })
     ]
   },
   {
-    id: 'tpl-content-guide',
-    title: 'Guide Release',
-    category: 'Content',
-    subject: 'New guide: {{GuideTitle}}',
-    shortcut: '/guide',
-    tier: 'free',
-    stylePresetId: 'cobalt-cloud',
-    bgEmail: '#eef2ff',
-    fontFamily: 'Tahoma, sans-serif',
-    fontColor: '#111827',
-    blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-055/1200/720', radius: '16px' },
-      { type: 'heading', text: '{{GuideTitle}}', size: '28px' },
-      { type: 'text', html: 'A step-by-step guide for {{Audience}}.', color: '#475569' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'What you will learn', size: '16px' },
-            { type: 'text', html: '&bull; {{LessonOne}}<br>&bull; {{LessonTwo}}<br>&bull; {{LessonThree}}', color: '#475569' }
-          ],
-          [
-            { type: 'heading', text: 'Includes', size: '16px' },
-            { type: 'text', html: '&bull; {{IncludeOne}}<br>&bull; {{IncludeTwo}}<br>&bull; {{IncludeThree}}', color: '#475569' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Download the guide', href: '{{GuideUrl}}', align: 'left' },
-      { type: 'text', html: 'Format: {{Format}} | Length: {{Length}}', size: '12px', color: '#64748b' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-content-report',
-    title: 'Research Report',
-    category: 'Content',
-    subject: '{{ReportTitle}} report',
-    shortcut: '/report',
-    tier: 'free',
-    stylePresetId: 'mono-ink',
-    bgEmail: '#f5f5f4',
-    fontFamily: "'Courier New', monospace",
-    fontColor: '#1c1917',
-    blocks: [
-      { type: 'heading', text: '{{ReportTitle}}', size: '28px' },
-      { type: 'text', html: 'Key findings from {{SampleSize}} responses.', color: '#57534e' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-056/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            {
-              type: 'text',
-              html: '<strong>{{StatOneValue}}</strong><br>{{StatOneLabel}}',
-              color: '#1c1917',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e7e5e4' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{StatTwoValue}}</strong><br>{{StatTwoLabel}}',
-              color: '#1c1917',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e7e5e4' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{StatThreeValue}}</strong><br>{{StatThreeLabel}}',
-              color: '#1c1917',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e7e5e4' }
-            }
-          ]
-        ]
-      },
-      {
-        type: 'text',
-        html: '<strong>Top insight</strong><br>{{TopInsight}}',
-        color: '#1c1917',
-        background: '#ffffff',
-        layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#e7e5e4' }
-      },
-      { type: 'button', text: 'Download the report', href: '{{ReportUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-content-interview',
-    title: 'Expert Interview',
-    category: 'Content',
-    subject: 'Interview with {{GuestName}}',
-    shortcut: '/interview',
-    tier: 'free',
-    stylePresetId: 'vapor-peach',
-    bgEmail: '#fff1f2',
-    fontFamily: 'Trebuchet MS, Verdana, sans-serif',
-    fontColor: '#4c0519',
-    blocks: [
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-057/1200/720', radius: '16px' },
-      { type: 'heading', text: 'Interview: {{GuestName}}', size: '26px' },
-      { type: 'text', html: '{{GuestRole}} at {{GuestCompany}}', size: '12px', color: '#9f1239' },
-      { type: 'text', html: '{{InterviewIntro}}', color: '#4c0519' },
-      { type: 'text', html: '<blockquote>{{Quote}}</blockquote>', color: '#4c0519' },
-      { type: 'button', text: 'Read the interview', href: '{{InterviewUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-company-milestone',
-    title: 'Company Milestone',
-    category: 'Company',
-    subject: '{{Brand}} milestone: {{Milestone}}',
-    shortcut: '/milestone',
-    tier: 'free',
-    stylePresetId: 'cobalt-cloud',
-    bgEmail: '#eef2ff',
-    fontFamily: 'Tahoma, sans-serif',
-    fontColor: '#111827',
-    blocks: [
-      { type: 'heading', text: 'We reached {{Milestone}}', size: '28px' },
-      { type: 'text', html: 'Thank you for helping {{Brand}} get here.', color: '#475569' },
-      { type: 'image', src: 'https://picsum.photos/seed/zt-template-058/1200/720', radius: '16px' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            {
-              type: 'text',
-              html: '<strong>{{MilestoneOneValue}}</strong><br>{{MilestoneOneLabel}}',
-              color: '#111827',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#c7d2fe' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{MilestoneTwoValue}}</strong><br>{{MilestoneTwoLabel}}',
-              color: '#111827',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#c7d2fe' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '<strong>{{MilestoneThreeValue}}</strong><br>{{MilestoneThreeLabel}}',
-              color: '#111827',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#c7d2fe' }
-            }
-          ]
-        ]
-      },
-      { type: 'button', text: 'See the story', href: '{{StoryUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-company-press',
-    title: 'Press Roundup',
-    category: 'Company',
-    subject: '{{Brand}} in the news',
-    shortcut: '/press',
-    tier: 'free',
-    stylePresetId: 'editorial-serif',
-    bgEmail: '#fff7ed',
-    fontFamily: 'Georgia, serif',
-    fontColor: '#1f2937',
-    blocks: [
-      { type: 'heading', text: 'In the news', size: '28px' },
-      { type: 'text', html: 'Recent coverage of {{Brand}}.', color: '#6b7280' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            {
-              type: 'text',
-              html: '"{{PressQuoteOne}}"<br><strong>{{PressSourceOne}}</strong>',
-              color: '#1f2937',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#fed7aa' }
-            }
-          ],
-          [
-            {
-              type: 'text',
-              html: '"{{PressQuoteTwo}}"<br><strong>{{PressSourceTwo}}</strong>',
-              color: '#1f2937',
-              background: '#ffffff',
-              layout: { padding: '12px', radius: '12px', borderWidth: '1', borderColor: '#fed7aa' }
-            }
-          ]
-        ]
-      },
-      { type: 'button', text: 'Read all coverage', href: '{{PressUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-company-team',
-    title: 'Team Update',
-    category: 'Company',
-    subject: '{{Brand}} team update | {{Month}}',
-    shortcut: '/team',
-    tier: 'free',
-    stylePresetId: 'ghost-minimal',
-    bgEmail: '#ffffff',
-    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
-    fontColor: '#0f172a',
-    blocks: [
-      { type: 'heading', text: 'Team update', size: '28px' },
-      { type: 'text', html: '{{Month}} {{Year}} | {{Brand}}', size: '12px', color: '#64748b' },
-      {
-        type: 'grid',
-        cols: 3,
-        columns: [
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-059/600/360', radius: '12px' },
-            { type: 'text', html: '<strong>{{TeamMemberOne}}</strong><br>{{TeamMemberOneRole}}', size: '12px', color: '#475569', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-060/600/360', radius: '12px' },
-            { type: 'text', html: '<strong>{{TeamMemberTwo}}</strong><br>{{TeamMemberTwoRole}}', size: '12px', color: '#475569', align: 'center' }
-          ],
-          [
-            { type: 'image', src: 'https://picsum.photos/seed/zt-template-061/600/360', radius: '12px' },
-            { type: 'text', html: '<strong>{{TeamMemberThree}}</strong><br>{{TeamMemberThreeRole}}', size: '12px', color: '#475569', align: 'center' }
-          ]
-        ]
-      },
-      { type: 'text', html: 'We are growing in {{Teams}}.', color: '#475569' },
-      { type: 'button', text: 'Meet the team', href: '{{TeamUrl}}', align: 'left' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
-    ]
-  },
-  {
-    id: 'tpl-company-hiring',
-    title: 'Hiring Highlights',
-    category: 'Company',
-    subject: 'We are hiring: {{Role}}',
-    shortcut: '/hiring',
+    id: 'tpl-curated-welcome-lifecycle',
+    title: 'Welcome Email',
+    category: 'Lifecycle',
+    subject: 'Welcome in. Here is the simple start.',
     tier: 'free',
     stylePresetId: 'mint-labs',
     bgEmail: '#ecfdf5',
     fontFamily: 'Arial, sans-serif',
     fontColor: '#064e3b',
     blocks: [
-      { type: 'heading', text: 'We are hiring', size: '28px' },
-      { type: 'text', html: 'Join {{Brand}} and help build {{Mission}}.', color: '#065f46' },
-      {
-        type: 'grid',
-        cols: 2,
-        columns: [
-          [
-            { type: 'heading', text: 'Open roles', size: '16px' },
-            { type: 'text', html: '&bull; {{RoleOne}}<br>&bull; {{RoleTwo}}<br>&bull; {{RoleThree}}', color: '#065f46' }
-          ],
-          [
-            { type: 'heading', text: 'Why join', size: '16px' },
-            { type: 'text', html: '{{HiringHighlights}}', color: '#065f46' }
-          ]
-        ]
-      },
-      { type: 'button', text: 'View open roles', href: '{{CareersUrl}}', align: 'left' },
-      { type: 'text', html: 'Remote-friendly | {{Location}}', size: '12px', color: '#6b7280' },
-      { type: 'social', networks: ['Instagram', 'TikTok', 'YouTube'] }
+      mpHeading('Welcome in', { size: '30px' }),
+      mpText('You are set up. The fastest way to get value is to start with one useful template, customize it, and download a backup copy.', { color: '#065f46' }),
+      mpGrid(3, [
+        [mpHeading('1', { size: '22px', align: 'center' }), mpText('Pick an example that matches your job.', { color: '#065f46', align: 'center' })],
+        [mpHeading('2', { size: '22px', align: 'center' }), mpText('Replace the copy with your voice.', { color: '#065f46', align: 'center' })],
+        [mpHeading('3', { size: '22px', align: 'center' }), mpText('Copy HTML or export a backup.', { color: '#065f46', align: 'center' })]
+      ], { background: '#ffffff', layout: mpLayout({ padding: '12px', radius: '16px', borderWidth: '1', borderColor: '#bbf7d0' }) }),
+      mpButton('Create my first template', MP_SITE + '/app'),
+      mpFooter('No account required. Your work stays in local browser storage.', '#047857')
+    ]
+  },
+  {
+    id: 'tpl-curated-onboarding-day-one',
+    title: 'Onboarding Day One',
+    category: 'Lifecycle',
+    subject: 'Day one: make one reusable email',
+    tier: 'free',
+    stylePresetId: 'aqua-studio',
+    bgEmail: '#ecfeff',
+    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
+    fontColor: '#0f172a',
+    blocks: [
+      mpText('DAY ONE', { size: '12px', color: '#0891b2' }),
+      mpHeading('Make one reusable email today', { size: '28px' }),
+      mpText('Do not try to organize everything at once. Start with the email you send most often and turn it into a clean reusable template.', { color: '#475569' }),
+      mpCard('<strong>Suggested first template</strong><br>A weekly update, customer follow-up, event invite, or product announcement.', { borderColor: '#bae6fd' }),
+      mpGrid(2, [
+        [mpHeading('Keep', { size: '16px' }), mpText('The structure, spacing, and any sections that match your real workflow.', { color: '#475569' })],
+        [mpHeading('Replace', { size: '16px' }), mpText('The sample copy, links, images, and any claims that are not yours.', { color: '#475569' })]
+      ], { background: '#ffffff', layout: mpLayout({ padding: '12px', radius: '16px', borderWidth: '1', borderColor: '#bae6fd' }) }),
+      mpButton('Open examples', MP_SITE + '/examples'),
+      mpFooter('Tomorrow: how to save a backup before you start relying on local storage.')
+    ]
+  },
+  {
+    id: 'tpl-curated-backup-reminder',
+    title: 'Backup Reminder',
+    category: 'Lifecycle',
+    subject: 'A quick reminder to back up your templates',
+    tier: 'free',
+    stylePresetId: 'ghost-minimal',
+    bgEmail: '#ffffff',
+    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
+    fontColor: '#0f172a',
+    blocks: [
+      mpHeading('Back up anything you would hate to lose', { size: '28px' }),
+      mpText('Local storage is private and convenient, but it belongs to this browser. Download a backup copy when your template library starts to matter.', { color: '#475569' }),
+      mpGrid(2, [
+        [mpHeading('Good moments to back up', { size: '16px' }), mpText('&bull; After creating a template set<br>&bull; Before clearing browser data<br>&bull; Before switching devices', { color: '#475569' })],
+        [mpHeading('Where to keep it', { size: '16px' }), mpText('Use a folder or drive you already trust for important documents. The backup is a JSON file.', { color: '#475569' })]
+      ]),
+      mpButton('Download a backup', MP_SITE + '/backup'),
+      mpFooter('Privacy works best when you keep your own copy too.')
+    ]
+  },
+  {
+    id: 'tpl-curated-winback-note',
+    title: 'Winback Note',
+    category: 'Lifecycle',
+    subject: 'Still useful, or should we part ways?',
+    tier: 'free',
+    stylePresetId: 'editorial-serif',
+    bgEmail: '#fff7ed',
+    fontFamily: 'Georgia, serif',
+    fontColor: '#1f2937',
+    blocks: [
+      mpHeading('Still useful?', { size: '30px' }),
+      mpText('We noticed you have not opened the last few updates. No hard feelings. Inboxes are crowded, and useful email should earn its place.', { color: '#475569', lineHeight: '1.8' }),
+      mpCard('<strong>Stay if you want:</strong><br>Practical templates, small product notes, and examples you can adapt quickly.', { borderColor: '#fed7aa' }),
+      mpGrid(2, [
+        [mpButton('Keep me subscribed', MP_SITE + '/stay')],
+        [mpButton('Pause updates', MP_SITE + '/pause', { bg: '#7c2d12', color: '#ffffff' })]
+      ]),
+      mpFooter('You can change this anytime from the footer of future emails.', '#9a3412')
+    ]
+  },
+  {
+    id: 'tpl-curated-trial-ending',
+    title: 'Trial Ending',
+    category: 'Lifecycle',
+    subject: 'Your trial wraps up tomorrow',
+    tier: 'free',
+    stylePresetId: 'cobalt-cloud',
+    bgEmail: '#eef2ff',
+    fontFamily: 'Tahoma, sans-serif',
+    fontColor: '#111827',
+    blocks: [
+      mpHeading('Your trial wraps up tomorrow', { size: '28px' }),
+      mpText('Here is what you created, what happens next, and how to keep momentum without surprises.', { color: '#475569' }),
+      mpGrid(3, [
+        [mpMetric('6', 'Templates created', { borderColor: '#c7d2fe' })],
+        [mpMetric('18', 'Exports copied', { borderColor: '#c7d2fe' })],
+        [mpMetric('1', 'Backup saved', { borderColor: '#c7d2fe' })]
+      ]),
+      mpCard('<strong>Recommended next step</strong><br>Review your saved templates and download a fresh backup before the trial closes.', { borderColor: '#c7d2fe' }),
+      mpButton('Review my workspace', MP_SITE + '/workspace')
+    ]
+  },
+  {
+    id: 'tpl-curated-order-confirmation',
+    title: 'Order Confirmation',
+    category: 'Transactional',
+    subject: 'Order confirmed: #1048',
+    tier: 'free',
+    stylePresetId: 'ghost-minimal',
+    bgEmail: '#ffffff',
+    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
+    fontColor: '#0f172a',
+    blocks: [
+      mpHeading('Your order is confirmed', { size: '28px' }),
+      mpText('Thanks for your order. We will send tracking as soon as it ships.', { color: '#475569' }),
+      mpCard('<strong>Order #1048</strong><br>Studio Mug x 1<br>Canvas Tote x 1<br><br><strong>Total</strong> $76.00', { background: '#f8fafc' }),
+      mpGrid(2, [
+        [mpHeading('Shipping to', { size: '16px' }), mpText('Maya Chen<br>123 Cozy Lane<br>Portland, OR 97205', { color: '#475569' })],
+        [mpHeading('Estimated arrival', { size: '16px' }), mpText('June 24-26<br>Standard shipping', { color: '#475569' })]
+      ]),
+      mpButton('View order', MP_SITE + '/orders/1048'),
+      mpFooter('Need help? Reply to this email and we will take a look.')
+    ]
+  },
+  {
+    id: 'tpl-curated-shipping-update',
+    title: 'Shipping Update',
+    category: 'Transactional',
+    subject: 'Your order is on the way',
+    tier: 'free',
+    stylePresetId: 'mint-labs',
+    bgEmail: '#ecfdf5',
+    fontFamily: 'Arial, sans-serif',
+    fontColor: '#064e3b',
+    blocks: [
+      mpHeading('Your order is on the way', { size: '28px' }),
+      mpText('The package left our studio and should arrive soon. Tracking can take a few hours to update.', { color: '#065f46' }),
+      mpCard('<strong>Tracking</strong><br>MP-8492-1138<br><strong>Carrier</strong><br>Ground', { borderColor: '#bbf7d0', color: '#064e3b' }),
+      mpGrid(3, [
+        [mpMetric('Packed', 'Step 1', { borderColor: '#bbf7d0', color: '#064e3b' })],
+        [mpMetric('Shipped', 'Step 2', { borderColor: '#bbf7d0', color: '#064e3b' })],
+        [mpMetric('Soon', 'Step 3', { borderColor: '#bbf7d0', color: '#064e3b' })]
+      ]),
+      mpButton('Track package', MP_SITE + '/tracking')
+    ]
+  },
+  {
+    id: 'tpl-curated-password-reset',
+    title: 'Password Reset',
+    category: 'Transactional',
+    subject: 'Reset your password',
+    tier: 'free',
+    stylePresetId: 'mono-ink',
+    bgEmail: '#f5f5f4',
+    fontFamily: "'Courier New', monospace",
+    fontColor: '#1c1917',
+    blocks: [
+      mpHeading('Reset your password', { size: '28px' }),
+      mpText('We received a request to reset the password for your account. This link expires in 30 minutes.', { color: '#57534e' }),
+      mpButton('Reset password', MP_SITE + '/reset-password', { bg: '#111827', color: '#ffffff' }),
+      mpCard('<strong>Did not request this?</strong><br>You can ignore this email. Your password will stay the same.', { borderColor: '#d6d3d1' }),
+      mpGrid(2, [
+        [mpCard('<strong>Expires</strong><br>30 minutes', { background: '#ffffff', borderColor: '#d6d3d1', align: 'center' })],
+        [mpCard('<strong>Requested from</strong><br>Portland, OR', { background: '#ffffff', borderColor: '#d6d3d1', align: 'center' })]
+      ]),
+      mpFooter('For security, never forward password reset emails.')
+    ]
+  },
+  {
+    id: 'tpl-curated-community-spotlight',
+    title: 'Community Spotlight',
+    category: 'Community',
+    subject: 'Community spotlight: Lena Ortiz',
+    tier: 'free',
+    stylePresetId: 'vapor-peach',
+    bgEmail: '#fff1f2',
+    fontFamily: 'Trebuchet MS, Verdana, sans-serif',
+    fontColor: '#4c0519',
+    blocks: [
+      mpHero('community-spotlight', { alt: 'Portrait-style workspace scene' }),
+      mpHeading('Community spotlight: Lena Ortiz', { size: '28px' }),
+      mpText('Lena runs a one-person design studio and uses reusable templates to keep client communication calm and consistent.', { color: '#9f1239' }),
+      mpGrid(2, [
+        [mpHeading('Favorite workflow', { size: '16px', color: '#4c0519' }), mpText('A Friday recap template with three sections: what shipped, what is blocked, and what needs a decision.', { color: '#9f1239' })],
+        [mpHeading('Advice', { size: '16px', color: '#4c0519' }), mpText('Do not make every client email custom. Make the care custom and the structure reusable.', { color: '#9f1239' })]
+      ]),
+      mpButton('Read the spotlight', MP_SITE + '/community/lena', { bg: '#e11d48', color: '#ffffff' }),
+      mpSocial(['Instagram', 'LinkedIn', 'YouTube'])
+    ]
+  },
+  {
+    id: 'tpl-curated-community-survey',
+    title: 'Community Survey',
+    category: 'Community',
+    subject: 'Help shape what we build next',
+    tier: 'free',
+    stylePresetId: 'aqua-studio',
+    bgEmail: '#ecfeff',
+    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
+    fontColor: '#0f172a',
+    blocks: [
+      mpHeading('Help shape what we build next', { size: '28px' }),
+      mpText('This short survey helps us understand which workflows deserve better examples, clearer docs, or fewer steps.', { color: '#475569' }),
+      mpGrid(3, [
+        [mpMetric('4 min', 'Time to complete', { borderColor: '#bae6fd' })],
+        [mpMetric('12', 'Questions', { borderColor: '#bae6fd' })],
+        [mpMetric('Friday', 'Deadline', { borderColor: '#bae6fd' })]
+      ]),
+      mpCard('<strong>Topics</strong><br>Mobile editing, backup habits, copy/export workflows, and the template categories you want next.', { borderColor: '#bae6fd' }),
+      mpButton('Take the survey', MP_SITE + '/survey')
+    ]
+  },
+  {
+    id: 'tpl-curated-ambassador-program',
+    title: 'Ambassador Program',
+    category: 'Community',
+    subject: 'Join the studio ambassador program',
+    tier: 'free',
+    stylePresetId: 'mint-labs',
+    bgEmail: '#ecfdf5',
+    fontFamily: 'Arial, sans-serif',
+    fontColor: '#064e3b',
+    blocks: [
+      mpHeading('Join the studio ambassador program', { size: '28px' }),
+      mpText('We are looking for thoughtful operators and creators who like sharing tools that make work feel lighter.', { color: '#065f46' }),
+      mpHero('ambassador-program', { alt: 'Creative community table' }),
+      mpGrid(2, [
+        [mpHeading('Ambassadors get', { size: '16px' }), mpText('&bull; Early feature previews<br>&bull; A private feedback channel<br>&bull; Shareable template packs', { color: '#065f46' })],
+        [mpHeading('Good fit', { size: '16px' }), mpText('You teach, write, consult, build, or regularly help people send clearer messages.', { color: '#065f46' })]
+      ]),
+      mpButton('Apply to join', MP_SITE + '/ambassador')
+    ]
+  },
+  {
+    id: 'tpl-curated-company-milestone',
+    title: 'Company Milestone',
+    category: 'Company',
+    subject: 'A milestone worth pausing for',
+    tier: 'free',
+    stylePresetId: 'cobalt-cloud',
+    bgEmail: '#eef2ff',
+    fontFamily: 'Tahoma, sans-serif',
+    fontColor: '#111827',
+    blocks: [
+      mpHeading('A milestone worth pausing for', { size: '29px' }),
+      mpText('This week we crossed 10,000 templates created. More importantly, those templates stayed in the hands of the people who made them.', { color: '#475569' }),
+      mpGrid(3, [
+        [mpMetric('10k', 'Templates created', { borderColor: '#c7d2fe' })],
+        [mpMetric('84%', 'Used more than once', { borderColor: '#c7d2fe' })],
+        [mpMetric('0', 'Accounts required', { borderColor: '#c7d2fe' })]
+      ]),
+      mpHero('company-milestone', { alt: 'Team celebrating a milestone' }),
+      mpButton('Read the milestone note', MP_SITE + '/milestone')
+    ]
+  },
+  {
+    id: 'tpl-curated-hiring-highlight',
+    title: 'Hiring Highlight',
+    category: 'Company',
+    subject: 'We are hiring a product designer',
+    tier: 'free',
+    stylePresetId: 'ghost-minimal',
+    bgEmail: '#ffffff',
+    fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
+    fontColor: '#0f172a',
+    blocks: [
+      mpHeading('We are hiring a product designer', { size: '29px' }),
+      mpText('We are looking for someone who can make powerful tools feel calm, obvious, and kind to the person using them.', { color: '#475569' }),
+      mpGrid(2, [
+        [mpHeading('You will work on', { size: '16px' }), mpText('&bull; Mobile editing flows<br>&bull; Template previews<br>&bull; Backup and import UX<br>&bull; Example library polish', { color: '#475569' })],
+        [mpHeading('You might be a fit if', { size: '16px' }), mpText('You care about clarity, write strong interface copy, and can explain design decisions without hiding behind taste.', { color: '#475569' })]
+      ]),
+      mpButton('View the role', MP_SITE + '/careers'),
+      mpFooter('Remote-friendly. Small team. Practical work.')
+    ]
+  },
+  {
+    id: 'tpl-curated-press-roundup',
+    title: 'Press Roundup',
+    category: 'Company',
+    subject: 'Recent coverage and notes',
+    tier: 'free',
+    stylePresetId: 'editorial-serif',
+    bgEmail: '#fff7ed',
+    fontFamily: 'Georgia, serif',
+    fontColor: '#1f2937',
+    blocks: [
+      mpHeading('Recent coverage and notes', { size: '29px' }),
+      mpText('A few thoughtful mentions from people discussing local-first tools, email workflows, and simpler software.', { color: '#475569' }),
+      mpGrid(2, [
+        [mpCard('&quot;A reminder that privacy-first software can still feel friendly.&quot;<br><strong>Small Tools Weekly</strong>', { borderColor: '#fed7aa' })],
+        [mpCard('&quot;The template examples are useful enough to teach the product.&quot;<br><strong>Operator Notes</strong>', { borderColor: '#fed7aa' })]
+      ]),
+      mpButton('Read all coverage', MP_SITE + '/press'),
+      mpFooter('For interviews or media questions, reply to this email.', '#9a3412')
     ]
   }
 ];
@@ -2347,7 +1272,56 @@ const LEGACY_DEFAULT_TEMPLATE_IDS = [
   'tpl-event-meetup',
   'tpl-promo-perk',
   'tpl-promo-seasonal',
-  'tpl-promo-flash'
+  'tpl-promo-flash',
+  'tpl-news-brief',
+  'tpl-news-digest',
+  'tpl-news-letter',
+  'tpl-launch-neon',
+  'tpl-launch-focus',
+  'tpl-launch-gallery',
+  'tpl-event-session',
+  'tpl-event-agenda',
+  'tpl-event-gathering',
+  'tpl-promo-member',
+  'tpl-promo-sale',
+  'tpl-promo-bundle',
+  'tpl-news-monthly',
+  'tpl-news-insight',
+  'tpl-news-metrics',
+  'tpl-news-story',
+  'tpl-launch-redesign',
+  'tpl-launch-beta',
+  'tpl-launch-partner',
+  'tpl-launch-drop',
+  'tpl-event-webinar',
+  'tpl-event-savedate',
+  'tpl-event-recap',
+  'tpl-event-series',
+  'tpl-promo-limited',
+  'tpl-promo-referral',
+  'tpl-promo-vip',
+  'tpl-promo-gift',
+  'tpl-product-changelog',
+  'tpl-product-roadmap',
+  'tpl-product-spotlight',
+  'tpl-product-integration',
+  'tpl-product-case',
+  'tpl-product-playbook',
+  'tpl-product-plans',
+  'tpl-community-ambassador',
+  'tpl-community-survey',
+  'tpl-community-gallery',
+  'tpl-community-recap',
+  'tpl-content-digest',
+  'tpl-content-podcast',
+  'tpl-content-video',
+  'tpl-content-guide',
+  'tpl-content-report',
+  'tpl-content-interview',
+  'tpl-company-milestone',
+  'tpl-company-press',
+  'tpl-company-team',
+  'tpl-company-hiring'
 ];
 
 function getMailPawIconSrc() {

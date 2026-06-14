@@ -194,12 +194,11 @@ function buildDefaultTemplatesFromSpecs(specs) {
       window.ztGlobalFontColor = prevGlobalFontColor;
       window.ztGlobalFontColorActive = prevGlobalFontColorActive;
     }
-    return {
+    const template = {
       id: templateSpec.id,
       title: templateSpec.title,
       category: templateSpec.category,
       subject: templateSpec.subject,
-      shortcut: isStandaloneMailPaw() ? '' : (templateSpec.shortcut || ''),
       tier: templateSpec.tier || 'free',
       design: designState,
       body: body,
@@ -211,6 +210,8 @@ function buildDefaultTemplatesFromSpecs(specs) {
       updatedAt: Date.now() - (index * 1000),
       isDefault: true
     };
+    if (!isStandaloneMailPaw()) template.shortcut = templateSpec.shortcut || '';
+    return template;
   });
 }
 
