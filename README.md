@@ -5,7 +5,7 @@
 
 **MailPaw is a free, privacy-first email template builder for newsletters, campaigns, announcements, outreach, and polished everyday emails.** It runs as a standalone web app, stores templates locally in your browser, and gives you copyable HTML plus downloadable backup files.
 
-[Open MailPaw](https://barryanders.github.io/MailPaw/app.html)
+[Open MailPaw](https://barryanders.github.io/MailPaw/)
 
 ## Free Email Template Builder
 
