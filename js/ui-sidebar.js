@@ -133,22 +133,22 @@ function applyBillingStateToBanner(billing) {
   const benefits = billing.isTrial
     ? [
         'Unlimited templates during trial',
-        'Export Gmail-ready HTML',
+        'Export email-ready HTML',
         'Download templates as JSON',
         'Share templates with your team',
         'Customize blocks and styles'
       ]
     : (isFree
       ? [
-          `Insert ${ZT_FREE_TEMPLATE_LIMIT} custom templates free`,
+          `Save ${ZT_FREE_TEMPLATE_LIMIT} custom templates free`,
           'Unlimited templates during trial',
-          'Export Gmail-ready HTML',
+          'Export email-ready HTML',
           'Download templates as JSON',
           'Customize blocks and styles'
         ]
       : [
           'Unlimited templates after purchase',
-          'Export Gmail-ready HTML',
+          'Export email-ready HTML',
           'Download templates as JSON',
           'Share templates with your team',
           'Customize blocks and styles'
@@ -743,7 +743,7 @@ function guardTemplateInsertion(template, onAllowed) {
 
     const content = `
       <div style="color:#475569; font-size:13px; line-height:1.5;">
-        To edit or insert this template, save a copy to your personal library.
+        To edit or copy this template, save a copy to your personal library.
         <div style="margin-top:12px; padding:10px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; font-size:12px; color:#64748b;">
           <strong>Free app:</strong> Templates are stored locally in this browser for privacy.
         </div>
@@ -832,7 +832,7 @@ function renderUpgradeView(billing, options = {}) {
   }
   if (options.reason === 'insert') {
     title = 'Copy HTML Anywhere';
-    message = 'The standalone app copies HTML for email clients that accept pasted HTML. Direct Gmail insertion only exists in the old Chrome extension path.';
+    message = 'MailPaw copies HTML for email clients that accept pasted HTML. Each email client handles pasted HTML differently, so send yourself a test before using a template for a real message.';
   }
   if (options.reason === 'pro-template') {
     title = 'Templates are Free';
@@ -1279,11 +1279,11 @@ function renderListItems(filter = '', animate = true) {
       const insertIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>`;
       if (isListView) {
         insertBtn.className = 'zt-action-btn zt-btn-insert';
-        insertBtn.setAttribute('data-tooltip', window.ZT_STANDALONE ? 'Copy HTML' : 'Insert into Gmail');
+        insertBtn.setAttribute('data-tooltip', 'Copy HTML');
         insertBtn.innerHTML = insertIcon;
       } else {
         insertBtn.className = 'zt-insert-btn';
-        insertBtn.innerHTML = `<span class="zt-btn-icon">${insertIcon}</span><span class="zt-btn-label">${window.ZT_STANDALONE ? 'Copy HTML' : 'Insert into Gmail'}</span>`;
+        insertBtn.innerHTML = `<span class="zt-btn-icon">${insertIcon}</span><span class="zt-btn-label">${'Copy HTML'}</span>`;
       }
       insertBtn.onclick = (e) => {
         e.stopPropagation();
@@ -1531,7 +1531,7 @@ function renderBillingView() {
       MailPaw has no trial, subscription, template limit, export limit, or paid plan.
       Templates are stored locally in this browser on this computer for privacy. MailPaw does not need an account or cloud library to hold your email content.
       Download backup copies from the Actions menu so you can restore them later or move them to another browser.
-      The standalone web app copies or exports HTML for email clients that accept pasted HTML. Direct insertion is only available when using the Chrome extension inside Gmail.
+      MailPaw copies or exports HTML for email clients that accept pasted HTML. Each email client handles pasted HTML differently, so send yourself a test before using a template for a real message.
       <div style="margin-top:14px;">
         If MailPaw helped you, you can <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#9b4f63; font-weight:700;">say thanks on Buy Me a Coffee</a>.
       </div>
@@ -1737,7 +1737,7 @@ function openTemplatePreview(template, access = {}) {
                 <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
               </svg>
             </span>
-            <span class="zt-btn-label">${window.ZT_STANDALONE ? 'Copy HTML' : 'Insert into Gmail'}</span>
+            <span class="zt-btn-label">${'Copy HTML'}</span>
           </button>
         </div>
       </div>
@@ -1894,7 +1894,7 @@ function openTemplatePreview(template, access = {}) {
 
   const insertBtn = overlay.querySelector('#zt-preview-insert');
   if (isLocked) {
-    setButtonLabel(insertBtn, 'Unlock to insert');
+    setButtonLabel(insertBtn, 'Unlock to copy');
     insertBtn.onclick = () => {
       closePreview();
       renderUpgradeView(access.billing || { isPremium: false, isTrial: false, daysLeft: 0, licenseStatus: 'expired' });

@@ -86,9 +86,9 @@ function initiateTemplateInsertion(template) {
 function ensureComposeReady() {
   if (activeComposeBody && activeComposeBody.isConnected) return true;
   if (typeof showModal === 'function') {
-    showModal('Open a Draft', `
+    showModal('Copy HTML', `
       <div style="color:#64748b; font-size:13px; line-height:1.5;">
-        Click inside a Gmail draft body, then choose a template again.
+        MailPaw creates email HTML you can copy or export, then paste into email clients that accept HTML.
       </div>
     `, () => true);
     const modal = document.querySelector('.zt-modal-overlay');
@@ -101,7 +101,7 @@ function ensureComposeReady() {
       if (cancel) cancel.style.display = 'none';
     }
   } else {
-    alert('Click inside a Gmail draft body, then choose a template again.');
+    alert('MailPaw creates email HTML you can copy or export.');
   }
   return false;
 }
