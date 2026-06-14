@@ -831,8 +831,8 @@ function renderUpgradeView(billing, options = {}) {
     message = 'Template creation is free in this standalone app. If you hit a saved browser setting from an older version, restore defaults or import a backup, then keep going.';
   }
   if (options.reason === 'insert') {
-    title = 'Copy HTML Anywhere';
-    message = 'MailPaw copies HTML for email clients that accept pasted HTML. Each email client handles pasted HTML differently, so send yourself a test before using a template for a real message.';
+    title = 'Copy Email Anywhere';
+    message = 'MailPaw copies rich email content for email clients that accept formatted paste. Each email client handles pasted content differently, so send yourself a test before using a template for a real message.';
   }
   if (options.reason === 'pro-template') {
     title = 'Templates are Free';
@@ -1013,12 +1013,12 @@ function renderHomeViewInner(animate = false) {
           <div class="zt-hero-copy">
             <div class="zt-hero-kicker">MailPaw</div>
             <div class="zt-hero-title">Email templates that stay by your side.</div>
-            <div class="zt-hero-subtitle">MailPaw keeps your template library private in this browser, with reusable blocks, copyable HTML, and backup files you control.</div>
+            <div class="zt-hero-subtitle">MailPaw keeps your template library private in this browser, with reusable blocks, copy-ready email output, and backup files you control.</div>
             <button class="zt-hero-btn zt-hero-primary" id="zt-hero-create">New Template</button>
             <div class="zt-hero-tags">
               <span class="zt-hero-tag">Local</span>
               <span class="zt-hero-tag">Private</span>
-              <span class="zt-hero-tag">Copy HTML</span>
+              <span class="zt-hero-tag">Copy Email</span>
             </div>
           </div>
           <div class="zt-hero-preview" aria-hidden="true">
@@ -1532,9 +1532,9 @@ function renderBillingView() {
       MailPaw has no trial, subscription, template limit, export limit, or paid plan.
       Templates are stored locally in this browser on this computer for privacy. MailPaw does not need an account or cloud library to hold your email content.
       Download backup copies from the Actions menu so you can restore them later or move them to another browser.
-      MailPaw copies or exports HTML for email clients that accept pasted HTML. Each email client handles pasted HTML differently, so send yourself a test before using a template for a real message.
+      MailPaw copies rich email content for email clients that accept formatted paste. Each email client handles pasted content differently, so send yourself a test before using a template for a real message.
       <div style="margin-top:14px;">
-        If MailPaw helped you, you can <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#9b4f63; font-weight:700;">say thanks on Buy Me a Coffee</a>.
+        If MailPaw helped you, you can <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#9b4f63; font-weight:700;">buy me a coffee as a thank you</a>.
       </div>
     </div>
   `, () => true);

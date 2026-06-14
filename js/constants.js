@@ -407,7 +407,7 @@ const DEFAULT_TEMPLATE_SPECS = [
       mpGrid(3, [
         [mpHeading('Fast', { size: '16px', color: '#f8fafc' }), mpText('Start from strong examples instead of blank screens.', { color: '#cbd5e1' })],
         [mpHeading('Local', { size: '16px', color: '#f8fafc' }), mpText('Keep saved drafts in your browser unless you export them.', { color: '#cbd5e1' })],
-        [mpHeading('Portable', { size: '16px', color: '#f8fafc' }), mpText('Copy email HTML for tools that accept pasted HTML.', { color: '#cbd5e1' })]
+        [mpHeading('Portable', { size: '16px', color: '#f8fafc' }), mpText('Copy finished email content for tools that accept formatted paste.', { color: '#cbd5e1' })]
       ], { background: '#111827', layout: mpLayout({ padding: '12px', radius: '16px', borderWidth: '1', borderColor: '#1f2937' }) }),
       mpFooter('You are getting this because you joined the launch list.', '#94a3b8')
     ]
@@ -627,7 +627,7 @@ const DEFAULT_TEMPLATE_SPECS = [
       mpText('A focused update for people who want to know what is better, what is fixed, and whether they need to do anything.', { color: '#475569' }),
       mpGrid(2, [
         [mpHeading('New', { size: '16px' }), mpText('&bull; Faster export previews<br>&bull; Cleaner mobile editor controls<br>&bull; More useful example templates', { color: '#475569' })],
-        [mpHeading('Fixed', { size: '16px' }), mpText('&bull; Toolbar buttons no longer disappear<br>&bull; Empty-state language matches the app<br>&bull; Old extension copy is gone', { color: '#475569' })]
+        [mpHeading('Fixed', { size: '16px' }), mpText('&bull; Toolbar buttons no longer disappear<br>&bull; Empty-state language matches the app<br>&bull; Copy Email is clearer', { color: '#475569' })]
       ]),
       mpCard('<strong>Do you need to do anything?</strong><br>No. The update is available the next time you open the app.', { background: '#f8fafc' }),
       mpButton('View all changes', MP_SITE + '/changelog')
@@ -737,7 +737,7 @@ const DEFAULT_TEMPLATE_SPECS = [
       mpText('Join a live workshop on turning rough updates into emails people can actually scan, understand, and act on.', { color: '#475569' }),
       mpCard('<strong>Thursday, June 24</strong><br>10:00 AM Central<br>Replay available to everyone who registers.', { borderColor: '#bae6fd' }),
       mpGrid(2, [
-        [mpHeading('You will learn', { size: '16px' }), mpText('&bull; How to shape one clear CTA<br>&bull; How to avoid design clutter<br>&bull; How to test pasted HTML', { color: '#475569' })],
+        [mpHeading('You will learn', { size: '16px' }), mpText('&bull; How to shape one clear CTA<br>&bull; How to avoid design clutter<br>&bull; How to test formatted paste', { color: '#475569' })],
         [mpHeading('Good for', { size: '16px' }), mpText('Founders, creators, operators, and anyone sending updates without a full marketing team.', { color: '#475569' })]
       ]),
       mpButton('Reserve a seat', MP_SITE + '/workshop')
@@ -934,7 +934,7 @@ const DEFAULT_TEMPLATE_SPECS = [
       mpGrid(3, [
         [mpHeading('1', { size: '22px', align: 'center' }), mpText('Pick an example that matches your job.', { color: '#065f46', align: 'center' })],
         [mpHeading('2', { size: '22px', align: 'center' }), mpText('Replace the copy with your voice.', { color: '#065f46', align: 'center' })],
-        [mpHeading('3', { size: '22px', align: 'center' }), mpText('Copy HTML or export a backup.', { color: '#065f46', align: 'center' })]
+        [mpHeading('3', { size: '22px', align: 'center' }), mpText('Copy the email or export a backup.', { color: '#065f46', align: 'center' })]
       ], { background: '#ffffff', layout: mpLayout({ padding: '12px', radius: '16px', borderWidth: '1', borderColor: '#bbf7d0' }) }),
       mpButton('Create my first template', MP_SITE + '/app'),
       mpFooter('No account required. Your work stays in local browser storage.', '#047857')

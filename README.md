@@ -3,7 +3,7 @@
   MailPaw
 </h1>
 
-**MailPaw is a free, privacy-first email template builder for newsletters, campaigns, announcements, outreach, and polished everyday emails.** It runs as a standalone web app, stores templates locally in your browser, and gives you copyable HTML plus downloadable backup files.
+**MailPaw is a free, privacy-first email template builder for newsletters, campaigns, announcements, outreach, and polished everyday emails.** It runs as a standalone web app, stores templates locally in your browser, and gives you copy-ready email content plus downloadable backup files.
 
 [Open MailPaw](https://barryanders.github.io/MailPaw/)
 
@@ -36,7 +36,7 @@ Because browser storage is local, download backup copies of important templates.
 - Reusable blocks for headings, text, buttons, images, dividers, spacers, social links, columns, and raw HTML
 - Local template library
 - Reusable templates for newsletters, announcements, updates, and outreach
-- Copyable HTML for email clients that accept pasted HTML
+- Copy Email action that pastes formatted email content into clients that accept rich paste
 - JSON export and import for local backups
 - No account
 - No subscription
@@ -51,7 +51,7 @@ Because browser storage is local, download backup copies of important templates.
 2. Pick a starter template or create a new one.
 3. Edit the blocks, colors, text, links, and layout.
 4. Save templates locally for reuse.
-5. Copy the HTML into an email client that supports pasted HTML.
+5. Copy the email into an email client that supports formatted paste.
 6. Download backup copies so you do not lose your work.
 
 MailPaw is a standalone web app. It cannot automatically insert into every mail client. Different email clients handle pasted HTML differently, so always send yourself a test email before sending a real campaign.
@@ -78,9 +78,7 @@ It is useful when you want a clean email layout builder, not another hosted acco
 
 ## Say Thanks
 
-MailPaw is free. If it helped you, this is an optional way to say thanks:
-
-https://buymeacoffee.com/barryanders
+MailPaw is free. If it helped you, you can [buy me a coffee as a thank you](https://buymeacoffee.com/barryanders).
 
 ## Author
 

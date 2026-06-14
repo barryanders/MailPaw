@@ -42,9 +42,9 @@
         This standalone version has no trial, subscription, template limit, export limit, or paid plan.
         Templates are stored locally in this browser on this computer for privacy. MailPaw does not need an account or cloud library to hold your email content.
         Download backup copies from the Actions menu so you can restore them later or move them to another browser.
-        MailPaw copies rich email content for clients that accept formatted paste, including Gmail and many desktop email apps. Each email client handles pasted HTML differently, so send yourself a test before using a template for a real message.
+        MailPaw copies rich email content for clients that accept formatted paste, including Gmail and many desktop email apps. Each email client handles pasted content differently, so send yourself a test before using a template for a real message.
         <div style="margin-top:14px;">
-          If MailPaw helped you, you can <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#9b4f63; font-weight:700;">say thanks on Buy Me a Coffee</a>.
+          If MailPaw helped you, you can <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#9b4f63; font-weight:700;">buy me a coffee as a thank you</a>.
         </div>
       </div>
     `, () => true);
