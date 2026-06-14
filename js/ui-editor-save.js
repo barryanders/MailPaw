@@ -210,13 +210,15 @@ function saveCurrentTemplate(isEdit, originalIdIgnored) {
     const fontColor = fontColorInput ? fontColorInput.value : '';
     const fontColorValue = window.ztGlobalFontColorActive ? fontColor : '';
     const { designState, body: finalHTML } = buildEmailHtmlFromCanvas(canvasEl, bgEmail, fontFamily, fontColorValue);
+    const subjectInput = document.getElementById('zt_tpl_sbj_fs');
+    const shortcutInput = document.getElementById('zt_tpl_sht_fs');
 
     const runSave = () => {
         saveTemplate(originalId, {
             category: cat,
             title: title,
-            subject: document.getElementById('zt_tpl_sbj_fs').value,
-            shortcut: document.getElementById('zt_tpl_sht_fs').value,
+            subject: subjectInput ? subjectInput.value : '',
+            shortcut: shortcutInput ? shortcutInput.value : '',
             body: finalHTML,
             design: designState,
             bgEmail: bgEmail,

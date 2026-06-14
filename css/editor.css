@@ -69,6 +69,26 @@
 #zt-inline-toolbar .zt-bar-row { margin: 0; }
 #zt-inline-toolbar .zt-bar-input { min-width: 0; }
 #zt-inline-toolbar .zt-bar-label { font-size: 9px; }
+.zt-mobile-editor-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid rgba(36, 28, 26, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--zt-text);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(47, 31, 27, 0.08);
+}
+.zt-mobile-editor-toggle[aria-pressed="true"] {
+  background: var(--zt-gradient);
+  color: #ffffff;
+  border-color: transparent;
+}
 .zt-fs-grid { flex: 1; display: grid; grid-template-columns: 260px 1fr 320px; overflow: hidden; }
 .zt-fs-label-bar { display: flex; align-items: center; padding: 0 20px; height: 44px; font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; background: rgba(255, 255, 255, 0.9); border-bottom: 1px solid rgba(15, 23, 42, 0.06); letter-spacing: 0.6px; width: 100%; }
 .zt-fs-settings-col { background: var(--zt-surface-strong); border-left: 1px solid rgba(15, 23, 42, 0.08); display: flex; flex-direction: column; overflow: hidden; }

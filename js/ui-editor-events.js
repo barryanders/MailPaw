@@ -33,6 +33,29 @@ function attachEditorGlobalEvents(fsLayer) {
     const helpBtn = fsLayer.querySelector('#zt-help-btn-fs');
     if (helpBtn) helpBtn.onclick = () => renderHelpModal();
 
+    const blocksToggle = fsLayer.querySelector('#zt-mobile-blocks-toggle');
+    const detailsToggle = fsLayer.querySelector('#zt-mobile-details-toggle');
+    const updateMobileDrawers = () => {
+        if (blocksToggle) blocksToggle.setAttribute('aria-pressed', fsLayer.classList.contains('show-mobile-blocks') ? 'true' : 'false');
+        if (detailsToggle) detailsToggle.setAttribute('aria-pressed', fsLayer.classList.contains('show-mobile-details') ? 'true' : 'false');
+    };
+    if (blocksToggle) {
+        blocksToggle.onclick = () => {
+            const show = !fsLayer.classList.contains('show-mobile-blocks');
+            fsLayer.classList.toggle('show-mobile-blocks', show);
+            fsLayer.classList.remove('show-mobile-details');
+            updateMobileDrawers();
+        };
+    }
+    if (detailsToggle) {
+        detailsToggle.onclick = () => {
+            const show = !fsLayer.classList.contains('show-mobile-details');
+            fsLayer.classList.toggle('show-mobile-details', show);
+            fsLayer.classList.remove('show-mobile-blocks');
+            updateMobileDrawers();
+        };
+    }
+
     if (!fsLayer.dataset.ztKeyBound) {
         fsLayer.dataset.ztKeyBound = 'true';
         fsLayer.addEventListener('keydown', (e) => {
@@ -57,6 +80,11 @@ function attachEditorGlobalEvents(fsLayer) {
             const bar = document.querySelector('.zt-context-bar');
             const block = bar ? bar.closest('.zt-builder-block') : null;
             if (bar && block) positionContextBar(bar, block);
+        });
+        canvasWrapper.addEventListener('click', (event) => {
+            if (event.target.closest('.zt-context-bar') || event.target.closest('.zt-builder-block')) return;
+            fsLayer.classList.remove('show-mobile-blocks', 'show-mobile-details');
+            updateMobileDrawers();
         });
     }
 }

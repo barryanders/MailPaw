@@ -12,7 +12,10 @@
   };
 
   const copyTemplateHtml = (template, button) => {
-    const html = typeof sanitizeTemplateHtml === 'function' ? sanitizeTemplateHtml(template.body || '') : (template.body || '');
+    const rawHtml = typeof materializeStandaloneTemplateText === 'function'
+      ? materializeStandaloneTemplateText(template.body || '')
+      : (template.body || '');
+    const html = typeof sanitizeTemplateHtml === 'function' ? sanitizeTemplateHtml(rawHtml) : rawHtml;
     const original = button ? button.innerHTML : '';
     copyTextToClipboard(html, () => {
       if (button) button.innerHTML = '<span class="zt-btn-label">Copied</span>';

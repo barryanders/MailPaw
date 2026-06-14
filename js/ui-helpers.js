@@ -153,13 +153,23 @@ if (typeof window !== 'undefined') {
 }
 
 function renderHelpModal() {
+    const standalone = typeof window !== 'undefined' && window.ZT_STANDALONE;
+    const workflowHelp = standalone
+        ? `
+        <p><strong>Mobile editing</strong><br>Use Blocks and Details in the top bar when you need them. The email canvas stays front and center.</p>
+        <p><strong>Using a template</strong><br>Preview it, then Copy HTML. Paste into an email client that accepts HTML, or export a backup copy from Actions.</p>
+        <p><strong>Privacy</strong><br>Your templates stay in this browser's local storage unless you export or share them.</p>
+        `
+        : `
+        <p><strong>Shortcuts</strong><br>Undo and redo: Cmd/Ctrl+Z and Shift+Cmd/Ctrl+Z.</p>
+        <p><strong>Variables</strong><br>Use <code>{{name}}</code> to create merge fields.</p>
+        `;
     showModal('Help', `
         <p><strong>Quick start</strong><br>Drag components from the left, then click to edit text or buttons. Use the crosshair handle to reorder blocks.</p>
         <p><strong>Formatting</strong><br>Select text to open the toolbar. Use the link icon to manage text or block links in the popup. For images, use the block link control.</p>
         <p><strong>Columns</strong><br>Drop blocks into columns to build side-by-side layouts. Each column supports its own blocks.</p>
-        <p><strong>Shortcuts</strong><br>Undo and redo: Cmd/Ctrl+Z and Shift+Cmd/Ctrl+Z.</p>
         <p><strong>HTML block</strong><br>Edit in the Code tab. Preview is read-only.</p>
-        <p><strong>Variables</strong><br>Use <code>{{name}}</code> to create merge fields.</p>
+        ${workflowHelp}
     `, () => true);
 
     const modal = document.querySelector('.zt-modal-overlay');

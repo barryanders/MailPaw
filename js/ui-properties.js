@@ -239,6 +239,11 @@ function renderTemplateSettingsInPanel(template) {
     `;
     const fontOptions = typeof FONT_OPTIONS !== 'undefined' ? FONT_OPTIONS : '<option value="inherit">Inherit / System</option>';
     const defaultFontColor = tpl.fontColor || '#0f172a';
+    const isStandalone = typeof window !== 'undefined' && window.ZT_STANDALONE;
+    const shortcutField = isStandalone ? '' : `
+        <input type="text" class="zt-input-title" id="zt_tpl_sht_fs" placeholder="/shortcut" style="font-family:monospace;" autocomplete="off" />
+    `;
+    const subjectLabel = isStandalone ? 'Subject' : 'Subject & Shortcut';
 
     // --- RENDER FORM ---
     settingsForm.innerHTML = `
@@ -253,9 +258,9 @@ function renderTemplateSettingsInPanel(template) {
             </select>
         </div>
 
-        <div class="zt-label-row"><label class="zt-label">Subject & Shortcut</label></div>
+        <div class="zt-label-row"><label class="zt-label">${subjectLabel}</label></div>
         <input type="text" class="zt-input-title" id="zt_tpl_sbj_fs" placeholder="Subject Line" autocomplete="off" style="margin-bottom:8px;" />
-        <input type="text" class="zt-input-title" id="zt_tpl_sht_fs" placeholder="/shortcut" style="font-family:monospace;" autocomplete="off" />
+        ${shortcutField}
 
         <div class="zt-group-title" style="margin-top:24px;">Email Appearance</div>
         <div class="zt-style-presets-panel">
@@ -287,11 +292,12 @@ function renderTemplateSettingsInPanel(template) {
     // --- APPLY VALUES ---
     document.getElementById('zt_tpl_nme_fs').value = tpl.title;
     document.getElementById('zt_tpl_sbj_fs').value = tpl.subject || '';
-    document.getElementById('zt_tpl_sht_fs').value = tpl.shortcut || '';
+    const shortcutInput = document.getElementById('zt_tpl_sht_fs');
+    if (shortcutInput) shortcutInput.value = tpl.shortcut || '';
 
     document.getElementById('zt_tpl_nme_fs').oninput = () => { window.ztEditorIsDirty = true; queueEditorHistoryCapture(); };
     document.getElementById('zt_tpl_sbj_fs').oninput = () => { window.ztEditorIsDirty = true; queueEditorHistoryCapture(); };
-    document.getElementById('zt_tpl_sht_fs').oninput = () => { window.ztEditorIsDirty = true; queueEditorHistoryCapture(); };
+    if (shortcutInput) shortcutInput.oninput = () => { window.ztEditorIsDirty = true; queueEditorHistoryCapture(); };
 
     // --- CATEGORY LOGIC: COMBINED INPUT + DROPDOWN ---
     const wrapper = document.getElementById('zt-cat-wrapper');

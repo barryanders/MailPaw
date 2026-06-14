@@ -175,13 +175,32 @@
   box-sizing: border-box;
 }
 @media (max-width: 640px) {
+  .zt-preview-overlay {
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+  .zt-preview-card,
+  .zt-preview-overlay.fullscreen .zt-preview-card {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+    transform: none;
+  }
+
   .zt-preview-body {
-    padding: 12px;
+    padding: 0;
+    background: #ffffff;
   }
 
   .zt-preview-email {
-    padding: 14px;
-    border-radius: 12px;
+    padding: 14px 10px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 100%;
   }
 
   .zt-preview-email .mp-stack {
@@ -196,12 +215,8 @@
     height: auto !important;
   }
 
-  .zt-preview-card {
-    height: min(82vh, 620px);
-  }
-
   .zt-preview-header {
-    padding: 12px 14px;
+    padding: 10px 12px;
   }
 
   .zt-preview-title {

@@ -107,11 +107,70 @@ function buildBlockFromSpec(spec, options = {}) {
   return block;
 }
 
+function isStandaloneMailPaw() {
+  return typeof window !== 'undefined' && !!window.ZT_STANDALONE;
+}
+
+function getStandalonePlaceholderValue(rawName) {
+  const name = String(rawName || '').trim();
+  const key = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const titleized = name
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/[_-]+/g, ' ')
+    .replace(/\b\w/g, char => char.toUpperCase())
+    .trim();
+
+  if (!key) return 'Sample content';
+  if (key.includes('url') || key.includes('link') || key.includes('href') || key.includes('website')) return 'https://example.com';
+  if (key.includes('email')) return 'hello@example.com';
+  if (key.includes('phone')) return '(555) 014-2026';
+  if (key.includes('date') || key.includes('deadline')) return 'June 24, 2026';
+  if (key.includes('time')) return '10:00 AM';
+  if (key.includes('address')) return '123 Cozy Lane';
+  if (key.includes('city')) return 'Portland';
+  if (key.includes('location') || key.includes('venue')) return 'The Cozy Studio';
+  if (key.includes('company') || key.includes('brand') || key.includes('team') || key.includes('organization')) return 'Whisker & Co.';
+  if (key.includes('firstname')) return 'Maya';
+  if (key === 'name' || key.includes('founder') || key.includes('host') || key.includes('speaker') || key.includes('author')) return 'Maya Chen';
+  if (key.includes('price')) return '$49';
+  if (key.includes('discount') || key.includes('percent')) return '20%';
+  if (key.includes('code') || key.includes('promo')) return 'PAW20';
+  if (key.includes('metric')) return '42%';
+  if (key.includes('product') || key.includes('feature') || key.includes('plan')) return 'Pawprint Pro';
+  if (key.includes('event') || key.includes('session') || key.includes('webinar')) return 'Cozy Launch Workshop';
+  if (key.includes('title') || key.includes('headline')) return titleized || 'A useful update for your readers';
+  if (key.includes('quote')) return 'Make the useful thing feel effortless.';
+  if (key.includes('summary') || key.includes('intro') || key.includes('copy') || key.includes('description') || key.includes('note')) {
+    return 'A concise note with the context your readers need.';
+  }
+  return titleized || 'Sample content';
+}
+
+function materializeStandaloneTemplateText(value) {
+  if (!isStandaloneMailPaw() || typeof value !== 'string') return value;
+  return value.replace(/{{\s*([^}]+?)\s*}}/g, (_, name) => getStandalonePlaceholderValue(name));
+}
+
+function materializeStandaloneTemplateSpec(value, key = '') {
+  if (!isStandaloneMailPaw()) return value;
+  if (typeof value === 'string') return key === 'shortcut' ? '' : materializeStandaloneTemplateText(value);
+  if (Array.isArray(value)) return value.map(item => materializeStandaloneTemplateSpec(item));
+  if (value && typeof value === 'object') {
+    const next = {};
+    Object.keys(value).forEach(childKey => {
+      next[childKey] = materializeStandaloneTemplateSpec(value[childKey], childKey);
+    });
+    return next;
+  }
+  return value;
+}
+
 function buildDefaultTemplatesFromSpecs(specs) {
   if (!Array.isArray(specs) || typeof buildEmailHtmlFromCanvas !== 'function') return [];
   return specs.map((spec, index) => {
+    const templateSpec = materializeStandaloneTemplateSpec(spec);
     const preset = (typeof resolveStylePresetForTemplate === 'function')
-      ? resolveStylePresetForTemplate(spec)
+      ? resolveStylePresetForTemplate(templateSpec)
       : null;
     const prevPresetDefaults = (typeof window !== 'undefined') ? window.ztStylePresetDefaults : null;
     const prevGlobalFontColor = (typeof window !== 'undefined') ? window.ztGlobalFontColor : null;
@@ -122,13 +181,13 @@ function buildDefaultTemplatesFromSpecs(specs) {
       window.ztGlobalFontColorActive = !!preset.fontColor;
     }
     const canvas = document.createElement('div');
-    (spec.blocks || []).forEach(blockSpec => {
+    (templateSpec.blocks || []).forEach(blockSpec => {
       const block = buildBlockFromSpec(blockSpec, { applyPreset: !!preset, templateSpacing: true });
       if (block) canvas.appendChild(block);
     });
-    const bgEmail = spec.bgEmail || preset?.bgEmail || '#ffffff';
-    const fontFamily = spec.fontFamily || preset?.fontFamily || '';
-    const fontColor = spec.fontColor || preset?.fontColor || '';
+    const bgEmail = templateSpec.bgEmail || preset?.bgEmail || '#ffffff';
+    const fontFamily = templateSpec.fontFamily || preset?.fontFamily || '';
+    const fontColor = templateSpec.fontColor || preset?.fontColor || '';
     const { designState, body } = buildEmailHtmlFromCanvas(canvas, bgEmail, fontFamily, fontColor);
     if (typeof window !== 'undefined') {
       window.ztStylePresetDefaults = prevPresetDefaults;
@@ -136,18 +195,18 @@ function buildDefaultTemplatesFromSpecs(specs) {
       window.ztGlobalFontColorActive = prevGlobalFontColorActive;
     }
     return {
-      id: spec.id,
-      title: spec.title,
-      category: spec.category,
-      subject: spec.subject,
-      shortcut: spec.shortcut || '',
-      tier: spec.tier || 'free',
+      id: templateSpec.id,
+      title: templateSpec.title,
+      category: templateSpec.category,
+      subject: templateSpec.subject,
+      shortcut: isStandaloneMailPaw() ? '' : (templateSpec.shortcut || ''),
+      tier: templateSpec.tier || 'free',
       design: designState,
       body: body,
       bgEmail: bgEmail,
       fontFamily: fontFamily,
       fontColor: fontColor,
-      stylePresetId: preset?.id || spec.stylePresetId || '',
+      stylePresetId: preset?.id || templateSpec.stylePresetId || '',
       createdAt: Date.now() - (index * 1000),
       updatedAt: Date.now() - (index * 1000),
       isDefault: true
@@ -211,7 +270,8 @@ function applyLoadedTemplates(storedTemplates, defaults, hideDefaultTemplates, l
     const fresh = defaultsById.get(t.id);
     if (!fresh) return t;
     const unchanged = t.updatedAt === t.createdAt;
-    if (!unchanged) return t;
+    const needsStandaloneRefresh = isStandaloneMailPaw() && ((t.body || '').includes('{{') || !!t.shortcut);
+    if (!unchanged && !needsStandaloneRefresh) return t;
     refreshedDefaults = true;
     return {
       ...fresh,

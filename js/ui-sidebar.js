@@ -1197,7 +1197,7 @@ function renderListItems(filter = '', animate = true) {
       const titleText = document.createElement('span');
       titleText.textContent = t.title || 'Untitled Template';
       titleRow.appendChild(titleText);
-      if (t.shortcut) {
+      if (t.shortcut && !(typeof window !== 'undefined' && window.ZT_STANDALONE)) {
         const badge = document.createElement('span');
         badge.className = 'zt-shortcut-badge';
         badge.textContent = t.shortcut;
