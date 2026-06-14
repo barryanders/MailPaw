@@ -12,11 +12,13 @@ function getEditorLayoutHTML(isEdit) {
         </div>
       </div>
       <div class="zt-header-group zt-header-toolbar" id="zt-inline-toolbar">
-        ${window.ZT_STANDALONE ? `
+        <div class="zt-mobile-editor-controls" id="zt-mobile-editor-controls">
           <button class="zt-mobile-editor-toggle" id="zt-mobile-blocks-toggle" type="button" aria-pressed="false">Blocks</button>
           <button class="zt-mobile-editor-toggle" id="zt-mobile-details-toggle" type="button" aria-pressed="false">Details</button>
-        ` : ''}
-        <span class="zt-toolbar-empty">Select a block to edit</span>
+        </div>
+        <div class="zt-inline-tools" id="zt-inline-tools">
+          <span class="zt-toolbar-empty">Select a block to edit</span>
+        </div>
       </div>
       <div class="zt-header-group zt-header-right">
         <button class="zt-icon-btn" id="zt-undo-btn-fs" data-tooltip="Undo">

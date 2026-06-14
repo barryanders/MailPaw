@@ -122,7 +122,7 @@ function positionContextBar(toolbar, block) {
 }
 
 function clearInlineToolbar() {
-    const toolbarHost = document.getElementById('zt-inline-toolbar');
+    const toolbarHost = document.getElementById('zt-inline-tools');
     if (toolbarHost) {
         toolbarHost.innerHTML = '<span class="zt-toolbar-empty">Select a block to edit</span>';
     }
@@ -136,7 +136,7 @@ function showInlinePopup(targetElement) {
     if (!block) return;
     if (targetElement.closest('.zt-html-container')) return;
 
-    const toolbarHost = document.getElementById('zt-inline-toolbar');
+    const toolbarHost = document.getElementById('zt-inline-tools');
     const useHeaderToolbar = !!toolbarHost;
     if (useHeaderToolbar) {
         document.querySelectorAll('.zt-context-bar').forEach(el => el.remove());
