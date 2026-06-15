@@ -257,7 +257,7 @@ function showValidationAlert(msg) {
                 Missing Info
             </div>
             <p style="font-size:14px; color:#64748b; line-height:1.5; margin-bottom:20px;">${msg}</p>
-            <button id="zt-alert-ok" style="background:#9b4f63; color:white; border:none; padding:10px; border-radius:10px; font-weight:600; width:100%; cursor:pointer; transition:background 0.2s;">OK</button>
+            <button id="zt-alert-ok" style="background:#111827; color:white; border:none; padding:10px; border-radius:10px; font-weight:600; width:100%; cursor:pointer; transition:background 0.2s;">OK</button>
         </div>
     `;
     

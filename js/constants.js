@@ -122,6 +122,7 @@ const TEMPLATE_STYLE_PRESETS = [
 ];
 
 const MAILPAW_SUPPORT_URL = 'https://buymeacoffee.com/barryanders';
+const MAILPAW_REPO_URL = 'https://github.com/barryanders/MailPaw';
 
 const STYLE_PRESET_BG_FALLBACKS = {
   '#f8fafc': 'ghost-minimal',

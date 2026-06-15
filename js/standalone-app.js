@@ -44,7 +44,8 @@
         Download backup copies from the Actions menu so you can restore them later or move them to another browser.
         MailPaw copies rich email content for clients that accept formatted paste, including Gmail and many desktop email apps. Each email client handles pasted content differently, so send yourself a test before using a template for a real message.
         <div style="margin-top:14px;">
-          If MailPaw helped you, you can <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#9b4f63; font-weight:700;">buy me a coffee as a thank you</a>.
+          MailPaw is open source on <a href="${MAILPAW_REPO_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">GitHub</a>.
+          If MailPaw helped you, feel free to <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">buy me a coffee as a thank you</a>.
         </div>
       </div>
     `, () => true);
