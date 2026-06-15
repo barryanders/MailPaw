@@ -78,7 +78,7 @@ It is useful when you want a clean email layout builder, not another hosted acco
 
 ## Say Thanks
 
-MailPaw is free. If it helped you, feel free to [buy me a coffee](https://buymeacoffee.com/barryanders) as a thank you.
+MailPaw is free. If it helped you, feel free to [leave a coffee thank-you](https://buymeacoffee.com/barryanders).
 
 ## Author
 

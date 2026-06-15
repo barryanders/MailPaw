@@ -16,7 +16,7 @@
 
     showModal('MailPaw helped?', `
       <div style="color:#475569; font-size:14px; line-height:1.5;">
-        You have copied ${count} emails with MailPaw. If it has saved you time, feel free to get me a coffee as a thank you.
+        You have copied ${count} emails with MailPaw. If it has saved you time, a small coffee thank-you is always appreciated.
       </div>
     `, () => {
       window.open(MAILPAW_SUPPORT_URL, '_blank', 'noopener');
@@ -26,7 +26,7 @@
     if (!modal) return;
     const submit = modal.querySelector('#modal-submit');
     const cancel = modal.querySelector('#modal-cancel');
-    if (submit) submit.textContent = 'Get me a coffee';
+    if (submit) submit.textContent = 'Leave a coffee thank-you';
     if (cancel) cancel.textContent = 'Maybe later';
   };
 
@@ -77,7 +77,7 @@
         MailPaw copies rich email content for clients that accept formatted paste, including Gmail and many desktop email apps. Each email client handles pasted content differently, so send yourself a test before using a template for a real message.
         <div style="margin-top:14px;">
           MailPaw is open source on <a href="${MAILPAW_REPO_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">GitHub</a>.
-          If MailPaw helped you, feel free to <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">buy me a coffee</a> as a thank you.
+          If MailPaw helped you, feel free to <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">leave a coffee thank-you</a>.
         </div>
       </div>
     `, () => true);
