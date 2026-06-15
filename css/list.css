@@ -523,7 +523,8 @@
 .zt-item { position: relative; background: var(--zt-surface-strong); border-radius: 16px; padding: 16px; margin-bottom: 12px; cursor: pointer; border: 1px solid rgba(15, 23, 42, 0.06); box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04); transition: transform 0.2s, border 0.2s, box-shadow 0.2s; }
 .zt-item.animate { animation: slideUpFade 0.3s ease backwards; }
 .zt-item:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12); border-color: rgba(14, 165, 233, 0.25); }
-.zt-item-title { font-weight: 700; font-size: 15px; color: var(--zt-text); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; row-gap: 4px; }
+.zt-item-title { font-weight: 700; font-size: 15px; color: var(--zt-text); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; row-gap: 4px; min-width: 0; }
+.zt-item-title > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .zt-item-preview {
   border: 1px solid rgba(15, 23, 42, 0.08);
   padding: 10px 12px;
@@ -591,6 +592,7 @@
 .zt-template-badge {
   display: inline-flex;
   align-items: center;
+  flex: none;
   padding: 2px 8px;
   border-radius: 999px;
   font-size: 10px;
@@ -598,6 +600,7 @@
   letter-spacing: 0.6px;
   text-transform: uppercase;
   border: 1px solid rgba(15, 23, 42, 0.2);
+  transition: opacity 0.16s ease, transform 0.16s ease;
 }
 .zt-template-badge.is-example {
   background: rgba(14, 165, 233, 0.12);
@@ -624,8 +627,18 @@
   padding: 4px;
   border-radius: 12px;
   backdrop-filter: blur(6px);
+  z-index: 4;
 }
-.zt-item:hover .zt-actions { opacity: 1; }
+.zt-item:hover .zt-actions,
+.zt-item:focus-within .zt-actions { opacity: 1; }
+.zt-list.view-thumb .zt-item:hover .zt-template-badge,
+.zt-list.view-thumb .zt-item:focus-within .zt-template-badge,
+.zt-list.view-preview .zt-item:hover .zt-template-badge,
+.zt-list.view-preview .zt-item:focus-within .zt-template-badge {
+  opacity: 0;
+  transform: translateY(-2px);
+  pointer-events: none;
+}
 .zt-action-btn { width: 32px; height: 32px; border-radius: 10px; border: none; background: transparent; color: #94a3b8; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
 .zt-action-btn svg { width: 18px; height: 18px; stroke-width: 2px; }
 .zt-action-btn[disabled] { opacity: 0.35; cursor: not-allowed; }
