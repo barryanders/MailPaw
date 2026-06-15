@@ -1970,13 +1970,14 @@ function openTemplatePreview(template, access = {}) {
     const footerGroups = overlay.querySelectorAll('.zt-preview-footer-actions');
     if (footerGroups[1]) footerGroups[1].classList.add('zt-preview-primary-actions');
 
+    const shouldUseCompactActions = window.matchMedia && window.matchMedia('(max-width: 640px)').matches;
     const footerActions = overlay.querySelector('.zt-preview-footer-actions');
-    const secondaryButtons = [
+    const secondaryButtons = shouldUseCompactActions ? [
       overlay.querySelector('#zt-preview-duplicate'),
       overlay.querySelector('#zt-preview-export'),
       overlay.querySelector('#zt-preview-delete')
-    ].filter(Boolean);
-    if (footerActions && secondaryButtons.length) {
+    ].filter(Boolean) : [];
+    if (shouldUseCompactActions && footerActions && secondaryButtons.length) {
       const details = document.createElement('details');
       details.className = 'zt-preview-more';
       details.innerHTML = `
