@@ -511,7 +511,8 @@ body.zt-standalone .zt-visual-editor {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
       "brand actions"
-      "toolbar utility";
+      "toolbar utility"
+      "inline inline";
     align-items: center;
     gap: 8px 8px;
     min-height: 0;
@@ -547,6 +548,13 @@ body.zt-standalone .zt-visual-editor {
     grid-area: toolbar;
     order: 3;
     width: 100%;
+    justify-content: flex-start;
+  }
+
+  body.zt-standalone .zt-header-inline {
+    grid-area: inline;
+    width: 100%;
+    min-width: 0;
     justify-content: flex-start;
   }
 
@@ -674,28 +682,29 @@ body.zt-standalone .zt-visual-editor {
     scrollbar-width: thin;
   }
 
-  body.zt-standalone #zt-inline-toolbar {
-    align-items: flex-start;
-    flex-wrap: wrap;
+  body.zt-standalone .zt-inline-tools {
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
     gap: 6px;
-    max-height: none;
-    overflow: visible;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 0 2px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
 
-  body.zt-standalone .zt-inline-tools {
-    flex: 1 1 100%;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 6px;
-    max-height: none;
-    overflow: visible;
+  body.zt-standalone .zt-inline-tools::-webkit-scrollbar {
+    display: none;
   }
 
   body.zt-standalone .zt-inline-tools .zt-bar-row {
-    flex: 1 1 100%;
-    flex-wrap: wrap;
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
     gap: 6px;
-    white-space: normal;
+    white-space: nowrap;
   }
 
   body.zt-standalone .zt-inline-tools .zt-bar-sep,
@@ -713,10 +722,18 @@ body.zt-standalone .zt-visual-editor {
 
   body.zt-standalone .zt-inline-tools .zt-bar-input,
   body.zt-standalone .zt-inline-tools .zt-bar-select {
-    flex: 1 1 104px;
+    flex: 0 0 auto;
     min-width: 0 !important;
-    max-width: 100%;
+    max-width: none;
     height: 32px;
+  }
+
+  body.zt-standalone .zt-inline-tools #bar-font-family {
+    display: none;
+  }
+
+  body.zt-standalone .zt-inline-tools #bar-font-size {
+    width: 76px !important;
   }
 
   body.zt-standalone .zt-inline-tools .zt-bar-btn-text {
@@ -796,6 +813,34 @@ body.zt-standalone .zt-visual-editor {
 
   body.zt-standalone .zt-drag-handle {
     display: none;
+  }
+
+  body.zt-standalone .zt-block-controls {
+    position: fixed;
+    top: auto;
+    left: 50%;
+    right: auto;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    display: none;
+    width: auto;
+    max-width: calc(100vw - 24px);
+    padding: 7px;
+    border-radius: 14px;
+    gap: 5px;
+    z-index: 2147483647;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.22);
+  }
+
+  body.zt-standalone .zt-builder-block.selected > .zt-block-controls,
+  body.zt-standalone .zt-builder-block.zt-child-selected > .zt-block-controls {
+    display: flex;
+  }
+
+  body.zt-standalone .zt-control-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
   }
 
   body.zt-standalone .zt-fs-settings-col {

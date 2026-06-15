@@ -31,6 +31,8 @@ function getEditorLayoutHTML(isEdit) {
             <span>Details</span>
           </button>
         </div>
+      </div>
+      <div class="zt-header-group zt-header-inline">
         <div class="zt-inline-tools" id="zt-inline-tools">
           <span class="zt-toolbar-empty">Select a block to edit</span>
         </div>

@@ -318,6 +318,15 @@ function showInlinePopup(targetElement) {
     }
 
     toolbar.innerHTML = useHeaderToolbar ? content : content + `<div class="zt-bar-arrow"></div>`;
+    if (useHeaderToolbar) {
+        toolbar.scrollLeft = 0;
+        const scheduleScrollReset = typeof requestAnimationFrame === 'function'
+            ? requestAnimationFrame
+            : (callback) => setTimeout(callback, 0);
+        scheduleScrollReset(() => {
+            toolbar.scrollLeft = 0;
+        });
+    }
     if (!useHeaderToolbar) {
         block.appendChild(toolbar);
         requestAnimationFrame(() => positionContextBar(toolbar, block));
