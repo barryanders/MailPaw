@@ -1064,9 +1064,25 @@ function bindHomeControls(area) {
         chrome.storage.sync.set({ listViewMode });
       }
       area.querySelectorAll('.zt-view-btn').forEach(b => b.classList.toggle('active', b === btn));
+      const mobileViewSelect = area.querySelector('#zt-mobile-view-select');
+      if (mobileViewSelect) mobileViewSelect.value = listViewMode;
       renderListItems(area.querySelector('.zt-search')?.value || '', false);
     };
   });
+  const mobileViewSelect = area.querySelector('#zt-mobile-view-select');
+  if (mobileViewSelect) {
+    mobileViewSelect.value = listViewMode;
+    mobileViewSelect.onchange = (e) => {
+      listViewMode = e.target.value;
+      if (chrome?.storage?.sync) {
+        chrome.storage.sync.set({ listViewMode });
+      }
+      area.querySelectorAll('.zt-view-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === listViewMode);
+      });
+      renderListItems(area.querySelector('.zt-search')?.value || '', false);
+    };
+  }
 }
 
 function renderHomeView(animate = false) {
@@ -1101,6 +1117,11 @@ function renderHomeViewInner(animate = false) {
             <option value="createdAt_asc">Oldest</option>
             <option value="title_asc">Name (A-Z)</option>
             <option value="title_desc">Name (Z-A)</option>
+          </select>
+          <select id="zt-mobile-view-select" class="zt-select zt-mobile-view-select" aria-label="Choose template view">
+            <option value="preview">Masonry</option>
+            <option value="thumb">Gallery</option>
+            <option value="list">List</option>
           </select>
           <div class="zt-view-toggle" aria-label="View options">
             <button class="zt-view-btn ${listViewMode === 'list' ? 'active' : ''}" data-view="list" data-tooltip="List">

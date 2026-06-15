@@ -507,6 +507,12 @@ body.zt-standalone .zt-visual-editor {
     display: none;
   }
 
+  body.zt-standalone .zt-mobile-view-select {
+    display: block;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
   body.zt-standalone .zt-list,
   body.zt-standalone .zt-list.view-thumb {
     display: block;
