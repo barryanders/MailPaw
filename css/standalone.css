@@ -504,10 +504,10 @@ body.zt-standalone .zt-visual-editor {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
-      "brand actions"
-      "toolbar toolbar";
+      "brand brand"
+      "toolbar actions";
     align-items: center;
-    gap: 6px 8px;
+    gap: 8px 8px;
     min-height: 0;
     padding: max(8px, env(safe-area-inset-top)) 12px 8px;
   }
@@ -519,13 +519,15 @@ body.zt-standalone .zt-visual-editor {
   body.zt-standalone .zt-header-left {
     grid-area: brand;
     min-width: 0;
-    justify-content: space-between;
+    justify-content: center;
+    text-align: center;
   }
 
   body.zt-standalone .zt-header-right {
     grid-area: actions;
     justify-content: flex-end;
-    gap: 5px;
+    gap: 4px;
+    min-width: 0;
   }
 
   body.zt-standalone .zt-header-toolbar {
@@ -542,6 +544,8 @@ body.zt-standalone .zt-visual-editor {
   body.zt-standalone #zt-inline-toolbar {
     justify-content: flex-start;
     padding-bottom: 2px;
+    min-width: 0;
+    overflow: visible;
   }
 
   body.zt-standalone .zt-mobile-editor-controls {
@@ -554,6 +558,8 @@ body.zt-standalone .zt-visual-editor {
 
   body.zt-standalone .zt-mobile-editor-toggle {
     display: inline-flex;
+    height: 34px;
+    padding: 0 10px;
   }
 
   body.zt-standalone .zt-header-right .zt-icon-btn {
@@ -565,7 +571,7 @@ body.zt-standalone .zt-visual-editor {
   body.zt-standalone .zt-header-right .zt-btn-save {
     flex: none;
     height: 34px;
-    padding: 0 10px;
+    padding: 0 9px;
     border-radius: 12px;
     font-size: 12px;
   }
@@ -582,10 +588,19 @@ body.zt-standalone .zt-visual-editor {
   }
 
   body.zt-standalone .zt-header-right .zt-btn-save {
-    max-width: 104px;
+    max-width: 84px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  body.zt-standalone .zt-header-right .zt-btn-save[data-mobile-label] .zt-save-label {
+    font-size: 0;
+  }
+
+  body.zt-standalone .zt-header-right .zt-btn-save[data-mobile-label] .zt-save-label::after {
+    content: attr(data-mobile-label);
+    font-size: 12px;
   }
 
   body.zt-standalone .zt-fs-grid {

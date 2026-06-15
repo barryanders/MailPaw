@@ -15,7 +15,12 @@ function openFullScreenEditor(template = null) {
   fsLayer.innerHTML = getEditorLayoutHTML(isEdit);
   const saveBtn = fsLayer.querySelector('#fs-save');
   if (saveBtn && template && template.isDefault) {
-    saveBtn.textContent = 'Save as new';
+    const label = saveBtn.querySelector('.zt-save-label');
+    if (label) {
+      label.textContent = 'Save as new';
+      label.setAttribute('data-mobile-label', 'Save');
+    }
+    saveBtn.setAttribute('data-mobile-label', 'Save');
   }
 
   const tpl = template || { title: '', subject: '', shortcut: '', body: '', category: null }; // Changed default category to null
