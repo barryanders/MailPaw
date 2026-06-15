@@ -1571,6 +1571,35 @@ const MAILPAW_EXAMPLE_TEMPLATE_SPECS = [
   }
 ];
 
+const MAILPAW_EXAMPLE_TEMPLATE_ORDER = [
+  'tpl-example-tiny-magazine',
+  'tpl-example-blueprint',
+  'tpl-example-signal-card',
+  'tpl-example-greenhouse',
+  'tpl-example-terminal-note',
+  'tpl-example-photo-letter',
+  'tpl-example-color-block',
+  'tpl-example-soft-cloud',
+  'tpl-example-ink-gallery',
+  'tpl-example-clear-receipt',
+  'tpl-example-brutalist-note',
+  'tpl-example-object-story',
+  'tpl-example-redacted',
+  'tpl-example-studio-index',
+  'tpl-example-luxe-minimal',
+  'tpl-example-type-poster',
+  'tpl-example-museum-card',
+  'tpl-example-noir-product'
+];
+
+const MAILPAW_EXAMPLE_TEMPLATE_ORDER_INDEX = new Map(MAILPAW_EXAMPLE_TEMPLATE_ORDER.map((id, index) => [id, index]));
+MAILPAW_EXAMPLE_TEMPLATE_SPECS.sort((a, b) => {
+  const orderA = MAILPAW_EXAMPLE_TEMPLATE_ORDER_INDEX.has(a.id) ? MAILPAW_EXAMPLE_TEMPLATE_ORDER_INDEX.get(a.id) : Number.MAX_SAFE_INTEGER;
+  const orderB = MAILPAW_EXAMPLE_TEMPLATE_ORDER_INDEX.has(b.id) ? MAILPAW_EXAMPLE_TEMPLATE_ORDER_INDEX.get(b.id) : Number.MAX_SAFE_INTEGER;
+  if (orderA !== orderB) return orderA - orderB;
+  return String(a.title || '').localeCompare(String(b.title || ''));
+});
+
 DEFAULT_TEMPLATE_SPECS.splice(0, DEFAULT_TEMPLATE_SPECS.length, ...MAILPAW_EXAMPLE_TEMPLATE_SPECS);
 
 const LEGACY_DEFAULT_TEMPLATE_IDS = [

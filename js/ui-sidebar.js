@@ -1220,6 +1220,16 @@ if (!window.ztPreviewScaleResizeBound) {
   window.addEventListener('orientationchange', queuePreviewScaleUpdate);
 }
 
+function getIncludedTemplateOrder(template) {
+  if (!template || !template.isDefault) return null;
+  const explicitOrder = Number(template.defaultOrder);
+  if (Number.isFinite(explicitOrder)) return explicitOrder;
+  if (typeof MAILPAW_EXAMPLE_TEMPLATE_ORDER_INDEX !== 'undefined' && MAILPAW_EXAMPLE_TEMPLATE_ORDER_INDEX.has(template.id)) {
+    return MAILPAW_EXAMPLE_TEMPLATE_ORDER_INDEX.get(template.id);
+  }
+  return Number.MAX_SAFE_INTEGER;
+}
+
 function renderListItems(filter = '', animate = true) {
   closeTemplateActionMenus();
   const list = document.querySelector('.zt-list');
@@ -1258,6 +1268,11 @@ function renderListItems(filter = '', animate = true) {
     return catMatch && searchMatch && filterMatch;
   });
   filtered.sort((a, b) => {
+    const includedOrderA = getIncludedTemplateOrder(a);
+    const includedOrderB = getIncludedTemplateOrder(b);
+    if (includedOrderA !== null && includedOrderB !== null && includedOrderA !== includedOrderB) {
+      return includedOrderA - includedOrderB;
+    }
     const [field, dir] = currentSort.split('_');
     let valA, valB;
     if (field === 'title') { valA = (a.title || '').toLowerCase(); valB = (b.title || '').toLowerCase(); } else { valA = a.createdAt || 0; valB = b.createdAt || 0; }

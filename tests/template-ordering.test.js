@@ -2,6 +2,19 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { setupDom, loadScripts } = require('./helpers');
 
+test('included example specs use the intended display order', () => {
+  const window = setupDom();
+  loadScripts(window, [
+    { path: 'js/constants.js', expose: ['DEFAULT_TEMPLATE_SPECS', 'MAILPAW_EXAMPLE_TEMPLATE_ORDER'] }
+  ]);
+
+  const specs = window.__testExports.DEFAULT_TEMPLATE_SPECS;
+  assert.equal(specs[0].id, 'tpl-example-tiny-magazine');
+  assert.equal(specs[0].title, 'Tiny Magazine');
+  assert.equal(window.__testExports.MAILPAW_EXAMPLE_TEMPLATE_ORDER[0], 'tpl-example-tiny-magazine');
+  assert.ok(specs.findIndex(spec => spec.id === 'tpl-example-ink-gallery') > 0);
+});
+
 test('included templates keep their original order when restored with custom templates', () => {
   const window = setupDom();
   window.ZT_STANDALONE = true;

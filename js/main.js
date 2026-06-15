@@ -208,6 +208,7 @@ function buildDefaultTemplatesFromSpecs(specs) {
       stylePresetId: preset?.id || templateSpec.stylePresetId || '',
       createdAt: Date.now() - (index * 1000),
       updatedAt: Date.now() - (index * 1000),
+      defaultOrder: index,
       isDefault: true
     };
     if (!isStandaloneMailPaw()) template.shortcut = templateSpec.shortcut || '';
@@ -240,7 +241,12 @@ function orderTemplatesWithIncludedFirst(storedList, defaults) {
   const included = Array.isArray(defaults) ? defaults : [];
   const includedIds = new Set(included.map(t => t && t.id).filter(Boolean));
   const storedById = new Map(cleaned.map(t => [t.id, t]));
-  const orderedIncluded = included.map(defaultTemplate => storedById.get(defaultTemplate.id) || defaultTemplate);
+  const orderedIncluded = included.map((defaultTemplate, index) => {
+    const storedTemplate = storedById.get(defaultTemplate.id);
+    return storedTemplate
+      ? { ...storedTemplate, defaultOrder: defaultTemplate.defaultOrder ?? index }
+      : defaultTemplate;
+  });
   const customTemplates = cleaned.filter(t => !includedIds.has(t.id));
   return orderedIncluded.concat(customTemplates);
 }
