@@ -1,5 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const { setupDom, loadScripts } = require('./helpers');
 
 test('createBlockHTML builds default blocks', () => {
@@ -26,8 +28,25 @@ test('createBlockHTML builds default blocks', () => {
     const image = window.createBlockHTML('image');
     const img = image.querySelector('img');
     assert.equal(image.getAttribute('data-type'), 'image');
-    assert.ok(img.getAttribute('src'));
+    assert.equal(img.getAttribute('src'), 'https://picsum.photos/seed/mailpaw-block-image/600/300');
     assert.equal(img.style.borderRadius, '8px');
+});
+
+test('placeholder image URLs are stable once assigned', () => {
+    const window = setupDom();
+    loadScripts(window, [
+        { path: 'js/components-data.js', attach: ['componentDefaults'] },
+        'js/components-blocks.js'
+    ]);
+
+    assert.equal(
+        window.createStablePlaceholderImage('Hero Image', 900, 420),
+        'https://picsum.photos/seed/mailpaw-hero-image/900/420'
+    );
+
+    const source = fs.readFileSync(path.join(__dirname, '..', 'js/components-blocks.js'), 'utf8');
+    const unseededPicsumUrls = source.match(/https:\/\/picsum\.photos\/(?!seed\/)[^'"`<\s]*/g) || [];
+    assert.deepEqual(unseededPicsumUrls, []);
 });
 
 test('inline toolbar keeps mobile editor controls while editing a block', () => {

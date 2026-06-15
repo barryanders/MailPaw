@@ -1,5 +1,10 @@
 /* --- BLOCK BUILDER --- */
 
+function createStablePlaceholderImage(seed, width, height) {
+    const safeSeed = String(seed || 'image').replace(/[^a-z0-9-]/gi, '-').toLowerCase();
+    return `https://picsum.photos/seed/mailpaw-${safeSeed}/${width}/${height}`;
+}
+
 function createBlockHTML(type, param=null) {
     let content = '';
     const def = componentDefaults[type] || {};
@@ -38,7 +43,7 @@ function createBlockHTML(type, param=null) {
             content = `<hr style="border:0; border-top:${def.thickness || '1px'} solid ${dividerColor}; margin:${def.margin || '10px 0'}; width:${def.width || '100%'};">`;
             break;
         case 'image':
-            content = `<img src="https://picsum.photos/600/300" style="width:100%; border-radius:${def.radius}; display:block;">`;
+            content = `<img src="${createStablePlaceholderImage('block-image', 600, 300)}" style="width:100%; border-radius:${def.radius}; display:block;">`;
             break;
         case 'spacer':
             const spacerHeight = def.height || '24px';
@@ -234,7 +239,7 @@ function insertPreset(type) {
     if (type === 'hero') {
         const image = createBlockHTML('image');
         const imgEl = image.querySelector('img');
-        if (imgEl) imgEl.src = 'https://picsum.photos/900/420';
+        if (imgEl) imgEl.src = createStablePlaceholderImage('preset-hero', 900, 420);
 
         const heading = createBlockHTML('heading');
         const headingEl = heading.querySelector('h2');
@@ -267,7 +272,7 @@ function insertPreset(type) {
             columns[0].innerHTML = '';
             const img = createBlockHTML('image');
             const imgEl = img.querySelector('img');
-            if (imgEl) imgEl.src = 'https://picsum.photos/460/300';
+            if (imgEl) imgEl.src = createStablePlaceholderImage('preset-feature-left', 460, 300);
             const subhead = createBlockHTML('heading');
             const subEl = subhead.querySelector('h2');
             if (subEl) {
@@ -285,7 +290,7 @@ function insertPreset(type) {
             columns[1].innerHTML = '';
             const img = createBlockHTML('image');
             const imgEl = img.querySelector('img');
-            if (imgEl) imgEl.src = 'https://picsum.photos/460/301';
+            if (imgEl) imgEl.src = createStablePlaceholderImage('preset-feature-right', 460, 301);
             const subhead = createBlockHTML('heading');
             const subEl = subhead.querySelector('h2');
             if (subEl) {
@@ -330,7 +335,7 @@ function insertPreset(type) {
             columns[1].innerHTML = '';
             const image = createBlockHTML('image');
             const imgEl = image.querySelector('img');
-            if (imgEl) imgEl.src = 'https://picsum.photos/420/360';
+            if (imgEl) imgEl.src = createStablePlaceholderImage('preset-cta', 420, 360);
             columns[1].appendChild(image);
         }
 
@@ -355,7 +360,7 @@ function insertPreset(type) {
             const logo = createBlockHTML('image');
             const logoImg = logo.querySelector('img');
             if (logoImg) {
-                logoImg.src = 'https://picsum.photos/280/120';
+                logoImg.src = createStablePlaceholderImage('preset-footer-logo', 280, 120);
                 logoImg.style.width = '140px';
                 logoImg.style.margin = '0';
             }
