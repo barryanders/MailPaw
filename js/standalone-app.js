@@ -1,4 +1,35 @@
 (function initStandaloneApp() {
+  const COPY_COUNT_KEY = 'mailpawCopyCount';
+  const COFFEE_PROMPT_EVERY = 100;
+
+  const maybeShowCoffeePrompt = () => {
+    let count = 0;
+    try {
+      count = Number(localStorage.getItem(COPY_COUNT_KEY) || '0') + 1;
+      localStorage.setItem(COPY_COUNT_KEY, String(count));
+    } catch (_) {
+      return;
+    }
+    if (count < COFFEE_PROMPT_EVERY || count % COFFEE_PROMPT_EVERY !== 0) return;
+    if (document.querySelector('.zt-modal-overlay')) return;
+    if (typeof showModal !== 'function') return;
+
+    showModal('MailPaw helped?', `
+      <div style="color:#475569; font-size:14px; line-height:1.5;">
+        You have copied ${count} emails with MailPaw. If it has saved you time, feel free to get me a coffee as a thank you.
+      </div>
+    `, () => {
+      window.open(MAILPAW_SUPPORT_URL, '_blank', 'noopener');
+      return true;
+    });
+    const modal = document.querySelector('.zt-modal-overlay');
+    if (!modal) return;
+    const submit = modal.querySelector('#modal-submit');
+    const cancel = modal.querySelector('#modal-cancel');
+    if (submit) submit.textContent = 'Get me a coffee';
+    if (cancel) cancel.textContent = 'Maybe later';
+  };
+
   const relabelAppActions = () => {
     document.querySelectorAll('#zt-billing').forEach((button) => {
       if (button.textContent !== 'About MailPaw') button.textContent = 'About MailPaw';
@@ -16,6 +47,7 @@
     const original = button ? button.innerHTML : '';
     const copy = typeof copyRichEmailToClipboard === 'function' ? copyRichEmailToClipboard : copyTextToClipboard;
     copy(html, () => {
+      maybeShowCoffeePrompt();
       if (button) button.innerHTML = '<span class="zt-btn-label">Copied</span>';
       setTimeout(() => {
         if (button) button.innerHTML = original;

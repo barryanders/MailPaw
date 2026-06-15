@@ -1078,53 +1078,9 @@ function renderHomeViewInner(animate = false) {
   tabContainer.querySelectorAll('.zt-tab').forEach(btn => { btn.onclick = () => { activeCategory = btn.dataset.cat; renderHomeView(false); }; });
 
   if (!area.querySelector('.zt-list')) {
-    const heroMarkup = ztHideHero ? '' : `
-      <div class="zt-hero">
-        <div class="zt-hero-card">
-          <button class="zt-hero-dismiss" id="zt-hero-dismiss" data-tooltip="Close" aria-label="Close">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-          <div class="zt-hero-copy">
-            <div class="zt-hero-kicker">MailPaw</div>
-            <div class="zt-hero-title">Email templates that stay by your side.</div>
-            <div class="zt-hero-subtitle">MailPaw keeps your template library private in this browser, with reusable blocks, copy-ready email output, and backup files you control.</div>
-            <button class="zt-hero-btn zt-hero-primary" id="zt-hero-create">New Template</button>
-            <div class="zt-hero-tags">
-              <span class="zt-hero-tag">Local</span>
-              <span class="zt-hero-tag">Private</span>
-              <span class="zt-hero-tag">Copy Email</span>
-            </div>
-          </div>
-          <div class="zt-hero-preview" aria-hidden="true">
-            <div class="zt-hero-preview-card card-back">
-              <span class="zt-hero-preview-bar"></span>
-              <span class="zt-hero-preview-line"></span>
-              <span class="zt-hero-preview-line short"></span>
-              <span class="zt-hero-preview-chip"></span>
-            </div>
-            <div class="zt-hero-preview-card card-mid">
-              <span class="zt-hero-preview-bar accent"></span>
-              <span class="zt-hero-preview-line"></span>
-              <span class="zt-hero-preview-line short"></span>
-              <span class="zt-hero-preview-button"></span>
-            </div>
-            <div class="zt-hero-preview-card card-front">
-              <span class="zt-hero-preview-bar"></span>
-              <span class="zt-hero-preview-line"></span>
-              <span class="zt-hero-preview-line short"></span>
-              <span class="zt-hero-preview-button"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
     area.innerHTML = `
       <div class="zt-library-scroll">
-        <div class="zt-library-intro${ztHideHero ? ' is-hidden' : ' has-hero'}" id="zt-library-intro">
-          ${heroMarkup}
+        <div class="zt-library-intro is-hidden" id="zt-library-intro">
           <div class="zt-billing-banner" id="zt-billing-banner" aria-live="polite"></div>
         </div>
         <div class="zt-search-container">
@@ -1163,14 +1119,6 @@ function renderHomeViewInner(animate = false) {
       </div>
     `;
     area.querySelector('.zt-search').onkeyup = (e) => renderListItems(e.target.value, false);
-    const heroCreate = document.getElementById('zt-hero-create');
-    if (heroCreate) heroCreate.onclick = () => guardTemplateCreation(() => renderEditorView());
-    const heroDismiss = document.getElementById('zt-hero-dismiss');
-    if (heroDismiss) {
-      heroDismiss.onclick = () => {
-        hideIntro(true);
-      };
-    }
     const sortSelect = document.getElementById('zt-sort-select');
     if (sortSelect) {
       sortSelect.value = currentSort;
