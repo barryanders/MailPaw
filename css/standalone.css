@@ -542,10 +542,16 @@ body.zt-standalone .zt-visual-editor {
     background: transparent;
   }
 
-  body.zt-standalone .zt-list.view-thumb .zt-preview-frame,
-  body.zt-standalone .zt-list.view-preview .zt-preview-frame {
+  body.zt-standalone .zt-list.view-thumb .zt-preview-frame {
     width: 100%;
     height: 132px;
+    border-radius: 12px;
+  }
+
+  body.zt-standalone .zt-list.view-preview .zt-preview-frame {
+    width: 100%;
+    height: var(--preview-rendered-height, 320px);
+    min-height: 220px;
     border-radius: 12px;
   }
 

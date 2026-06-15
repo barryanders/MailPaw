@@ -206,9 +206,12 @@ body.zt-standalone .zt-shortcut-badge,
     display: none !important;
   }
 
-  body.zt-standalone .zt-list.view-thumb .zt-preview-frame,
-  body.zt-standalone .zt-list.view-preview .zt-preview-frame {
+  body.zt-standalone .zt-list.view-thumb .zt-preview-frame {
     height: 220px;
+  }
+
+  body.zt-standalone .zt-list.view-preview .zt-preview-frame {
+    height: var(--preview-rendered-height, 320px);
   }
 
   body.zt-standalone .zt-template-overlay {

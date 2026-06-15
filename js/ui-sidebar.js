@@ -1194,10 +1194,11 @@ function schedulePreviewScaleUpdate() {
       const baseHeight = contentHeight || ((canvas && canvas.scrollHeight) ? canvas.scrollHeight : 800);
       const scaleByWidth = frameWidth / baseWidth;
       const scaleByHeight = frameHeight / baseHeight;
-      const shouldFitFullPreview = document.body.classList.contains('zt-standalone') && window.innerWidth <= 700;
       const shouldShowFullPreview = document.body.classList.contains('zt-standalone')
-        && frame.closest('.zt-list.view-preview')
-        && window.innerWidth > 700;
+        && frame.closest('.zt-list.view-preview');
+      const shouldFitFullPreview = document.body.classList.contains('zt-standalone')
+        && window.innerWidth <= 700
+        && !shouldShowFullPreview;
       const scale = shouldShowFullPreview
         ? Math.min(1, scaleByWidth)
         : shouldFitFullPreview
