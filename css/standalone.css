@@ -519,8 +519,8 @@ body.zt-standalone .zt-visual-editor {
   body.zt-standalone .zt-header-left {
     grid-area: brand;
     min-width: 0;
-    justify-content: center;
-    text-align: center;
+    justify-content: flex-start;
+    text-align: left;
   }
 
   body.zt-standalone .zt-header-right {

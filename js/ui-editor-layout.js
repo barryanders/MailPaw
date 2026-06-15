@@ -14,8 +14,13 @@ function getEditorLayoutHTML(isEdit) {
       <div class="zt-header-group zt-header-toolbar" id="zt-inline-toolbar">
         <div class="zt-mobile-editor-controls" id="zt-mobile-editor-controls">
           <button class="zt-mobile-editor-toggle" id="zt-mobile-blocks-toggle" type="button" aria-pressed="false">
-            <svg class="zt-toggle-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+            <svg class="zt-toggle-icon zt-cubes-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2.8 17.2 5.7 12 8.7 6.8 5.7 12 2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
+              <path d="M6.8 5.7v6L12 14.8v-6L6.8 5.7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
+              <path d="M17.2 5.7v6L12 14.8v-6l5.2-3.1Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
+              <path d="M6.2 12.4 11 15.2 6.2 18 1.4 15.2l4.8-2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
+              <path d="M17.8 12.4 22.6 15.2 17.8 18 13 15.2l4.8-2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
+              <path d="M6.2 18v3.1M17.8 18v3.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
             </svg>
             <span>Blocks</span>
           </button>

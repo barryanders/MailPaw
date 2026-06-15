@@ -89,6 +89,7 @@
   box-shadow: 0 8px 18px rgba(47, 31, 27, 0.08);
 }
 .zt-toggle-icon { flex: none; }
+.zt-cubes-icon { margin-left: -1px; }
 .zt-mobile-editor-toggle[aria-pressed="true"] {
   background: var(--zt-gradient);
   color: #ffffff;
