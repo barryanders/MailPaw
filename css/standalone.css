@@ -140,6 +140,12 @@ body.zt-standalone .zt-logo-mark {
   box-shadow: 0 12px 24px rgba(45, 35, 25, 0.16);
 }
 
+body.zt-standalone .zt-logo,
+body.zt-standalone .zt-logo-text,
+body.zt-standalone .zt-logo-text::after {
+  text-align: left;
+}
+
 body.zt-standalone .zt-logo-text::after {
   content: "Local email studio";
   display: block;

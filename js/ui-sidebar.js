@@ -16,6 +16,69 @@ let ztUpgradeReturnState = null;
 let ztBillingRefreshTimer = null;
 let ztBillingRefreshStopTimer = null;
 
+function closeTemplateActionMenus() {
+  document.querySelectorAll('.zt-card-actions-popover').forEach((menu) => menu.remove());
+  document.querySelectorAll('.zt-btn-more[aria-expanded="true"]').forEach((button) => {
+    button.setAttribute('aria-expanded', 'false');
+  });
+}
+
+function positionTemplateActionMenu(menu, anchor) {
+  if (!menu || !anchor) return;
+  const gap = 8;
+  const margin = 10;
+  menu.style.visibility = 'hidden';
+  menu.style.left = '0px';
+  menu.style.top = '0px';
+  document.body.appendChild(menu);
+
+  const anchorRect = anchor.getBoundingClientRect();
+  const menuRect = menu.getBoundingClientRect();
+  const left = Math.max(margin, Math.min(window.innerWidth - menuRect.width - margin, anchorRect.right - menuRect.width));
+  let top = anchorRect.bottom + gap;
+  if (top + menuRect.height > window.innerHeight - margin) {
+    top = Math.max(margin, anchorRect.top - menuRect.height - gap);
+  }
+
+  menu.style.left = `${Math.round(left)}px`;
+  menu.style.top = `${Math.round(top)}px`;
+  menu.style.visibility = 'visible';
+}
+
+function openTemplateActionMenu(anchor, template, access) {
+  if (!anchor || !template) return;
+  const wasOpen = anchor.getAttribute('aria-expanded') === 'true';
+  closeTemplateActionMenus();
+  if (wasOpen) return;
+
+  const makeAction = (label, icon, handler, options = {}) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = `zt-card-action-menu-item${options.danger ? ' is-danger' : ''}`;
+    button.disabled = !!options.disabled;
+    button.innerHTML = `<span class="zt-card-action-menu-icon" aria-hidden="true">${icon}</span><span>${label}</span>`;
+    button.onclick = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      closeTemplateActionMenus();
+      if (!button.disabled && typeof handler === 'function') handler();
+    };
+    return button;
+  };
+
+  const menu = document.createElement('div');
+  menu.className = 'zt-card-actions-popover';
+  menu.setAttribute('role', 'menu');
+  menu.appendChild(makeAction('Copy Email', '<svg viewBox="0 0 24 24"><path d="M22 2 11 13"></path><path d="m22 2-7 20-4-9-9-4Z"></path></svg>', () => initiateTemplateInsertion(template), { disabled: access.locked }));
+  menu.appendChild(makeAction('Duplicate', '<svg viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"></rect><path d="M4 16H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path></svg>', () => guardTemplateDuplicate(template, () => duplicateTemplate(template)), { disabled: access.locked }));
+  menu.appendChild(makeAction('Export', '<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>', () => guardPremiumAction(() => exportSingleTemplate(template)), { disabled: access.locked }));
+  menu.appendChild(makeAction('Delete', '<svg viewBox="0 0 24 24"><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path></svg>', () => renderDeleteView(template), { danger: true }));
+  menu.onclick = (event) => event.stopPropagation();
+
+  anchor.setAttribute('aria-expanded', 'true');
+  positionTemplateActionMenu(menu, anchor);
+}
+
 function loadHeroPreference() {
   if (!chrome?.storage?.sync) return;
   chrome.storage.sync.get([ZT_HIDE_HERO_KEY], (result) => {
@@ -1144,6 +1207,7 @@ if (!window.ztPreviewScaleResizeBound) {
 }
 
 function renderListItems(filter = '', animate = true) {
+  closeTemplateActionMenus();
   const list = document.querySelector('.zt-list');
   if(!list) return;
   list.innerHTML = '';
@@ -1346,8 +1410,14 @@ function renderListItems(filter = '', animate = true) {
       const moreBtn = document.createElement('button');
       moreBtn.className = 'zt-action-btn zt-btn-more';
       moreBtn.setAttribute('data-tooltip', 'More actions');
+      moreBtn.setAttribute('aria-label', 'More template actions');
+      moreBtn.setAttribute('aria-haspopup', 'menu');
+      moreBtn.setAttribute('aria-expanded', 'false');
       moreBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>`;
-      moreBtn.onclick = (e) => { e.stopPropagation(); openTemplatePreview(t, access); };
+      moreBtn.onclick = (e) => {
+        e.stopPropagation();
+        openTemplateActionMenu(moreBtn, t, access);
+      };
 
       actionsDiv.appendChild(previewBtn);
       actionsDiv.appendChild(editBtn);

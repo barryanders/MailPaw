@@ -5,6 +5,9 @@ document.addEventListener('click', (e) => {
   const modal = document.querySelector('.zt-modal-overlay');
   const preview = document.getElementById('zt-preview-overlay');
   const settingsBtn = document.getElementById('zt-btn-settings');
+  if (!e.target.closest('.zt-card-actions-popover') && !e.target.closest('.zt-btn-more')) {
+    if (typeof closeTemplateActionMenus === 'function') closeTemplateActionMenus();
+  }
   if (document.getElementById('zt-fs-layer')?.classList.contains('show')) return;
   if (preview && preview.contains(e.target)) return;
   if (modal && modal.contains(e.target)) return;
@@ -27,6 +30,10 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     e.preventDefault();
     e.stopPropagation();
+    if (document.querySelector('.zt-card-actions-popover')) {
+      if (typeof closeTemplateActionMenus === 'function') closeTemplateActionMenus();
+      return;
+    }
     const modal = document.querySelector('.zt-modal-overlay');
     if (modal) { modal.remove(); return; }
     const preview = document.getElementById('zt-preview-overlay');
