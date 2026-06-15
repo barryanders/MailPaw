@@ -1376,11 +1376,23 @@ function renderListItems(filter = '', animate = true) {
       textDiv.onclick = () => openTemplatePreview(t, access);
       const actionsDiv = document.createElement('div');
       actionsDiv.className = 'zt-actions';
+      const useExpandedListActions = isListView
+        && typeof window !== 'undefined'
+        && window.ZT_STANDALONE
+        && window.matchMedia
+        && window.matchMedia('(min-width: 701px)').matches;
+      const labelListAction = (button, label) => {
+        if (!useExpandedListActions || !button) return;
+        button.classList.add('zt-action-labeled');
+        button.setAttribute('aria-label', label);
+        button.innerHTML = `${button.innerHTML}<span class="zt-action-label">${label}</span>`;
+      };
 
       const previewBtn = document.createElement('button');
       previewBtn.className = 'zt-action-btn zt-btn-preview';
       previewBtn.setAttribute('data-tooltip', 'Preview template');
       previewBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+      labelListAction(previewBtn, 'Preview');
       previewBtn.onclick = (e) => { e.stopPropagation(); openTemplatePreview(t, access); };
 
       const insertBtn = document.createElement('button');
@@ -1390,6 +1402,7 @@ function renderListItems(filter = '', animate = true) {
         insertBtn.className = 'zt-action-btn zt-btn-insert';
         insertBtn.setAttribute('data-tooltip', copyActionLabel);
         insertBtn.innerHTML = insertIcon;
+        labelListAction(insertBtn, copyActionLabel);
       } else {
         insertBtn.className = 'zt-insert-btn';
         insertBtn.innerHTML = `<span class="zt-btn-icon">${insertIcon}</span><span class="zt-btn-label">${copyActionLabel}</span>`;
@@ -1410,6 +1423,7 @@ function renderListItems(filter = '', animate = true) {
       editBtn.className = 'zt-action-btn zt-btn-edit';
       editBtn.setAttribute('data-tooltip', 'Edit');
       editBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>`;
+      labelListAction(editBtn, 'Edit');
       editBtn.onclick = (e) => { e.stopPropagation(); guardTemplateAccess(t, () => renderEditorView(t)); };
       if (access.locked) editBtn.disabled = true;
 
@@ -1417,6 +1431,7 @@ function renderListItems(filter = '', animate = true) {
       duplicateBtn.className = 'zt-action-btn zt-btn-duplicate';
       duplicateBtn.setAttribute('data-tooltip', 'Duplicate');
       duplicateBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+      labelListAction(duplicateBtn, 'Duplicate');
       duplicateBtn.onclick = (e) => { e.stopPropagation(); guardTemplateDuplicate(t, () => duplicateTemplate(t)); };
       if (access.locked) duplicateBtn.disabled = true;
 
@@ -1424,12 +1439,14 @@ function renderListItems(filter = '', animate = true) {
       delBtn.className = 'zt-action-btn zt-btn-delete';
       delBtn.setAttribute('data-tooltip', 'Delete');
       delBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7c-1 0-2-1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
+      labelListAction(delBtn, 'Delete');
       delBtn.onclick = (e) => { e.stopPropagation(); renderDeleteView(t); };
 
       const downBtn = document.createElement('button');
       downBtn.className = 'zt-action-btn zt-btn-download';
       downBtn.setAttribute('data-tooltip', 'Export');
       downBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
+      labelListAction(downBtn, 'Export');
       downBtn.onclick = (e) => { e.stopPropagation(); guardPremiumAction(() => exportSingleTemplate(t)); };
       if (access.locked) downBtn.disabled = true;
 
@@ -1447,7 +1464,11 @@ function renderListItems(filter = '', animate = true) {
 
       actionsDiv.appendChild(previewBtn);
       actionsDiv.appendChild(editBtn);
-      if (window.ZT_STANDALONE) {
+      if (useExpandedListActions) {
+        actionsDiv.appendChild(duplicateBtn);
+        actionsDiv.appendChild(downBtn);
+        actionsDiv.appendChild(delBtn);
+      } else if (window.ZT_STANDALONE) {
         actionsDiv.appendChild(moreBtn);
       } else {
         actionsDiv.appendChild(duplicateBtn);

@@ -747,6 +747,25 @@
 }
 .zt-list.view-list .zt-action-btn { width: 28px; height: 28px; }
 .zt-list.view-list .zt-action-btn svg { width: 16px; height: 16px; }
+.zt-list.view-list .zt-action-labeled {
+  width: auto;
+  min-width: 0;
+  height: 34px;
+  padding: 0 10px;
+  gap: 6px;
+  border-radius: 10px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.zt-list.view-list .zt-action-labeled svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+.zt-action-label { line-height: 1; }
+.zt-list.view-list .zt-action-labeled.zt-btn-delete { color: #991b1b; }
 
 /* Thumbnail View */
 .zt-list.view-thumb { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
