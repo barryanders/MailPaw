@@ -548,11 +548,12 @@
   flex-shrink: 0;
   --preview-base-width: 600px;
   --preview-scale: 0.2;
+  --preview-offset-x: 0px;
 }
 .zt-preview-canvas {
   position: absolute;
   top: 0;
-  left: 0;
+  left: var(--preview-offset-x);
   width: var(--preview-base-width);
   transform: scale(var(--preview-scale));
   transform-origin: top left;
