@@ -826,7 +826,7 @@ function guardPremiumAction(onAllowed, options = {}) {
 
 function renderUpgradeView(billing, options = {}) {
   let title = 'MailPaw is Free';
-  let message = 'There is no trial, subscription, or paid plan. If MailPaw helps, feel free to get me a coffee as a thank you.';
+  let message = 'There is no trial, subscription, or paid plan. If MailPaw helps, feel free to get me a coffee.';
   if (options.reason === 'limit') {
     message = 'Template creation is free in this standalone app. If you hit a saved browser setting from an older version, restore defaults or import a backup, then keep going.';
   }
@@ -1120,7 +1120,7 @@ function schedulePreviewScaleUpdate() {
       const scaleByHeight = frameHeight / baseHeight;
       const shouldFitFullPreview = document.body.classList.contains('zt-standalone') && window.innerWidth <= 700;
       const scale = shouldFitFullPreview
-        ? Math.min(1, Math.min(scaleByWidth, scaleByHeight))
+        ? Math.min(1, scaleByWidth, Math.max(scaleByHeight * 1.9, scaleByWidth * 0.85))
         : Math.min(1, Math.max(scaleByWidth, scaleByHeight));
       const offsetX = shouldFitFullPreview ? Math.max(0, (frameWidth - (baseWidth * scale)) / 2) : 0;
       frame.style.setProperty('--preview-base-width', `${baseWidth}px`);
@@ -1540,7 +1540,7 @@ function renderBillingView() {
       MailPaw copies rich email content for email clients that accept formatted paste. Each email client handles pasted content differently, so send yourself a test before using a template for a real message.
       <div style="margin-top:14px;">
         MailPaw is open source on <a href="${MAILPAW_REPO_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">GitHub</a>.
-        If MailPaw helped you, feel free to <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">get me a coffee</a> as a thank you.
+        If MailPaw helped you, feel free to <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">get me a coffee</a>.
       </div>
     </div>
   `, () => true);
