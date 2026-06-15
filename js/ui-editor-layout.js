@@ -15,12 +15,9 @@ function getEditorLayoutHTML(isEdit) {
         <div class="zt-mobile-editor-controls" id="zt-mobile-editor-controls">
           <button class="zt-mobile-editor-toggle" id="zt-mobile-blocks-toggle" type="button" aria-pressed="false">
             <svg class="zt-toggle-icon zt-cubes-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 2.8 17.2 5.7 12 8.7 6.8 5.7 12 2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
-              <path d="M6.8 5.7v6L12 14.8v-6L6.8 5.7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
-              <path d="M17.2 5.7v6L12 14.8v-6l5.2-3.1Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
-              <path d="M6.2 12.4 11 15.2 6.2 18 1.4 15.2l4.8-2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
-              <path d="M17.8 12.4 22.6 15.2 17.8 18 13 15.2l4.8-2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
-              <path d="M6.2 18v3.1M17.8 18v3.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+              <path d="M12 3 19 7 12 11 5 7l7-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>
+              <path d="M5 7v8l7 4v-8L5 7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>
+              <path d="M19 7v8l-7 4v-8l7-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>
             </svg>
             <span>Blocks</span>
           </button>
@@ -38,7 +35,7 @@ function getEditorLayoutHTML(isEdit) {
           <span class="zt-toolbar-empty">Select a block to edit</span>
         </div>
       </div>
-      <div class="zt-header-group zt-header-right">
+      <div class="zt-header-group zt-header-utility">
         <button class="zt-icon-btn" id="zt-undo-btn-fs" data-tooltip="Undo">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 14 4 9l5-5"></path>
@@ -52,12 +49,10 @@ function getEditorLayoutHTML(isEdit) {
           </svg>
         </button>
         <button class="zt-icon-btn" id="zt-help-btn-fs" data-tooltip="Help"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+      <div class="zt-header-group zt-header-right">
         <button class="zt-btn-cancel" id="fs-close">Close</button>
         <button class="zt-btn-save" id="fs-save">
-          <svg class="zt-save-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M5 3h12l2 2v16H5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
-            <path d="M8 3v6h8V3M8 21v-7h8v7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
-          </svg>
           <span class="zt-save-label">${isEdit ? 'Update' : 'Save'}</span>
         </button>
       </div>

@@ -510,8 +510,8 @@ body.zt-standalone .zt-visual-editor {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
-      "brand brand"
-      "toolbar actions";
+      "brand actions"
+      "toolbar utility";
     align-items: center;
     gap: 8px 8px;
     min-height: 0;
@@ -531,6 +531,13 @@ body.zt-standalone .zt-visual-editor {
 
   body.zt-standalone .zt-header-right {
     grid-area: actions;
+    justify-content: flex-end;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  body.zt-standalone .zt-header-utility {
+    grid-area: utility;
     justify-content: flex-end;
     gap: 4px;
     min-width: 0;
@@ -568,7 +575,7 @@ body.zt-standalone .zt-visual-editor {
     padding: 0 10px;
   }
 
-  body.zt-standalone .zt-header-right .zt-icon-btn {
+  body.zt-standalone .zt-header-utility .zt-icon-btn {
     width: 34px;
     height: 34px;
   }
@@ -594,10 +601,15 @@ body.zt-standalone .zt-visual-editor {
   }
 
   body.zt-standalone .zt-header-right .zt-btn-save {
-    max-width: 84px;
+    min-width: 66px;
+    max-width: 80px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  body.zt-standalone .zt-save-icon {
+    display: none;
   }
 
   body.zt-standalone .zt-header-right .zt-btn-save[data-mobile-label] .zt-save-label {
@@ -749,9 +761,20 @@ body.zt-standalone .zt-visual-editor {
     min-height: 320px;
     padding: 16px 10px;
     border-radius: 12px;
-    font-size: 14px;
+    font-size: 16px;
     box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
     max-width: 100%;
+  }
+
+  body.zt-standalone #zt-fs-layer input,
+  body.zt-standalone #zt-fs-layer textarea,
+  body.zt-standalone #zt-fs-layer select,
+  body.zt-standalone #zt-fs-layer [contenteditable="true"],
+  body.zt-standalone #zt-fs-layer .zt-bar-input,
+  body.zt-standalone #zt-fs-layer .zt-input-title,
+  body.zt-standalone #zt-fs-layer .zt-input-select,
+  body.zt-standalone #zt-fs-layer .zt-box-input {
+    font-size: 16px !important;
   }
 
   body.zt-standalone .zt-visual-editor table,

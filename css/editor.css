@@ -56,7 +56,8 @@
 .zt-fs-header { display: flex; align-items: center; justify-content: space-between; min-height: 60px; height: auto; padding: 8px 20px; background: var(--zt-surface-strong); border-bottom: 1px solid rgba(15, 23, 42, 0.08); overflow: visible; }
 .zt-header-group { display: flex; align-items: center; gap: 12px; }
 .zt-header-left { min-width: 180px; }
-.zt-header-right { gap: 8px; }
+.zt-header-right,
+.zt-header-utility { gap: 8px; }
 .zt-header-toolbar { flex: 1; justify-content: center; min-width: 0; }
 .zt-logo { display: inline-flex; align-items: center; justify-content: flex-start; gap: 10px; text-align: left; }
 .zt-logo-mark { width: 28px; height: 28px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 10px 18px rgba(15, 23, 42, 0.16); overflow: hidden; background: #dbeafe; }
@@ -89,7 +90,7 @@
   box-shadow: 0 8px 18px rgba(47, 31, 27, 0.08);
 }
 .zt-toggle-icon { flex: none; }
-.zt-cubes-icon { margin-left: -1px; }
+.zt-cubes-icon { margin-left: -1px; overflow: visible; }
 .zt-mobile-editor-toggle[aria-pressed="true"] {
   background: var(--zt-gradient);
   color: #ffffff;
