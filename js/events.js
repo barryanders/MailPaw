@@ -1,4 +1,54 @@
 /* --- LISTENERS --- */
+
+function clearBrowserSelection() {
+  const selection = window.getSelection ? window.getSelection() : null;
+  if (selection) selection.removeAllRanges();
+}
+
+function isTextField(target) {
+  if (!target || target.nodeType !== 1) return false;
+  const tag = target.tagName;
+  return tag === 'INPUT' || tag === 'TEXTAREA';
+}
+
+function selectEditableBlockContents(blockContent) {
+  if (!blockContent || !window.getSelection || !document.createRange) return;
+  const range = document.createRange();
+  range.selectNodeContents(blockContent);
+  const selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
+
+function handleMailPawSelectAll(e) {
+  if (e.key.toLowerCase() !== 'a' || (!e.metaKey && !e.ctrlKey)) return;
+
+  const panel = document.getElementById('zt-panel');
+  const editor = document.getElementById('zt-fs-layer');
+  const editorIsOpen = !!editor && editor.classList.contains('show');
+  const panelIsOpen = !!panel && (panel.classList.contains('open') || panel.classList.contains('fullscreen'));
+  if (!editorIsOpen && !panelIsOpen) return;
+
+  const target = e.target;
+  if (isTextField(target)) return;
+
+  if (editorIsOpen) {
+    const editableBlock = target.closest?.('.zt-builder-block .zt-block-content[contenteditable="true"]');
+    if (editableBlock) {
+      e.preventDefault();
+      e.stopPropagation();
+      selectEditableBlockContents(editableBlock);
+      return;
+    }
+  }
+
+  e.preventDefault();
+  e.stopPropagation();
+  clearBrowserSelection();
+}
+
+document.addEventListener('keydown', handleMailPawSelectAll, true);
+
 document.addEventListener('click', (e) => {
   const panel = document.getElementById('zt-panel');
   const menu = document.getElementById('zt-settings-menu');
