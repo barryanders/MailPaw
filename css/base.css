@@ -29,6 +29,18 @@
 
 #zt-panel, #zt-fs-layer {
   color: var(--zt-text);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#zt-panel input,
+#zt-panel textarea,
+#zt-panel [contenteditable="true"],
+#zt-fs-layer input,
+#zt-fs-layer textarea,
+#zt-fs-layer [contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 /* ANIMATIONS */

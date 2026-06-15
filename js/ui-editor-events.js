@@ -60,10 +60,16 @@ function attachEditorGlobalEvents(fsLayer) {
         fsLayer.dataset.ztKeyBound = 'true';
         fsLayer.addEventListener('keydown', (e) => {
             const target = e.target;
-            if (target.isContentEditable || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
             const isMac = navigator.platform.toUpperCase().includes('MAC');
             const cmdKey = isMac ? e.metaKey : e.ctrlKey;
             if (!cmdKey) return;
+            if (target.isContentEditable || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
+            if (e.key.toLowerCase() === 'a') {
+                e.preventDefault();
+                const selection = window.getSelection();
+                if (selection) selection.removeAllRanges();
+                return;
+            }
             if (e.key.toLowerCase() === 'z' && !e.shiftKey) {
                 e.preventDefault();
                 undoEditor();
