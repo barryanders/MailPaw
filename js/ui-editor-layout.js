@@ -8,7 +8,7 @@ function getEditorLayoutHTML(isEdit) {
           <span class="zt-logo-mark" aria-hidden="true">
             <img src="${getMailPawIconSrc()}" alt="">
           </span>
-          <span class="zt-logo-text">MailPaw <span class="zt-logo-sub">Studio</span></span>
+          <span class="zt-logo-text">MailPaw</span>
         </div>
       </div>
       <div class="zt-header-group zt-header-toolbar" id="zt-inline-toolbar">
