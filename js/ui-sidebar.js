@@ -1105,6 +1105,8 @@ function renderHomeViewInner(animate = false) {
   renderBillingBanner();
 }
 
+let ztPreviewScaleResizeTimer = null;
+
 function schedulePreviewScaleUpdate() {
   const fallbackWidth = 600;
   requestAnimationFrame(() => {
@@ -1120,7 +1122,7 @@ function schedulePreviewScaleUpdate() {
       const scaleByHeight = frameHeight / baseHeight;
       const shouldFitFullPreview = document.body.classList.contains('zt-standalone') && window.innerWidth <= 700;
       const scale = shouldFitFullPreview
-        ? Math.min(1, scaleByWidth, Math.max(scaleByHeight * 1.9, scaleByWidth * 0.85))
+        ? Math.min(1, scaleByWidth, Math.max(scaleByHeight * 1.43, scaleByWidth * 0.72))
         : Math.min(1, Math.max(scaleByWidth, scaleByHeight));
       const offsetX = shouldFitFullPreview ? Math.max(0, (frameWidth - (baseWidth * scale)) / 2) : 0;
       frame.style.setProperty('--preview-base-width', `${baseWidth}px`);
@@ -1128,6 +1130,17 @@ function schedulePreviewScaleUpdate() {
       frame.style.setProperty('--preview-offset-x', `${offsetX.toFixed(1)}px`);
     });
   });
+}
+
+function queuePreviewScaleUpdate() {
+  clearTimeout(ztPreviewScaleResizeTimer);
+  ztPreviewScaleResizeTimer = setTimeout(schedulePreviewScaleUpdate, 80);
+}
+
+if (!window.ztPreviewScaleResizeBound) {
+  window.ztPreviewScaleResizeBound = true;
+  window.addEventListener('resize', queuePreviewScaleUpdate);
+  window.addEventListener('orientationchange', queuePreviewScaleUpdate);
 }
 
 function renderListItems(filter = '', animate = true) {
