@@ -17,10 +17,10 @@ function openFullScreenEditor(template = null) {
   if (saveBtn && template && template.isDefault) {
     const label = saveBtn.querySelector('.zt-save-label');
     if (label) {
-      label.textContent = 'Save as new';
-      label.setAttribute('data-mobile-label', 'Save');
+      label.textContent = 'Save';
     }
-    saveBtn.setAttribute('data-mobile-label', 'Save');
+    saveBtn.setAttribute('aria-label', 'Save a copy of this included template');
+    saveBtn.setAttribute('title', 'Save a copy');
   }
 
   const tpl = template || { title: '', subject: '', shortcut: '', body: '', category: null }; // Changed default category to null
