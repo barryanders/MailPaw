@@ -303,7 +303,7 @@ function applyLoadedTemplates(storedTemplates, defaults, hideDefaultTemplates, l
   if (refreshedDefaults) saveTemplatesToStorage(templates);
 }
 
-chrome.storage.sync.get(['listViewMode', 'componentDefaults', 'hideDefaultTemplates'], (result) => {
+chrome.storage.sync.get(['listViewMode', 'componentDefaults', 'hideDefaultTemplates', 'desktopMasonryDefaultApplied'], (result) => {
   if (result.componentDefaults && typeof applyComponentDefaultsFromStorage === 'function') {
     applyComponentDefaultsFromStorage(result.componentDefaults);
   }
@@ -312,9 +312,19 @@ chrome.storage.sync.get(['listViewMode', 'componentDefaults', 'hideDefaultTempla
   const legacyIds = new Set((typeof LEGACY_DEFAULT_TEMPLATE_IDS !== 'undefined' && Array.isArray(LEGACY_DEFAULT_TEMPLATE_IDS)) ? LEGACY_DEFAULT_TEMPLATE_IDS : []);
 
   const finishBoot = () => {
-    listViewMode = result.listViewMode || 'thumb';
-    if (listViewMode === 'preview') listViewMode = 'thumb';
-    if (!result.listViewMode || result.listViewMode === 'preview') chrome.storage.sync.set({ listViewMode });
+    const defaultListViewMode = typeof getDefaultListViewMode === 'function' ? getDefaultListViewMode() : 'thumb';
+    listViewMode = result.listViewMode || defaultListViewMode;
+    if (
+      defaultListViewMode === 'preview'
+      && result.desktopMasonryDefaultApplied !== true
+      && (!result.listViewMode || result.listViewMode === 'thumb')
+    ) {
+      listViewMode = 'preview';
+    }
+    if (!['list', 'thumb', 'preview'].includes(listViewMode)) listViewMode = defaultListViewMode;
+    if (!result.listViewMode || result.listViewMode !== listViewMode || result.desktopMasonryDefaultApplied !== true) {
+      chrome.storage.sync.set({ listViewMode, desktopMasonryDefaultApplied: true });
+    }
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new CustomEvent('zt-templates-ready'));
     }

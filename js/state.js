@@ -3,7 +3,7 @@ let activeComposeBody = null;
 let activeCategory = 'All';
 let currentSort = 'createdAt_desc';
 let activeElementInEditor = null;
-let listViewMode = 'thumb';
+let listViewMode = 'preview';
 
 const TEMPLATE_STORAGE_KEY = 'templates';
 

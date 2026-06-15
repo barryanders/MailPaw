@@ -162,6 +162,131 @@ body.zt-standalone .zt-usage-cta__btn {
   box-shadow: 0 14px 28px rgba(155, 79, 99, 0.22);
 }
 
+@media (min-width: 701px) {
+  body.zt-standalone .zt-header {
+    padding: 28px 34px 0;
+  }
+
+  body.zt-standalone .zt-header-top {
+    margin-bottom: 18px;
+  }
+
+  body.zt-standalone .zt-logo {
+    gap: 14px;
+  }
+
+  body.zt-standalone .zt-logo-mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+  }
+
+  body.zt-standalone .zt-logo-text {
+    font-size: 24px;
+    letter-spacing: -0.5px;
+  }
+
+  body.zt-standalone .zt-logo-text::after {
+    margin-top: 2px;
+    font-size: 12px;
+    letter-spacing: 1.35px;
+  }
+
+  body.zt-standalone .zt-header-create {
+    height: 44px;
+    padding: 0 22px;
+    font-size: 15px;
+  }
+
+  body.zt-standalone .zt-icon-btn,
+  body.zt-standalone .zt-close {
+    width: 44px;
+    height: 44px;
+  }
+
+  body.zt-standalone .zt-tabs {
+    gap: 28px;
+  }
+
+  body.zt-standalone .zt-tab {
+    padding: 14px 0;
+    font-size: 14px;
+  }
+
+  body.zt-standalone .zt-search-container {
+    gap: 18px;
+    padding: 28px 34px 24px;
+  }
+
+  body.zt-standalone .zt-search {
+    height: 56px;
+    font-size: 18px;
+    border-radius: 16px;
+    padding: 0 18px;
+  }
+
+  body.zt-standalone .zt-select {
+    height: 54px;
+    min-width: 170px;
+    border-radius: 15px;
+    font-size: 14px;
+    padding-left: 16px;
+  }
+
+  body.zt-standalone .zt-view-toggle {
+    padding: 6px;
+    border-radius: 15px;
+  }
+
+  body.zt-standalone .zt-view-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+  }
+
+  body.zt-standalone .zt-view-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  body.zt-standalone .zt-list {
+    padding: 0 34px 34px;
+  }
+
+  body.zt-standalone .zt-list.view-thumb {
+    grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+    gap: 24px;
+  }
+
+  body.zt-standalone .zt-list.view-preview {
+    columns: 360px;
+    column-gap: 24px;
+  }
+
+  body.zt-standalone .zt-list.view-thumb .zt-item {
+    padding: 18px;
+  }
+
+  body.zt-standalone .zt-item-title {
+    font-size: 19px;
+    margin-bottom: 10px;
+  }
+
+  body.zt-standalone .zt-template-badge {
+    font-size: 11px;
+    padding: 4px 11px;
+  }
+
+  body.zt-standalone .zt-list.view-thumb .zt-preview-frame {
+    height: 235px;
+  }
+
+  body.zt-standalone .zt-insert-btn {
+    min-height: 52px;
+    font-size: 16px;
+  }
+}
+
 body.zt-standalone .zt-item {
   border-color: rgba(45, 35, 25, 0.08);
 }

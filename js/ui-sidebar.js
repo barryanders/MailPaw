@@ -586,12 +586,18 @@ function toggleSidebar(anchorBtn) {
   if (panel.classList.contains('open')) {
     panel.classList.remove('open');
   } else {
-    listViewMode = 'thumb';
+    listViewMode = getDefaultListViewMode();
     currentSort = 'createdAt_desc';
     renderHomeView(true);
     applyPanelFullscreen(panel, true);
     panel.classList.add('open');
   }
+}
+
+function getDefaultListViewMode() {
+  const isStandalone = typeof window !== 'undefined' && window.ZT_STANDALONE;
+  const isDesktop = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(min-width: 701px)').matches;
+  return isStandalone && isDesktop ? 'preview' : 'thumb';
 }
 
 function createPanel() {
@@ -1104,6 +1110,14 @@ function renderHomeViewInner(animate = false) {
                 <line x1="4" y1="18" x2="20" y2="18"></line>
               </svg>
             </button>
+            <button class="zt-view-btn ${listViewMode === 'preview' ? 'active' : ''}" data-view="preview" data-tooltip="Masonry">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="4" y="4" width="6" height="9" rx="1"></rect>
+                <rect x="14" y="4" width="6" height="5" rx="1"></rect>
+                <rect x="4" y="16" width="6" height="4" rx="1"></rect>
+                <rect x="14" y="12" width="6" height="8" rx="1"></rect>
+              </svg>
+            </button>
             <button class="zt-view-btn ${listViewMode === 'thumb' ? 'active' : ''}" data-view="thumb" data-tooltip="Gallery">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="4" width="8" height="7" rx="1"></rect>
@@ -1146,13 +1160,20 @@ function schedulePreviewScaleUpdate() {
       const scaleByWidth = frameWidth / baseWidth;
       const scaleByHeight = frameHeight / baseHeight;
       const shouldFitFullPreview = document.body.classList.contains('zt-standalone') && window.innerWidth <= 700;
-      const scale = shouldFitFullPreview
+      const shouldShowFullPreview = document.body.classList.contains('zt-standalone')
+        && frame.closest('.zt-list.view-preview')
+        && window.innerWidth > 700;
+      const scale = shouldShowFullPreview
+        ? Math.min(1, scaleByWidth)
+        : shouldFitFullPreview
         ? Math.min(1, scaleByWidth, Math.max(scaleByHeight * 1.43, scaleByWidth * 0.72))
         : Math.min(1, Math.max(scaleByWidth, scaleByHeight));
       const offsetX = shouldFitFullPreview ? Math.max(0, (frameWidth - (baseWidth * scale)) / 2) : 0;
+      const renderedHeight = Math.max(160, Math.ceil(baseHeight * scale));
       frame.style.setProperty('--preview-base-width', `${baseWidth}px`);
       frame.style.setProperty('--preview-scale', scale.toFixed(4));
       frame.style.setProperty('--preview-offset-x', `${offsetX.toFixed(1)}px`);
+      frame.style.setProperty('--preview-rendered-height', `${renderedHeight}px`);
     });
   });
 }
@@ -1183,8 +1204,7 @@ function renderListItems(filter = '', animate = true) {
   const list = document.querySelector('.zt-list');
   if(!list) return;
   list.innerHTML = '';
-  if (listViewMode === 'preview') listViewMode = 'thumb';
-  if (!['list', 'thumb'].includes(listViewMode)) listViewMode = 'thumb';
+  if (!['list', 'thumb', 'preview'].includes(listViewMode)) listViewMode = getDefaultListViewMode();
   list.classList.remove('view-list', 'view-preview', 'view-thumb');
   list.classList.add(`view-${listViewMode}`);
   const isListView = listViewMode === 'list';
