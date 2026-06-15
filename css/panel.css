@@ -59,7 +59,7 @@
 .zt-title { font-size: 18px; font-weight: 700; letter-spacing: -0.4px; color: var(--zt-text); }
 .zt-title strong { background: var(--zt-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .zt-logo { display: inline-flex; align-items: center; justify-content: flex-start; gap: 10px; text-align: left; }
-.zt-logo-mark { width: 28px; height: 28px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(15, 23, 42, 0.18); overflow: hidden; background: #dbeafe; }
+.zt-logo-mark { width: 28px; height: 28px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; box-shadow: none; overflow: hidden; background: transparent; }
 .zt-logo-mark img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .zt-logo-text { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; color: var(--zt-text); text-align: left; }
 .zt-header-actions { display: flex; gap: 8px; align-items: center; }

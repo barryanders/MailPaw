@@ -135,9 +135,9 @@ body.zt-standalone .zt-header::after {
 }
 
 body.zt-standalone .zt-logo-mark {
-  border: 1px solid rgba(45, 35, 25, 0.14);
-  background: #fff0ea;
-  box-shadow: 0 12px 24px rgba(45, 35, 25, 0.16);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 body.zt-standalone .zt-logo,
