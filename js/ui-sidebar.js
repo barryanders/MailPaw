@@ -1359,12 +1359,6 @@ function renderListItems(filter = '', animate = true) {
           img.addEventListener('load', schedulePreviewScaleUpdate, { once: true });
         });
         previewFrame.appendChild(previewCanvas);
-        if (t.isDefault) {
-          const templateOverlay = document.createElement('div');
-          templateOverlay.className = 'zt-template-overlay is-example';
-          templateOverlay.innerHTML = '<span>Included</span>';
-          previewFrame.appendChild(templateOverlay);
-        }
         preview.appendChild(previewFrame);
 
         if (previewData.subject) {
