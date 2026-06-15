@@ -1184,8 +1184,10 @@ function schedulePreviewScaleUpdate() {
   requestAnimationFrame(() => {
     document.querySelectorAll('.zt-preview-frame').forEach((frame) => {
       const canvas = frame.querySelector('.zt-preview-canvas');
-      const frameWidth = frame.clientWidth || fallbackWidth;
-      const frameHeight = frame.clientHeight || 200;
+      const frameStyle = window.getComputedStyle ? window.getComputedStyle(frame) : null;
+      const previewInset = frameStyle ? parseFloat(frameStyle.getPropertyValue('--preview-inset')) || 0 : 0;
+      const frameWidth = Math.max(1, (frame.clientWidth || fallbackWidth) - (previewInset * 2));
+      const frameHeight = Math.max(1, (frame.clientHeight || 200) - (previewInset * 2));
       const baseWidth = (canvas && canvas.scrollWidth)
         ? Math.max(fallbackWidth, canvas.scrollWidth)
         : fallbackWidth;
@@ -1204,7 +1206,7 @@ function schedulePreviewScaleUpdate() {
         ? Math.min(1, scaleByWidth, Math.max(scaleByHeight * 1.43, scaleByWidth * 0.72))
         : Math.min(1, Math.max(scaleByWidth, scaleByHeight));
       const offsetX = shouldFitFullPreview ? Math.max(0, (frameWidth - (baseWidth * scale)) / 2) : 0;
-      const renderedHeight = Math.max(160, Math.ceil(baseHeight * scale));
+      const renderedHeight = Math.max(160, Math.ceil(baseHeight * scale) + (previewInset * 2));
       frame.style.setProperty('--preview-base-width', `${baseWidth}px`);
       frame.style.setProperty('--preview-scale', scale.toFixed(4));
       frame.style.setProperty('--preview-offset-x', `${offsetX.toFixed(1)}px`);

@@ -551,11 +551,12 @@
   --preview-base-width: 600px;
   --preview-scale: 0.2;
   --preview-offset-x: 0px;
+  --preview-inset: 0px;
 }
 .zt-preview-canvas {
   position: absolute;
-  top: 0;
-  left: var(--preview-offset-x);
+  top: var(--preview-inset);
+  left: calc(var(--preview-inset) + var(--preview-offset-x));
   width: var(--preview-base-width);
   transform: scale(var(--preview-scale));
   transform-origin: top left;
@@ -835,8 +836,13 @@ body.zt-standalone .zt-list.view-list .zt-item-body { flex: 1 1 420px; }
   height: var(--preview-rendered-height, 260px);
   min-height: 160px;
   border-radius: 16px;
+  --preview-inset: 10px;
 }
-.zt-list.view-preview .zt-preview-canvas { min-height: 0; }
+.zt-list.view-preview .zt-preview-canvas {
+  min-height: 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
 .zt-list.view-preview .zt-preview-text { display: none; }
 .zt-btn-delete { color: #94a3b8; }
 .zt-btn-delete:hover { background: rgba(239, 68, 68, 0.12); color: #ef4444; }
