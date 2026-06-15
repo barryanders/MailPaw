@@ -1378,9 +1378,7 @@ function renderListItems(filter = '', animate = true) {
       actionsDiv.className = 'zt-actions';
       const useExpandedListActions = isListView
         && typeof window !== 'undefined'
-        && window.ZT_STANDALONE
-        && window.matchMedia
-        && window.matchMedia('(min-width: 701px)').matches;
+        && window.ZT_STANDALONE;
       const labelListAction = (button, label) => {
         if (!useExpandedListActions || !button) return;
         button.classList.add('zt-action-labeled');
