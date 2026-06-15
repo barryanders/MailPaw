@@ -596,8 +596,7 @@ function toggleSidebar(anchorBtn) {
 
 function getDefaultListViewMode() {
   const isStandalone = typeof window !== 'undefined' && window.ZT_STANDALONE;
-  const isDesktop = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(min-width: 701px)').matches;
-  return isStandalone && isDesktop ? 'preview' : 'thumb';
+  return isStandalone ? 'preview' : 'thumb';
 }
 
 function createPanel() {

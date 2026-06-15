@@ -303,7 +303,7 @@ function applyLoadedTemplates(storedTemplates, defaults, hideDefaultTemplates, l
   if (refreshedDefaults) saveTemplatesToStorage(templates);
 }
 
-chrome.storage.sync.get(['listViewMode', 'componentDefaults', 'hideDefaultTemplates', 'desktopMasonryDefaultApplied'], (result) => {
+chrome.storage.sync.get(['listViewMode', 'componentDefaults', 'hideDefaultTemplates', 'desktopMasonryDefaultApplied', 'masonryDefaultApplied'], (result) => {
   if (result.componentDefaults && typeof applyComponentDefaultsFromStorage === 'function') {
     applyComponentDefaultsFromStorage(result.componentDefaults);
   }
@@ -316,14 +316,14 @@ chrome.storage.sync.get(['listViewMode', 'componentDefaults', 'hideDefaultTempla
     listViewMode = result.listViewMode || defaultListViewMode;
     if (
       defaultListViewMode === 'preview'
-      && result.desktopMasonryDefaultApplied !== true
+      && result.masonryDefaultApplied !== true
       && (!result.listViewMode || result.listViewMode === 'thumb')
     ) {
       listViewMode = 'preview';
     }
     if (!['list', 'thumb', 'preview'].includes(listViewMode)) listViewMode = defaultListViewMode;
-    if (!result.listViewMode || result.listViewMode !== listViewMode || result.desktopMasonryDefaultApplied !== true) {
-      chrome.storage.sync.set({ listViewMode, desktopMasonryDefaultApplied: true });
+    if (!result.listViewMode || result.listViewMode !== listViewMode || result.desktopMasonryDefaultApplied !== true || result.masonryDefaultApplied !== true) {
+      chrome.storage.sync.set({ listViewMode, desktopMasonryDefaultApplied: true, masonryDefaultApplied: true });
     }
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new CustomEvent('zt-templates-ready'));
