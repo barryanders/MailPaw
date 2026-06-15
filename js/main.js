@@ -165,9 +165,10 @@ function materializeStandaloneTemplateSpec(value, key = '') {
   return value;
 }
 
-function buildDefaultTemplatesFromSpecs(specs) {
+function buildDefaultTemplatesFromSpecs(specs, startIndex = 0, baseTime = Date.now()) {
   if (!Array.isArray(specs) || typeof buildEmailHtmlFromCanvas !== 'function') return [];
   return specs.map((spec, index) => {
+    const absoluteIndex = startIndex + index;
     const templateSpec = materializeStandaloneTemplateSpec(spec);
     const preset = (typeof resolveStylePresetForTemplate === 'function')
       ? resolveStylePresetForTemplate(templateSpec)
@@ -206,9 +207,9 @@ function buildDefaultTemplatesFromSpecs(specs) {
       fontFamily: fontFamily,
       fontColor: fontColor,
       stylePresetId: preset?.id || templateSpec.stylePresetId || '',
-      createdAt: Date.now() - (index * 1000),
-      updatedAt: Date.now() - (index * 1000),
-      defaultOrder: index,
+      createdAt: baseTime - (absoluteIndex * 1000),
+      updatedAt: baseTime - (absoluteIndex * 1000),
+      defaultOrder: absoluteIndex,
       isDefault: true
     };
     if (!isStandaloneMailPaw()) template.shortcut = templateSpec.shortcut || '';
@@ -223,9 +224,10 @@ function buildDefaultTemplatesFromSpecsAsync(specs, callback) {
   }
   const output = [];
   let index = 0;
+  const baseTime = Date.now();
   const step = () => {
     const batch = specs.slice(index, index + 2);
-    output.push(...buildDefaultTemplatesFromSpecs(batch));
+    output.push(...buildDefaultTemplatesFromSpecs(batch, index, baseTime));
     index += batch.length;
     if (index < specs.length) {
       setTimeout(step, 0);

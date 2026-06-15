@@ -55,3 +55,43 @@ test('included templates keep their original order when restored with custom tem
   assert.equal(ordered[0].title, 'Edited Welcome');
   assert.equal(ordered[2].title, 'Edited Thanks');
 });
+
+test('async default template build keeps global order across batches', async () => {
+  const window = setupDom();
+  window.ZT_STANDALONE = true;
+  window.chrome = {
+    storage: {
+      local: {
+        get: (_keys, callback) => callback({}),
+        set: (_value, callback) => { if (callback) callback(); }
+      },
+      sync: {
+        get: (_keys, callback) => callback({}),
+        set: (_value, callback) => { if (callback) callback(); }
+      }
+    }
+  };
+  window.setupTooltipLogic = () => {};
+  window.buildEmailHtmlFromCanvas = () => ({ designState: [], body: '<div></div>' });
+
+  loadScripts(window, [
+    'js/state.js',
+    { path: 'js/main.js', expose: ['buildDefaultTemplatesFromSpecsAsync'] }
+  ]);
+
+  const specs = Array.from({ length: 5 }, (_, index) => ({
+    id: `default-${index}`,
+    title: `Default ${index}`,
+    category: 'Examples',
+    subject: '',
+    blocks: []
+  }));
+
+  const built = await new Promise(resolve => {
+    window.__testExports.buildDefaultTemplatesFromSpecsAsync(specs, resolve);
+  });
+
+  assert.deepEqual(Array.from(built, t => t.defaultOrder), [0, 1, 2, 3, 4]);
+  assert.deepEqual(Array.from(built, t => t.id), specs.map(spec => spec.id));
+  assert.ok(built[0].createdAt > built[4].createdAt);
+});
