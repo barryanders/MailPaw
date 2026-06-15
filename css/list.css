@@ -795,10 +795,11 @@
 }
 .zt-list.view-preview .zt-preview-frame {
   width: 100%;
-  height: var(--preview-rendered-height, 460px);
-  min-height: 220px;
+  height: var(--preview-rendered-height, 260px);
+  min-height: 160px;
   border-radius: 16px;
 }
+.zt-list.view-preview .zt-preview-canvas { min-height: 0; }
 .zt-list.view-preview .zt-preview-text { display: none; }
 .zt-btn-delete { color: #94a3b8; }
 .zt-btn-delete:hover { background: rgba(239, 68, 68, 0.12); color: #ef4444; }

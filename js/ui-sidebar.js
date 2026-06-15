@@ -1146,6 +1146,19 @@ function renderHomeViewInner(animate = false) {
 
 let ztPreviewScaleResizeTimer = null;
 
+function getPreviewCanvasContentHeight(canvas) {
+  if (!canvas) return 0;
+  const children = Array.from(canvas.children || []);
+  if (!children.length) return canvas.scrollHeight || 0;
+  return children.reduce((height, child) => {
+    const style = window.getComputedStyle ? window.getComputedStyle(child) : null;
+    const marginTop = style ? parseFloat(style.marginTop) || 0 : 0;
+    const marginBottom = style ? parseFloat(style.marginBottom) || 0 : 0;
+    const childBottom = child.offsetTop + marginTop + Math.max(child.scrollHeight || 0, child.offsetHeight || 0) + marginBottom;
+    return Math.max(height, childBottom);
+  }, 0);
+}
+
 function schedulePreviewScaleUpdate() {
   const fallbackWidth = 600;
   requestAnimationFrame(() => {
@@ -1156,7 +1169,8 @@ function schedulePreviewScaleUpdate() {
       const baseWidth = (canvas && canvas.scrollWidth)
         ? Math.max(fallbackWidth, canvas.scrollWidth)
         : fallbackWidth;
-      const baseHeight = (canvas && canvas.scrollHeight) ? canvas.scrollHeight : 800;
+      const contentHeight = getPreviewCanvasContentHeight(canvas);
+      const baseHeight = contentHeight || ((canvas && canvas.scrollHeight) ? canvas.scrollHeight : 800);
       const scaleByWidth = frameWidth / baseWidth;
       const scaleByHeight = frameHeight / baseHeight;
       const shouldFitFullPreview = document.body.classList.contains('zt-standalone') && window.innerWidth <= 700;
