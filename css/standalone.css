@@ -98,17 +98,12 @@ body.zt-standalone #zt-header-buy {
   display: none !important;
 }
 
-body.zt-standalone .zt-menu-section:has(#zt-billing) .zt-menu-title {
-  font-size: 0;
-}
-
-body.zt-standalone .zt-menu-section:has(#zt-billing) .zt-menu-title::after {
-  content: "About";
-  font-size: 11px;
-}
-
 body.zt-standalone #zt-export-cat,
 body.zt-standalone #zt-support {
+  display: none;
+}
+
+body.zt-standalone .zt-standalone-compose-only {
   display: none;
 }
 

@@ -626,19 +626,29 @@ function createPanel() {
       </div>
       <div class="zt-tabs" id="zt-tabs-container"></div>
       <div class="zt-settings-menu" id="zt-settings-menu">
-        <div class="zt-menu-section">
-          <div class="zt-menu-title">Templates</div>
+        <div class="zt-menu-section zt-standalone-compose-only" ${typeof window !== 'undefined' && window.ZT_STANDALONE ? 'style="display:none"' : ''}>
+          <div class="zt-menu-title">Create</div>
           <button class="zt-menu-item" id="zt-save-current">Save Current Email</button>
+        </div>
+        <div class="zt-menu-section">
+          <div class="zt-menu-title">Backup & Import</div>
           <button class="zt-menu-item" id="zt-import">Import Templates</button>
           <button class="zt-menu-item" id="zt-export-all">Download Backup Copy</button>
           <button class="zt-menu-item" id="zt-export-cat">Export Current Category</button>
-          <button class="zt-menu-item" id="zt-restore-defaults">Restore Default Templates</button>
+        </div>
+        <div class="zt-menu-section">
+          <div class="zt-menu-title">Included Templates</div>
+          <button class="zt-menu-item" id="zt-restore-defaults">Restore Included Templates</button>
+          <button class="zt-menu-item" id="zt-delete-included">Delete Included Templates</button>
+        </div>
+        <div class="zt-menu-section">
+          <div class="zt-menu-title">Delete</div>
           <button class="zt-menu-item" id="zt-delete-all">Delete All Templates</button>
         </div>
         <div class="zt-menu-section">
-          <div class="zt-menu-title">Account</div>
-          <button class="zt-menu-item" id="zt-support">Say Thanks</button>
+          <div class="zt-menu-title">About</div>
           <button class="zt-menu-item" id="zt-billing">About MailPaw</button>
+          <button class="zt-menu-item" id="zt-support">Say Thanks</button>
         </div>
         <input type="file" id="zt-file-input" accept=".json" style="display:none" />
       </div>
@@ -688,6 +698,10 @@ function createPanel() {
   document.getElementById('zt-restore-defaults').onclick = () => {
     menu.classList.remove('show');
     renderRestoreDefaultsView();
+  };
+  document.getElementById('zt-delete-included').onclick = () => {
+    menu.classList.remove('show');
+    renderDeleteIncludedTemplatesView();
   };
   document.getElementById('zt-delete-all').onclick = () => {
     menu.classList.remove('show');
@@ -899,7 +913,7 @@ function renderUpgradeView(billing, options = {}) {
   }
   if (options.reason === 'pro-template') {
     title = 'Templates are Free';
-    message = 'Examples and custom templates are free to use, duplicate, export, and back up locally.';
+    message = 'Included and custom templates are free to use, duplicate, export, and back up locally.';
   }
   if (options.reason === 'style-presets') {
     title = 'Style Presets are Free';
@@ -996,7 +1010,7 @@ function ensureTemplateFilterControl(area) {
     filterSelect.setAttribute('aria-label', 'Filter templates by type');
     filterSelect.innerHTML = `
       <option value="all">All templates</option>
-      <option value="examples">Examples</option>
+      <option value="examples">Included</option>
       <option value="custom">My templates</option>
     `;
     const sortSelect = container.querySelector('#zt-sort-select');
@@ -1117,7 +1131,7 @@ function renderHomeViewInner(animate = false) {
           <input type="text" class="zt-search" placeholder="Search in ${activeCategory}..." />
           <select id="zt-template-filter" class="zt-select" aria-label="Filter templates by type">
             <option value="all">All templates</option>
-            <option value="examples">Examples</option>
+            <option value="examples">Included</option>
             <option value="custom">My templates</option>
           </select>
           <select id="zt-sort-select" class="zt-select">
@@ -1254,7 +1268,7 @@ function renderListItems(filter = '', animate = true) {
   if (filtered.length === 0) {
     const filterLabel = activeTemplateFilter === 'all'
       ? 'templates'
-      : (activeTemplateFilter === 'examples' ? 'example templates' : 'custom templates');
+      : (activeTemplateFilter === 'examples' ? 'included templates' : 'custom templates');
     const emptyLabel = activeCategory === 'All'
       ? `No ${filterLabel} match your filters.`
       : `No ${filterLabel} in "${activeCategory}".`;
@@ -1288,7 +1302,7 @@ function renderListItems(filter = '', animate = true) {
       const templateBadge = document.createElement('span');
       const isExample = access.tier === 'example';
       templateBadge.className = `zt-template-badge ${isExample ? 'is-example' : 'is-custom'}`;
-      templateBadge.textContent = isExample ? 'Example' : 'Custom';
+      templateBadge.textContent = isExample ? 'Included' : 'Custom';
       titleRow.appendChild(templateBadge);
       textDiv.appendChild(titleRow);
       if (isListView) {
@@ -1333,7 +1347,7 @@ function renderListItems(filter = '', animate = true) {
         if (t.isDefault) {
           const templateOverlay = document.createElement('div');
           templateOverlay.className = 'zt-template-overlay is-example';
-          templateOverlay.innerHTML = '<span>Example</span>';
+          templateOverlay.innerHTML = '<span>Included</span>';
           previewFrame.appendChild(templateOverlay);
         }
         preview.appendChild(previewFrame);
@@ -1487,19 +1501,19 @@ function renderRestoreDefaultsView() {
   if (typeof showModal !== 'function') return;
   const defaults = getDefaultTemplatesSnapshot();
   if (!defaults.length) {
-    alert('Default templates are unavailable right now.');
+    alert('Included templates are unavailable right now.');
     return;
   }
   const content = `
     <div class="zt-danger-text" style="margin-bottom:8px;">
-      Restore the ${defaults.length} original templates?
+      Restore the ${defaults.length} included templates?
     </div>
-    <div style="font-size:12px; color:#94a3b8;">Your custom templates stay in place.</div>
+    <div style="font-size:12px; color:#94a3b8;">They will return in the original MailPaw order. Your saved templates stay in place.</div>
   `;
-  showModal('Restore Default Templates', content, () => {
+  showModal('Restore Included Templates', content, () => {
     const defaultIds = new Set(defaults.map(t => t.id));
     const customTemplates = Array.isArray(templates) ? templates.filter(t => !defaultIds.has(t.id)) : [];
-    templates = customTemplates.concat(defaults);
+    templates = defaults.concat(customTemplates);
     saveTemplatesToStorage(templates);
     chrome.storage.sync.set({ hideDefaultTemplates: false });
     renderHomeView(true);
@@ -1509,7 +1523,43 @@ function renderRestoreDefaultsView() {
   if (modal) {
     const submit = modal.querySelector('#modal-submit');
     const cancel = modal.querySelector('#modal-cancel');
-    if (submit) submit.textContent = 'Restore Defaults';
+    if (submit) submit.textContent = 'Restore Included';
+    if (cancel) cancel.textContent = 'Cancel';
+  }
+}
+
+function renderDeleteIncludedTemplatesView() {
+  if (typeof showModal !== 'function') return;
+  const defaults = getDefaultTemplatesSnapshot();
+  const defaultIds = new Set(defaults.map(t => t.id));
+  const includedCount = Array.isArray(templates)
+    ? templates.filter(t => t && (t.isDefault || defaultIds.has(t.id))).length
+    : 0;
+  const countLabel = includedCount === 1 ? '1 included template' : `${includedCount} included templates`;
+  const content = `
+    <div class="zt-danger-text" style="margin-bottom:8px;">
+      Delete ${countLabel} from your library?
+    </div>
+    <div style="font-size:12px; color:#94a3b8;">Your saved templates stay in place. You can restore the included templates later from Actions.</div>
+  `;
+  showModal('Delete Included Templates?', content, () => {
+    templates = Array.isArray(templates)
+      ? templates.filter(t => t && !(t.isDefault || defaultIds.has(t.id)))
+      : [];
+    saveTemplatesToStorage(templates);
+    chrome.storage.sync.set({ hideDefaultTemplates: true });
+    renderHomeView(true);
+    return true;
+  });
+  const modal = document.querySelector('.zt-modal-overlay');
+  if (modal) {
+    const submit = modal.querySelector('#modal-submit');
+    const cancel = modal.querySelector('#modal-cancel');
+    if (submit) {
+      submit.textContent = 'Delete Included';
+      submit.classList.remove('zt-btn-save');
+      submit.classList.add('zt-btn-danger');
+    }
     if (cancel) cancel.textContent = 'Cancel';
   }
 }
@@ -1861,7 +1911,7 @@ function openTemplatePreview(template, access = {}) {
   const safeTitle = escapeHtml(template.title || 'Untitled Template');
   const subject = template.subject ? escapeHtml(template.subject) : '';
   const isExample = !!template.isDefault;
-  const badgeLabel = isExample ? 'Example' : 'Custom';
+  const badgeLabel = isExample ? 'Included' : 'Custom';
   const badgeClass = `zt-preview-badge ${isExample ? 'is-example' : 'is-custom'}${isLocked ? ' locked' : ''}`;
   overlay.innerHTML = `
     <div class="zt-preview-card">

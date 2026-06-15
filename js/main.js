@@ -235,6 +235,16 @@ function buildDefaultTemplatesFromSpecsAsync(specs, callback) {
   setTimeout(step, 0);
 }
 
+function orderTemplatesWithIncludedFirst(storedList, defaults) {
+  const cleaned = Array.isArray(storedList) ? storedList : [];
+  const included = Array.isArray(defaults) ? defaults : [];
+  const includedIds = new Set(included.map(t => t && t.id).filter(Boolean));
+  const storedById = new Map(cleaned.map(t => [t.id, t]));
+  const orderedIncluded = included.map(defaultTemplate => storedById.get(defaultTemplate.id) || defaultTemplate);
+  const customTemplates = cleaned.filter(t => !includedIds.has(t.id));
+  return orderedIncluded.concat(customTemplates);
+}
+
 function applyLoadedTemplates(storedTemplates, defaults, hideDefaultTemplates, legacyIds) {
   const storedList = Array.isArray(storedTemplates) ? storedTemplates : null;
   if (storedList) {
@@ -246,8 +256,10 @@ function applyLoadedTemplates(storedTemplates, defaults, hideDefaultTemplates, l
     } else {
       const existingIds = new Set(cleaned.map(t => t.id));
       const defaultsToAdd = defaults.filter(t => !existingIds.has(t.id));
-      templates = cleaned.concat(defaultsToAdd);
-      if (removedLegacy || defaultsToAdd.length) saveTemplatesToStorage(templates);
+      templates = orderTemplatesWithIncludedFirst(cleaned, defaults);
+      const cleanedOrder = cleaned.map(t => t.id).join('|');
+      const orderedTemplateIds = templates.map(t => t.id).join('|');
+      if (removedLegacy || defaultsToAdd.length || cleanedOrder !== orderedTemplateIds) saveTemplatesToStorage(templates);
     }
   } else {
     if (hideDefaultTemplates) {
