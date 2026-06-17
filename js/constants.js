@@ -1750,7 +1750,7 @@ LEGACY_DEFAULT_TEMPLATE_IDS.push(
 
 function getMailPawIconSrc() {
   if (typeof chrome !== 'undefined' && chrome.runtime?.getURL) {
-    return chrome.runtime.getURL('mailpaw-icon.png');
+    return chrome.runtime.getURL('mailpaw-icon.png') + '?v=20260617-catletter';
   }
-  return 'mailpaw-icon.png';
+  return 'mailpaw-icon.png?v=20260617-catletter';
 }
