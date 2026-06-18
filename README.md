@@ -1,5 +1,5 @@
 <h1>
-  <img src="mailpaw-icon.png" alt="" width="72" height="72" align="center" style="border-radius:25%; box-shadow:0 6px 18px rgba(15, 23, 42, 0.16);">
+  <img src="mailpaw-icon.png" alt="" width="72" height="72" align="center" style="max-width: 100%; height: auto; max-height: 100px; aspect-ratio: 100 / 100; background-color: var(--bgColor-muted); border-radius: 1rem; box-shadow:0 6px 18px rgba(15, 23, 42, 0.16);">
   MailPaw
 </h1>
 
