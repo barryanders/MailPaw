@@ -908,7 +908,7 @@ function guardPremiumAction(onAllowed, options = {}) {
 
 function renderUpgradeView(billing, options = {}) {
   let title = 'MailPaw is Free';
-  let message = 'There is no trial, subscription, or paid plan. If MailPaw helps, a small coffee thank-you is always appreciated.';
+  let message = 'There is no trial, subscription, or paid plan. If MailPaw helps, a small coffee is always appreciated.';
   if (options.reason === 'limit') {
     message = 'Template creation is free in this standalone app. If you hit a saved browser setting from an older version, restore defaults or import a backup, then keep going.';
   }
@@ -1706,7 +1706,7 @@ function renderBillingView() {
       MailPaw copies rich email content for email clients that accept formatted paste. Each email client handles pasted content differently, so send yourself a test before using a template for a real message.
       <div style="margin-top:14px;">
         MailPaw is open source on <a href="${MAILPAW_REPO_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">GitHub</a>.
-        If MailPaw helped you, feel free to <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">leave a coffee thank-you</a>.
+        If MailPaw helped you, feel free to <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">buy me a coffee</a>.
       </div>
     </div>
   `, () => true);

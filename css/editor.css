@@ -59,6 +59,7 @@
 .zt-header-left { min-width: 180px; }
 .zt-header-right,
 .zt-header-utility { gap: 8px; }
+.zt-header-utility { margin-right: 14px; }
 .zt-header-toolbar { flex: 0 0 auto; justify-content: center; min-width: 0; }
 .zt-header-inline { flex: 1 1 auto; justify-content: center; min-width: 0; }
 .zt-logo { display: inline-flex; align-items: center; justify-content: flex-start; gap: 10px; text-align: left; }

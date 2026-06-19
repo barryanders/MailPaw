@@ -68,7 +68,15 @@ function saveTemplate(existingId, templateData) {
   saveTemplatesToStorage(templates);
 }
 
-function initiateTemplateInsertion(template) {
+function initiateTemplateInsertion(template, button) {
+  if (
+    typeof window !== 'undefined'
+    && window.ZT_STANDALONE
+    && typeof window.initiateStandaloneTemplateCopy === 'function'
+  ) {
+    window.initiateStandaloneTemplateCopy(template, button);
+    return;
+  }
   if (typeof guardTemplateInsertion === 'function') {
     guardTemplateInsertion(template, () => runTemplateInsertion(template));
     return;

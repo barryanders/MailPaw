@@ -58,6 +58,33 @@ body.mailpaw-ready .mailpaw-launch {
   display: none;
 }
 
+.mailpaw-copy-hint {
+  position: fixed;
+  left: 50%;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 100000;
+  max-width: min(340px, calc(100vw - 32px));
+  padding: 10px 14px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.92);
+  color: #ffffff;
+  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.2);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  transform: translate(-50%, 10px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.mailpaw-copy-hint.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 body.zt-standalone #zt-panel {
   top: 0;
   left: 0;
@@ -672,8 +699,9 @@ body.zt-standalone .zt-visual-editor {
   body.zt-standalone .zt-header-utility {
     grid-area: utility;
     justify-content: flex-end;
-    gap: 4px;
+    gap: 8px;
     min-width: 0;
+    margin-right: 8px;
   }
 
   body.zt-standalone .zt-header-toolbar {

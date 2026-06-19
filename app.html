@@ -3,37 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MailPaw App - Free Email Template Builder</title>
-  <meta name="description" content="Email templates that stay by your side. MailPaw is a free privacy-first email template builder for newsletters, reusable HTML email blocks, local storage, and backups.">
+  <title>Free HTML Email Template Builder for Newsletters &amp; Outreach | MailPaw</title>
+  <meta name="description" content="Create reusable HTML email templates for newsletters, announcements, outreach, and everyday emails. MailPaw is free, local-first, and needs no account, ads, or tracking.">
   <meta name="robots" content="index,follow">
   <meta name="application-name" content="MailPaw">
   <meta name="theme-color" content="#f6f7f9">
   <link rel="canonical" href="https://barryanders.github.io/MailPaw/app.html">
-  <meta property="og:title" content="MailPaw App - Free Email Template Builder">
-  <meta property="og:description" content="Email templates that stay by your side. Build newsletter and HTML email templates locally in your browser. No account, no subscription, no cloud template library.">
+  <meta property="og:title" content="MailPaw - Free HTML Email Template Builder">
+  <meta property="og:description" content="Build copy-ready newsletter, announcement, outreach, and reusable HTML email templates locally in your browser. No account, no subscription, no cloud template library.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://barryanders.github.io/MailPaw/app.html">
   <meta property="og:image" content="https://barryanders.github.io/MailPaw/mailpaw-icon.png?v=20260617-catletter">
   <meta property="og:site_name" content="MailPaw">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="MailPaw App - Free Email Template Builder">
-  <meta name="twitter:description" content="Email templates that stay by your side. Create reusable newsletter and HTML email templates locally in your browser.">
+  <meta name="twitter:title" content="MailPaw - Free HTML Email Template Builder">
+  <meta name="twitter:description" content="Create reusable newsletter, announcement, outreach, and HTML email templates locally in your browser.">
   <meta name="twitter:image" content="https://barryanders.github.io/MailPaw/mailpaw-icon.png?v=20260617-catletter">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "MailPaw",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Any",
-    "url": "https://barryanders.github.io/MailPaw/app.html",
-    "image": "https://barryanders.github.io/MailPaw/mailpaw-icon.png?v=20260617-catletter",
-    "description": "Email templates that stay by your side. Free privacy-first email template builder for newsletter templates, reusable HTML email blocks, local browser storage, and downloadable backups.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "MailPaw",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "url": "https://barryanders.github.io/MailPaw/app.html",
+        "image": "https://barryanders.github.io/MailPaw/mailpaw-icon.png?v=20260617-catletter",
+        "description": "A free local-first HTML email template builder for newsletters, announcements, outreach, and reusable email layouts.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "HTML email template builder",
+          "Newsletter template builder",
+          "Outreach email templates",
+          "Reusable local template library",
+          "Copy-ready rich email output",
+          "JSON backup and import",
+          "No account required"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is MailPaw free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. MailPaw is free to use and does not require an account, subscription, ads, or tracking."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What can I make with MailPaw?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MailPaw helps create reusable HTML email templates for newsletters, product updates, event announcements, customer outreach, founder notes, and polished everyday emails."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does MailPaw upload my email templates?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. MailPaw stores templates and settings locally in your browser unless you choose to copy, export, import, or share them."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
   <link rel="icon" type="image/png" href="mailpaw-icon-64.png?v=20260617-catletter">
@@ -42,9 +84,9 @@
   <link rel="stylesheet" href="css/trigger.css?v=20260615-preview-inset-corners">
   <link rel="stylesheet" href="css/panel.css?v=20260615-preview-inset-corners">
   <link rel="stylesheet" href="css/list.css?v=20260615-preview-inset-corners">
-  <link rel="stylesheet" href="css/editor.css?v=20260615-preview-inset-corners">
+  <link rel="stylesheet" href="css/editor.css?v=20260616-header-spacing">
   <link rel="stylesheet" href="css/views.css?v=20260615-preview-inset-corners">
-  <link rel="stylesheet" href="css/standalone.css?v=20260615-preview-inset-corners">
+  <link rel="stylesheet" href="css/standalone.css?v=20260616-copy-hint">
   <link rel="stylesheet" href="css/neutral.css?v=20260615-preview-inset-corners">
 </head>
 <body class="zt-standalone">
@@ -78,8 +120,8 @@
   <script src="js/ui-editor-events.js?v=20260615-preview-inset-corners"></script>
   <script src="js/ui-editor-save.js?v=20260615-preview-inset-corners"></script>
   <script src="js/ui-editor-core.js?v=20260615-preview-inset-corners"></script>
-  <script src="js/templates.js?v=20260615-preview-inset-corners"></script>
-  <script src="js/standalone-app.js?v=20260615-preview-inset-corners"></script>
+  <script src="js/templates.js?v=20260616-copy-hint"></script>
+  <script src="js/standalone-app.js?v=20260616-copy-hint"></script>
   <script src="js/main.js?v=20260615-preview-inset-corners"></script>
 </body>
 </html>

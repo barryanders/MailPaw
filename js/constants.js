@@ -514,7 +514,7 @@ const DEFAULT_TEMPLATE_SPECS = [
     blocks: [
       mpText('WEEKEND ONLY', { size: '12px', color: '#ea580c', align: 'center' }),
       mpHeading('Warm up your workspace', { size: '31px', align: 'center', color: '#78350f' }),
-      mpText('Take 20% off reader favorites through Monday. No mystery countdowns, just a straightforward seasonal thank-you.', { color: '#92400e', align: 'center' }),
+      mpText('Take 20% off reader favorites through Monday. No mystery countdowns, just a straightforward seasonal thank you.', { color: '#92400e', align: 'center' }),
       mpButton('Shop the sale', MP_SITE + '/sale', { align: 'center', bg: '#f97316', color: '#1f1300' }),
       mpHero('seasonal-sale', { alt: 'Warm desktop product arrangement' }),
       mpGrid(2, [
