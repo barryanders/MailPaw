@@ -1,25 +1,21 @@
-<div align="center">
-  <img src="mailpaw-icon.png" alt="MailPaw app icon" width="88" height="88">
-  <h1>MailPaw</h1>
-  <p><strong>Email templates that stay by your side.</strong></p>
-  <p>
-    A free, privacy-first email template builder for newsletters, campaigns, announcements, outreach, and polished everyday emails.<br>
-    It runs as a standalone web app, stores templates locally in your browser, and gives you copy-ready email content plus downloadable backup files.
-  </p>
-  <p>
-    <a href="https://barryanders.github.io/MailPaw/">Open MailPaw</a>
-    ·
-    <a href="https://github.com/barryanders/MailPaw/issues">Report an issue</a>
-  </p>
-  <p><sub>free to use · local-first · no account · no subscription · no ads · no tracking</sub></p>
-  <p>
-    <a href="https://buymeacoffee.com/barryanders">
-      <img alt="Give me a coffee if you'd like to say thanks" src="https://img.shields.io/badge/Say%20thanks-Give%20me%20a%20coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=000000&labelColor=1f2937">
-    </a>
-  </p>
-</div>
+<img src="mailpaw-icon.png" alt="MailPaw app icon" width="256" height="256">
 
----
+# MailPaw
+
+<p><strong>Email templates that stay by your side.</strong></p>
+<p>
+A free, privacy-first email template builder for newsletters, campaigns, announcements, outreach, and polished everyday emails.<br>
+It runs as a standalone web app, stores templates locally in your browser, and gives you copy-ready email content plus downloadable backup files.
+</p>
+<p>
+  <a href="https://barryanders.github.io/MailPaw/">Open MailPaw</a>
+</p>
+<p><sub>free to use · local-first · no account · no subscription · no ads · no tracking</sub></p>
+<p>
+  <a href="https://buymeacoffee.com/barryanders">
+    <img alt="Give me a coffee if you'd like to say thanks" src="https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=fff&labelColor=1f2937">
+  </a>
+</p>
 
 ## Free Email Template Builder
 
