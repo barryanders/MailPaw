@@ -1706,7 +1706,7 @@ function renderBillingView() {
       MailPaw copies rich email content for email clients that accept formatted paste. Each email client handles pasted content differently, so send yourself a test before using a template for a real message.
       <div style="margin-top:14px;">
         MailPaw is open source on <a href="${MAILPAW_REPO_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">GitHub</a>.
-        If MailPaw helped, <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">coffee is appreciated</a>.
+        <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">Buy me a coffee</a>.
       </div>
     </div>
   `, () => true);

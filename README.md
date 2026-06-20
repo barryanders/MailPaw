@@ -13,7 +13,7 @@ It runs as a standalone web app, stores templates locally in your browser, and g
 <p><sub>free to use · local-first · no account · no subscription · no ads · no tracking</sub></p>
 <p>
   <a href="https://buymeacoffee.com/barryanders">
-    <img alt="Give me a coffee if you'd like to say thanks" src="https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=fff&labelColor=1f2937">
+    <img alt="Buy me a coffee" src="https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=fff&labelColor=1f2937">
   </a>
 </p>
 

@@ -129,7 +129,7 @@
         </div>
         <div class="zt-billing-banner__actions">
           <button type="button" class="zt-banner-cta" id="mailpaw-about">How it works</button>
-          <button type="button" class="zt-banner-link" id="mailpaw-support">Coffee</button>
+          <button type="button" class="zt-banner-link" id="mailpaw-support">Buy me a coffee</button>
         </div>
       </div>
     `;
@@ -218,7 +218,7 @@
         MailPaw copies rich email content for clients that accept formatted paste, including Gmail and many desktop email apps. Each email client handles pasted content differently, so send yourself a test before using a template for a real message.
         <div style="margin-top:14px;">
           MailPaw is open source on <a href="${MAILPAW_REPO_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">GitHub</a>.
-          If MailPaw helped, <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">coffee is appreciated</a>.
+          <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">Buy me a coffee</a>.
         </div>
       </div>
     `, () => true);
