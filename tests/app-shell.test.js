@@ -26,3 +26,12 @@ test('root page remains a noindex redirect to the app', () => {
   assert.match(root, /window\.location\.replace\('app\.html'/);
   assert.match(root, /<a href="app\.html">Open MailPaw<\/a>/);
 });
+
+test('about view links to the privacy-safe problem report form', () => {
+  const constants = readProjectFile('js/constants.js');
+  const standalone = readProjectFile('js/standalone-app.js');
+
+  assert.match(constants, /goodburrow\.com\/report\/\?app=mailpaw&name=MailPaw&version=1\.0\.2/);
+  assert.match(standalone, /Report a problem/);
+  assert.match(standalone, /No templates or email content are attached/);
+});

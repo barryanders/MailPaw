@@ -227,6 +227,10 @@
           MailPaw is open source on <a href="${MAILPAW_REPO_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">GitHub</a>.
           <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">Visit goodburrow.com</a>.
         </div>
+        <div style="margin-top:14px; padding-top:14px; border-top:1px solid #e2e8f0;">
+          <a href="${MAILPAW_REPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">Report a problem</a>
+          <div style="margin-top:4px; color:#64748b; font-size:12px;">No templates or email content are attached.</div>
+        </div>
       </div>
     `, () => true);
     const modal = document.querySelector('.zt-modal-overlay');

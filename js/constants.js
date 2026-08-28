@@ -123,6 +123,7 @@ const TEMPLATE_STYLE_PRESETS = [
 
 const MAILPAW_SUPPORT_URL = 'https://goodburrow.com/';
 const MAILPAW_REPO_URL = 'https://github.com/GoodBurrow/MailPaw';
+const MAILPAW_REPORT_URL = 'https://goodburrow.com/report/?app=mailpaw&name=MailPaw&version=1.0.2&os=Web%20browser';
 
 const STYLE_PRESET_BG_FALLBACKS = {
   '#f8fafc': 'ghost-minimal',
