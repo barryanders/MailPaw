@@ -2,10 +2,10 @@
   "name": "mailpaw",
   "private": false,
   "description": "Email templates that stay by your side. Free privacy-first email template builder with local storage, copy-ready output, reusable blocks, and backups.",
-  "homepage": "https://goodburrow.github.io/MailPaw/",
+  "homepage": "https://barryanders.github.io/MailPaw/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/GoodBurrow/MailPaw.git"
+    "url": "https://github.com/barryanders/MailPaw.git"
   },
   "author": "Barry Anders",
   "license": "MIT",

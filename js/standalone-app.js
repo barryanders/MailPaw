@@ -39,41 +39,6 @@
     }, 2600);
   };
 
-  const maybeShowCoffeePrompt = () => {
-    let count = 0;
-    try {
-      count = Number(localStorage.getItem(COPY_COUNT_KEY) || '0') + 1;
-      localStorage.setItem(COPY_COUNT_KEY, String(count));
-    } catch (_) {
-      return;
-    }
-    let shouldPrompt = count === 1 || (count >= COFFEE_PROMPT_EVERY && count % COFFEE_PROMPT_EVERY === 0);
-    try {
-      if (sessionStorage.getItem(COFFEE_PROMPT_SESSION_KEY)) shouldPrompt = false;
-      if (shouldPrompt) sessionStorage.setItem(COFFEE_PROMPT_SESSION_KEY, '1');
-    } catch (_) {
-      if (maybeShowCoffeePrompt.seen) shouldPrompt = false;
-      if (shouldPrompt) maybeShowCoffeePrompt.seen = true;
-    }
-    if (!shouldPrompt) return;
-    if (document.querySelector('.zt-modal-overlay')) return;
-    if (typeof showModal !== 'function') return;
-
-    showModal('Email ready', `
-      <div style="color:#475569; font-size:14px; line-height:1.5;">
-        MailPaw is a free Good Burrow app.
-      </div>
-    `, () => {
-      window.open(MAILPAW_SUPPORT_URL, '_blank', 'noopener');
-      return true;
-    });
-    const modal = document.querySelector('.zt-modal-overlay');
-    if (!modal) return;
-    const submit = modal.querySelector('#modal-submit');
-    const cancel = modal.querySelector('#modal-cancel');
-    if (submit) submit.textContent = 'Explore Good Burrow';
-    if (cancel) cancel.textContent = 'Maybe later';
-  };
 
   const renderStandaloneIntro = () => {
     const intro = document.getElementById('zt-library-intro');
@@ -129,7 +94,7 @@
         </div>
         <div class="zt-billing-banner__actions">
           <button type="button" class="zt-banner-cta" id="mailpaw-about">How it works</button>
-          <button type="button" class="zt-banner-link" id="mailpaw-support">Explore Good Burrow</button>
+          <button type="button" class="zt-banner-link" id="mailpaw-support">Explore Anders</button>
         </div>
       </div>
     `;
@@ -183,7 +148,7 @@
     const original = button ? button.innerHTML : '';
     const copy = typeof copyRichEmailToClipboard === 'function' ? copyRichEmailToClipboard : copyTextToClipboard;
     copy(html, () => {
-      maybeShowCoffeePrompt();
+
       showCopyHint();
       if (button) button.innerHTML = '<span class="zt-btn-label">Copied</span>';
       setTimeout(() => {
@@ -217,7 +182,7 @@
             <span style="position:absolute; inset:9px 8px 0; border-radius:50% 50% 0 0; background:#f7f7f3;"></span>
             <span style="position:absolute; left:13px; bottom:0; width:12px; height:15px; border-radius:50% 50% 0 0; background:#ad614c;"></span>
           </span>
-          <strong style="font-size:16px;">Good Burrow</strong>
+          <strong style="font-size:16px;">Anders</strong>
         </a>
         This standalone version has no trial, subscription, template limit, export limit, or paid plan.
         Templates are stored locally in this browser on this computer for privacy. MailPaw does not need an account or cloud library to hold your email content.
@@ -225,7 +190,7 @@
         MailPaw copies rich email content for clients that accept formatted paste, including Gmail and many desktop email apps. Each email client handles pasted content differently, so send yourself a test before using a template for a real message.
         <div style="margin-top:14px;">
           MailPaw is open source on <a href="${MAILPAW_REPO_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">GitHub</a>.
-          <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">Visit goodburrow.com</a>.
+          <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">Visit barryanders.github.io</a>.
         </div>
         <div style="margin-top:14px; padding-top:14px; border-top:1px solid #e2e8f0;">
           <a href="${MAILPAW_REPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">Report a problem</a>

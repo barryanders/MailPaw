@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://goodburrow.github.io/MailPaw/sitemap.xml
+Sitemap: https://barryanders.github.io/MailPaw/sitemap.xml

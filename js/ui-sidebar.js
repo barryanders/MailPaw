@@ -908,7 +908,7 @@ function guardPremiumAction(onAllowed, options = {}) {
 
 function renderUpgradeView(billing, options = {}) {
   let title = 'MailPaw is Free';
-  let message = 'There is no trial, subscription, or paid plan. MailPaw is a free Good Burrow app.';
+  let message = 'There is no trial, subscription, or paid plan. MailPaw is a free Anders app.';
   if (options.reason === 'limit') {
     message = 'Template creation is free in this standalone app. If you hit a saved browser setting from an older version, restore defaults or import a backup, then keep going.';
   }
@@ -932,7 +932,7 @@ function renderUpgradeView(billing, options = {}) {
     title = 'Keep Building for Free';
     message = 'MailPaw is free and local-first. Download backup copies of important templates so you control your work.';
   }
-  const ctaLabel = 'Explore Good Burrow';
+  const ctaLabel = 'Explore Anders';
   const showPlansLink = false;
   const showBuyOption = true;
   if (typeof showModal !== 'function') return;
@@ -940,13 +940,13 @@ function renderUpgradeView(billing, options = {}) {
     <div style="text-align:center;">
       <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="margin:0 auto 16px; display:flex; align-items:center; justify-content:center; gap:10px; color:#242329; text-decoration:none;">
         <span aria-hidden="true" style="width:38px; height:38px; position:relative; display:inline-block; overflow:hidden; border-radius:50% 50% 44% 44%; background:#1f493b; box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);"><span style="position:absolute; inset:9px 8px 0; border-radius:50% 50% 0 0; background:#f7f7f3;"></span><span style="position:absolute; left:13px; bottom:0; width:12px; height:15px; border-radius:50% 50% 0 0; background:#ad614c;"></span></span>
-        <strong style="font-size:16px;">Good Burrow</strong>
+        <strong style="font-size:16px;">Anders</strong>
       </a>
       <div style="color:#475569; font-size:14px; margin-bottom:14px;">${message}</div>
       ${showPlansLink ? '<button class="zt-link-btn" id="zt-upgrade-plans">Trial details</button>' : ''}
       ${showBuyOption ? `
         <div class="zt-upgrade-actions" style="margin-top:12px;">
-          <button class="zt-btn-secondary" id="zt-upgrade-buy">Visit goodburrow.com</button>
+          <button class="zt-btn-secondary" id="zt-upgrade-buy">Visit barryanders.github.io</button>
         </div>
       ` : ''}
     </div>
@@ -1704,7 +1704,7 @@ function renderBillingView() {
       MailPaw copies rich email content for email clients that accept formatted paste. Each email client handles pasted content differently, so send yourself a test before using a template for a real message.
       <div style="margin-top:14px;">
         MailPaw is open source on <a href="${MAILPAW_REPO_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">GitHub</a>.
-        <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">Explore Good Burrow</a>.
+        <a href="${MAILPAW_SUPPORT_URL}" target="_blank" rel="noopener" style="color:#111827; font-weight:700;">Explore Anders</a>.
       </div>
     </div>
   `, () => true);

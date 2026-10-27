@@ -13,7 +13,7 @@ test('public app shell keeps searchable local-first metadata', () => {
   assert.match(app, /<title>Free HTML Email Template Builder/);
   assert.match(app, /<meta name="description" content="[^"]*local-first[^"]*no account/i);
   assert.match(app, /<meta name="robots" content="index,follow">/);
-  assert.match(app, /<link rel="canonical" href="https:\/\/goodburrow\.github\.io\/MailPaw\/app\.html">/);
+  assert.match(app, /<link rel="canonical" href="https:\/\/barryanders\.github\.io\/MailPaw\/app\.html">/);
   assert.match(app, /"@type": "WebApplication"/);
   assert.match(app, /"No account required"/);
 });
@@ -31,7 +31,7 @@ test('about view links to the privacy-safe problem report form', () => {
   const constants = readProjectFile('js/constants.js');
   const standalone = readProjectFile('js/standalone-app.js');
 
-  assert.match(constants, /goodburrow\.com\/report\/\?app=mailpaw&name=MailPaw&version=1\.0\.2/);
+  assert.ok(constants.includes('https://github.com/barryanders/MailPaw/issues'));
   assert.match(standalone, /Report a problem/);
   assert.match(standalone, /No templates or email content are attached/);
 });
