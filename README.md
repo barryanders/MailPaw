@@ -17,6 +17,10 @@ It runs as a standalone web app, stores templates locally in your browser, and g
   <a href="https://barryanders.github.io/">From Anders</a>
 </p>
 
+## Screenshots
+
+![Included email templates](docs/screenshots/template-library.jpg)
+
 ## Free Email Template Builder
 
 MailPaw helps you create reusable email templates without signing up for a hosted email marketing platform. It is built for people who want a lightweight alternative to tools like Mailchimp, Constant Contact, Beehiiv, ConvertKit, Substack editors, and other campaign builders when they only need to design and reuse good-looking email HTML.
