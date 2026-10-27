@@ -76,11 +76,7 @@ It is useful when you want a clean email layout builder, not another hosted acco
 
 ## Author
 
-<a href="https://barryanders.github.io" rel="nofollow">
-  <img alt="Barry Anders" src="https://avatars.githubusercontent.com/u/91902180?v=4&amp;s=200" width="100" height="100" style="border-radius:50%;">
-</a>
-
-[Barry Anders](https://barryanders.github.io)
+[Anders](https://barryanders.github.io)
 
 ## License
 
