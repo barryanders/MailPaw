@@ -19,6 +19,8 @@ It runs as a standalone web app, stores templates locally in your browser, and g
 
 ## Screenshots
 
+Real app captures. [Explore the full-size showcase](https://barryanders.github.io/products/mailpaw/).
+
 ![Included email templates](docs/screenshots/template-library.jpg)
 
 ## Free Email Template Builder
